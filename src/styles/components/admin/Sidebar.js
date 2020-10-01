@@ -36,6 +36,11 @@ export const Itens = styled.ul`
     padding: 14px 16px;
   }
 
+  & > li > a[href="${({ activeUrl }) => activeUrl }"] {
+    font-weight: bold;
+    background: var(--color-primary-hover);
+  }
+
   & > li > a:hover {
     background: var(--color-primary-hover);
   }

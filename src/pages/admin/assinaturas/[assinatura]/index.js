@@ -10,7 +10,8 @@ const Servicos = () => {
       </Head>
       <Layout>
         <div>
-            <form>
+            <h1 className="page-title-secondary">Assinaturas</h1>
+            <form className="margin-3x">
                 <label>Titulo</label>
                 <input type="text"/>
                 <label>url</label>

@@ -1,5 +1,5 @@
-import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { Container, Itens } from "../../styles/components/admin/Sidebar";
 
@@ -17,14 +17,16 @@ const Sidebar = (props) => {
 export default Sidebar;
 
 export const MenuItems = () => {
+  const router = useRouter();
+  
   return (
     <>
-      <Itens>
-        <li>
-          <Link href="/admin/servicos"><a><ListUlIcon/>Serviços</a></Link>
-        </li>
+      <Itens activeUrl={`/admin/${router.pathname.split("/")[2]}`}>
         <li>
           <Link href="/admin/assinaturas"><a><CartAltIcon />Assinaturas</a></Link>
+        </li>
+        <li>
+          <Link href="/admin/servicos"><a><ListUlIcon/>Serviços</a></Link>
         </li>
         <li>
           <Link href="/admin/configuracoes"><a><SettingsIcons />Configuração</a></Link>

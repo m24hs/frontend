@@ -10,12 +10,14 @@ const Servicos = () => {
       </Head>
       <Layout>
         <div>
-            <form>
-                <label>Titulo</label>
-                <input type="text"/>
-                <label>url</label>
-                <input type="text"/>                
-            </form>
+          <h1 className="page-title-secondary">Serviços</h1>
+          <form className="margin-3x">
+            <label>Titulo</label>
+            <input type="text" />
+            <label>url</label>
+            <input type="text" />
+            <button className="btn-primary">Salvar</button>
+          </form>
         </div>
       </Layout>
     </>

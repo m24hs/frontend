@@ -49,7 +49,7 @@ export const Wrapper = styled.div`
   form > input {
     display: block;
     width: 100%;
-    height: calc(1.5em + .75rem + 2px);
+    height: 42px;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;

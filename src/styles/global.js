@@ -137,6 +137,30 @@ export default createGlobalStyle`
     background: var(--color-tertiary-hover);
   }
 
+  .btn-primary svg {
+      width: 18px;
+  }
+
+  .btn-primary {
+    width: 100%;
+    height: 42px;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--color-text);
+    background: var(--color-primary);
+    border-radius: .25rem;
+    transition: all 0.5s;
+  }
+
+  .btn-primary:disabled {
+    cursor: not-allowed;
+    background: var(--color-primary-disabled);
+  }
+
+  .btn-primary:hover:enabled {
+    background: var(--color-primary-hover);
+  }
+
   .form-light label {
         font-weight: bold;
         color: var(--color-primary);

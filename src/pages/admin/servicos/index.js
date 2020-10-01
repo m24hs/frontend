@@ -1,11 +1,12 @@
 import Head from "next/head";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import Moment from "react-moment";
 
 import api from "../../../services/api.js";
-import { checkErrors, fetchData } from "../../../services/helpers.js";
+import { fetchData } from "../../../services/helpers.js";
 
 import Layout from "../../../components/admin/Layout";
+import DataTable from "../../../components/admin/DataTable";
 
 const Servicos = ({ servicos }) => {
   const router = useRouter();
@@ -17,24 +18,39 @@ const Servicos = ({ servicos }) => {
       </Head>
       <Layout>
         <div>
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Serviço</th>
-              </tr>
-            </thead>
-            <tbody>
-              {servicos.data.map((servico) => (
-                <tr key={servico._id}>
-                  <td>1</td>
-                  <td>
-                    <Link href={`${router.pathname}/${servico.url}`}>{servico.titulo}</Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <h1 className="page-title-secondary">Serviços</h1>
+          <DataTable
+            className="margin-3x"
+            columns={[
+              {
+                name: "#",
+                selector: "id",
+                sortable: true,
+              },
+              {
+                name: "Serviço",
+                selector: "name",
+                sortable: true,
+              },
+              {
+                name: "Valor",
+                sortable: true,
+                cell: (row) => <>R$ {row.price.toFixed(2).replace(".", ",")}</>,
+              },
+              {
+                name: "Data e Hora",
+                sortable: true,
+                cell: (row) => (
+                  <Moment date={row.createdAt} format="DD/MM/YYYY HH:mm:ss" />
+                ),
+              },
+            ]}
+            data={servicos.data}
+            baseUrl={router.pathname}
+            search={true}
+            add={true}
+            edit={true}
+          />
         </div>
       </Layout>
     </>
@@ -42,8 +58,7 @@ const Servicos = ({ servicos }) => {
 };
 
 export async function getStaticProps() {
-  const servicos = { data: [] };
-  //const servicos = await fetchData(api.get("/servico")) || { data:{} };
+  const servicos = await fetchData(api.get("/services"));
 
   return {
     props: {
