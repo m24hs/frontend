@@ -51,7 +51,7 @@ const Assinaturas = ({ assinaturas }) => {
                 ),
               },
             ]}
-            data={assinaturas.data}
+            data={assinaturas}
             search={true}
           />
         </div>

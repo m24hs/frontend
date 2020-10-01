@@ -29,6 +29,9 @@ export const MenuItems = () => {
           <Link href="/admin/servicos"><a><ListUlIcon/>Serviços</a></Link>
         </li>
         <li>
+          <Link href="/admin/services"><a><ListUlIcon/>testes</a></Link>
+        </li>
+        <li>
           <Link href="/admin/configuracoes"><a><SettingsIcons />Configuração</a></Link>
         </li>
       </Itens>

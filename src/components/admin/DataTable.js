@@ -16,7 +16,7 @@ const DataTable = (props) => {
     search = false,
     add = false,
     baseUrl = "",
-    edit = true,
+    edit = false,
     ...restOfProps
   } = props;
   const [filteredData, setFilteredData] = useState(data);
@@ -26,10 +26,9 @@ const DataTable = (props) => {
     const value = e.target.value || "";
 
     if (value !== "") {
-      console.log(data);
       setFilteredData(filterIt(data, value));
     } else {
-      setFilteredData(data);
+      setFilteredData(data );
     }
   };
 
@@ -73,7 +72,7 @@ const DataTable = (props) => {
           if (onRowClicked) {
             return onRowClicked();
           } else if (edit) {
-            router.push(`${router.pathname}/${item.id}`);
+            router.push(`${baseUrl}/${item.id}`);
           }
           return;
         }}

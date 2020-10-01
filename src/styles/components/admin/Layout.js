@@ -46,7 +46,11 @@ export const Wrapper = styled.div`
     color: #52A0D0;
   }  
 
-  form > input {
+  form > div {
+    margin: 0 0 16px 0;
+  }
+
+  form input {
     display: block;
     width: 100%;
     height: 42px;

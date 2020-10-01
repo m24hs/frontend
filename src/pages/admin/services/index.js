@@ -45,7 +45,7 @@ const Servicos = ({ servicos }) => {
                 ),
               },
             ]}
-            data={servicos}
+            data={servicos.data}
             search={true}
             baseUrl={router.pathname}
             add={true}
