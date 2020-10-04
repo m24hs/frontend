@@ -28,12 +28,11 @@ export const MenuItems = () => {
         <li>
           <Link href="/admin/servicos"><a><ListUlIcon/>Serviços</a></Link>
         </li>
+    {/*
         <li>
-          <Link href="/admin/services"><a><ListUlIcon/>testes</a></Link>
+          <Link href="/admin/configuracoes"><a><SettingsIcons />Configurações</a></Link>
         </li>
-        <li>
-          <Link href="/admin/configuracoes"><a><SettingsIcons />Configuração</a></Link>
-        </li>
+    */}
       </Itens>
     </>
   );

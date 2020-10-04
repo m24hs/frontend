@@ -1,10 +1,11 @@
+// Imports padrão
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
 
+// Imports auxiliares
 import api from "../../../services/api.js";
-import { checkErrors, fetchData } from "../../../services/helpers.js";
-
+import { fetchData } from "../../../services/helpers.js";
 import Layout from "../../../components/admin/Layout";
 import DataTable from "../../../components/admin/DataTable";
 
@@ -29,7 +30,7 @@ const Assinaturas = ({ assinaturas }) => {
               },
               {
                 name: "Usuário",
-                selector: "user",
+                selector: "User.name",
                 sortable: true,
               },
               {
@@ -61,6 +62,7 @@ const Assinaturas = ({ assinaturas }) => {
 };
 
 export async function getStaticProps() {
+  // Carregar
   const assinaturas = await fetchData(api.get("/subscriptions"));
 
   return {

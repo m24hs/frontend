@@ -2,9 +2,10 @@ import { useState } from "react";
 
 import Menu from "./Menu";
 import Sidebar from "./Sidebar";
+import Loading from "../Loading";
+import Error from "../Error";
 
 import { Wrapper, Container } from "../../styles/components/admin/Layout";
-import { Whatsapp as WhatsappIcon } from "@styled-icons/icomoon";
 
 const Layout = (props) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -20,6 +21,8 @@ const Layout = (props) => {
       <Wrapper {...props} sidebarOpen={sidebarOpen}>
         {props.children}
       </Wrapper>
+      <Loading show={props.loading} />
+      <Error text={props.error} />
     </Container>
   );
 };

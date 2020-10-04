@@ -1,19 +1,17 @@
 import { useState, useEffect } from "react";
+
 import Menu from "./Menu";
 import Footer from "./Footer";
+import Loading from "../Loading";
+import Error from "../Error";
 
 import {
   Wrapper,
   Container,
   FloatButton,
-  Loading,
-  ErrorStyle,
 } from "../../styles/components/site/Layout";
-import {
-  Whatsapp as WhatsappIcon,
-  Spinner10 as SpinnerIcon,
-} from "@styled-icons/icomoon";
-import { Close as CloseIcon } from "@styled-icons/material";
+
+import { Whatsapp as WhatsappIcon } from "@styled-icons/icomoon";
 
 const Layout = (props) => {
   return (
@@ -29,40 +27,9 @@ const Layout = (props) => {
           <WhatsappIcon />
         </FloatButton>
       )}
-      {props.loading && (
-        <Loading>
-          <SpinnerIcon />
-        </Loading>
-      )}
+      <Loading show={props.loading} />
       <Error text={props.error} />
     </Container>
-  );
-};
-
-const Error = (props) => {
-  const [isError, setIsError] = useState("");
-
-  useEffect(() => {
-    setIsError(props.text);
-  },[props]);
-
-  const handleCloseError = () => {    
-    setIsError("");
-  };
-
-  return (
-    <>
-      {isError && (
-        <ErrorStyle>
-          <div>
-            <p>{isError}</p>
-            <button onClick={() => handleCloseError()}>
-              <CloseIcon />
-            </button>
-          </div>
-        </ErrorStyle>
-      )}
-    </>
   );
 };
 

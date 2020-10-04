@@ -4,12 +4,12 @@ import { useRouter } from "next/router";
 import Head from "next/head";
 
 // Imports auxiliares
-import api from "../../../../services/api.js";
-import { getFormData } from "../../../../services/helpers.js";
-import Layout from "../../../../components/admin/Layout";
-import Editor from "../../../../components/admin/Editor";
+import api from "../../../services/api.js";
+import { getFormData } from "../../../services/helpers.js";
+import Layout from "../../../components/admin/Layout";
+import Editor from "../../../components/admin/Editor";
 
-const Servicos = (props) => {
+const Configuracoes = (props) => {
   // Rotas
   const router = useRouter();
   const { servico } = router.query;
@@ -41,27 +41,27 @@ const Servicos = (props) => {
   return (
     <>
       <Head>
-        <title>Serviços - Painel Administrativo - M24</title>
+        <title>Configurações - Painel Administrativo - M24</title>
       </Head>
       <Layout loading={isLoading}>
         <div>
-          <h1 className="page-title-secondary">Serviços</h1>
+          <h1 className="page-title-secondary">Configurações</h1>
           <form className="form-service margin-3x">
             <input name="id" type="hidden" defaultValue={formData.id} />
             <div>
-              <label>Titulo</label>
+              <label>Email</label>
               <input name="title" type="text" defaultValue={formData.title} />
             </div>
             <div>
-              <label>Url</label>
+              <label>Senha</label>
               <input name="url" type="text" defaultValue={formData.url} />
             </div>
             <div>
-              <label>Image</label>
+              <label>Host</label>
               <input name="image" type="text" defaultValue={formData.image} />
             </div>    
             <div>
-              <label>Plano</label>
+              <label>Porta</label>
               <input name="plan" type="text" defaultValue={formData.plan} />
             </div>                    
             <div>
@@ -83,4 +83,4 @@ const Servicos = (props) => {
     </>
   );
 };
-export default Servicos;
+export default Configuracoes;

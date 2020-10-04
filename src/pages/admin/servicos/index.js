@@ -1,14 +1,16 @@
+// Imports padrão
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
 
+// Import auxiliares
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
-
 import Layout from "../../../components/admin/Layout";
 import DataTable from "../../../components/admin/DataTable";
 
 const Servicos = ({ servicos }) => {
+  // Rota
   const router = useRouter();
 
   return (
@@ -29,7 +31,7 @@ const Servicos = ({ servicos }) => {
               },
               {
                 name: "Serviço",
-                selector: "name",
+                selector: "title",
                 sortable: true,
               },
               {
@@ -58,6 +60,7 @@ const Servicos = ({ servicos }) => {
 };
 
 export async function getStaticProps() {
+  // Carregar
   const servicos = await fetchData(api.get("/services"));
 
   return {

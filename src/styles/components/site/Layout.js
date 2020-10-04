@@ -1,4 +1,4 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
   position: relative;
@@ -49,78 +49,5 @@ export const FloatButton = styled.a`
   & > svg {
     width: 32px;
     height: 32px;
-  }
-`;
-
-const SpinnerAnimation = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-export const Loading = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #2e4458ae;
-  width: 100vw;
-  height: 100vh;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s;
-
-  & > svg {
-    width: 128px;
-    color: var(--color-tertiary);
-    animation: 2s linear ${SpinnerAnimation} infinite;
-  }
-`;
-
-export const ErrorStyle = styled.div`
-  position: fixed;
-  top: calc(64px + 32px);
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  z-index: 100;
-
-  & > div {
-    display: flex;    
-    align-items: center;
-    width: calc(100% - 64px);
-    background: var(--color-tertiary);
-    padding: 32px;
-    color: var(--color-text);
-    text-align: center;
-    box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.2);
-  }
-  & > div > p { 
-    flex: 1;
-  }
-
-  & > div > button {
-    transition: all .3s;
-  }
-
-  & > div > button:hover {
-    background: var(--color-tertiary-hover);
-  }
-
-  & > div > button > svg { 
-    width: 32px;
-    color: var(--color-text);
-  }
-
-  @media (min-width: 780px) {
-    & > div {
-      max-width: 600px;
-
-    }
   }
 `;

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 
 import {
@@ -5,13 +6,20 @@ import {
   Container,
   Logo,
   ButtonSidebar,
-  ButtonUser,
+  UserMenu,
+  DropDown,
 } from "../../styles/components/admin/Menu";
 
 import LogoSvg from "../../assets/logo.svg";
 import { Menu as MenuIcon, LogOut as LogOutIcon, UserCircle as UserCircleIcon } from "@styled-icons/boxicons-regular";
 
 const Menu = (props) => {
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const handleToogleUserMenu = () => {
+    setUserMenuOpen(!userMenuOpen);
+  }
+
   return (
     <>
     <Header>
@@ -23,9 +31,17 @@ const Menu = (props) => {
       <ButtonSidebar onClick={() => {props.handleToggleSidebar()}}>
         <MenuIcon />
       </ButtonSidebar>  
-      <ButtonUser>
+      <UserMenu onClick={() => handleToogleUserMenu()}>
         <UserCircleIcon />
-      </ButtonUser>
+        <DropDown open={userMenuOpen}>
+          <li>
+            <Link href="/admin/configuracoes">Configurações</Link>
+          </li>
+          <li>
+            <Link href="/admin/logout">Sair</Link>
+          </li>
+        </DropDown>
+      </UserMenu>
     </Header>
     </>
   );
