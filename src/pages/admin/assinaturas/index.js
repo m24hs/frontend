@@ -53,7 +53,9 @@ const Assinaturas = ({ assinaturas }) => {
               },
             ]}
             data={assinaturas}
+            baseUrl={router.pathname}
             search={true}
+            edit={true}
           />
         </div>
       </Layout>

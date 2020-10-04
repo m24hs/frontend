@@ -63,7 +63,7 @@ const DataTable = (props) => {
       <DataTableWrapper
         {...restOfProps}
         customStyles={Custom}
-        noDataComponent={"Nenhum registro encontrado."}
+        noDataComponent={(<><br/>Nenhum registro encontrado.</>)}
         pagination={true}
         highlightOnHover={true}
         responsive={true}
@@ -72,7 +72,8 @@ const DataTable = (props) => {
           if (onRowClicked) {
             return onRowClicked();
           } else if (edit) {
-            router.push(`${baseUrl}/${item.id}`);
+            //router.push(`${baseUrl}/${item.id}`);
+            window.location.href = `${baseUrl}/${item.id}`;
           }
           return;
         }}

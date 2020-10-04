@@ -6,7 +6,7 @@ import Layout from "../../../../../../components/site/Layout";
 import {
   Container,
   Wrapper,
-} from "../../../../../../styles/pages/servicos/cadastro/user/tipo";
+} from "../../../../../../styles/pages/servicos/cadastro/user/finalizacao/tipo";
 
 import { Clock as ClockIcon } from "@styled-icons/bootstrap";
 import { CheckCircle as CheckCircleIcon } from "@styled-icons/boxicons-solid";
