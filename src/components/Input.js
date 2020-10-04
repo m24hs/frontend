@@ -1,34 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { WrapperStyle } from "../styles/components/Input";
 
 import ReactSelect from "react-select";
-import InputMask from "react-input-mask";
+import InputMaskWrapper from "react-input-mask";
 
 const Input = (props) => {
-  const { type, label, divStyle, ...restOfProps } = props;
+  const { type, label, divstyle, ...restOfProps } = props;
 
   if (type === "select")
     return (
-      <Wrapper style={divStyle} label={label}>
+      <Wrapper style={divstyle} label={label}>
         <Select {...props} />
       </Wrapper>
     );
   else if (type === "text")
     return (
-      <Wrapper style={divStyle} label={label}>
+      <Wrapper style={divstyle} label={label}>
         <HtmlInput type="text" {...props} />
       </Wrapper>
     );
   else if (type === "passoword")
     return (
-      <Wrapper style={divStyle} label={label}>
+      <Wrapper style={divstyle} label={label}>
         <HtmlInput type="password" {...props} />
       </Wrapper>
     );
   else if (type === "mask")
     return (
-      <Wrapper style={divStyle} label={label}>
+      <Wrapper style={divstyle} label={label}>
         <InputMask {...props} />
       </Wrapper>
     );
@@ -77,10 +77,9 @@ const HtmlInput = (props) => {
         {...restOfProps}
         error={isError !== "" && isError}
         onBlur={(e) => {
-          if (onBlur) return onBlur();
+          if (onBlur) return onBlur(e);
           else if (validate) {
-            const response = validate(e);
-            setIsError(response.expression === false ? response.message : "");
+            setIsError(validateInput(validate, e));
             return;
           }
         }}
@@ -88,4 +87,61 @@ const HtmlInput = (props) => {
       {isError !== "" && <span>{isError}</span>}
     </>
   );
+};
+
+const InputMask = (props) => {
+  const { validate, onBlur, ...restOfProps } = props;
+  const [isError, setIsError] = useState("");
+
+  useEffect(() => {
+    if ((props.error || "").length !== "") {
+      setIsError(props.error);
+    }
+  }, [props]);
+
+  return (
+    <>
+      <InputMaskWrapper
+        {...restOfProps}
+        error={isError !== "" && isError}
+        onBlur={(e) => {
+          if (onBlur) return onBlur(e);
+          else if (validate) {
+            setIsError(validateInput(validate, e));
+            return;
+          }
+        }}
+      />
+      {isError !== "" && <span>{isError}</span>}
+    </>
+  );
+};
+
+const validateInput = (f, e) => {
+  try {
+    // Executa função
+    const response = f(e.target);
+    // Loop
+    for (
+      let responseIndex = 0;
+      responseIndex < response.length;
+      responseIndex++
+    ) {
+      let item = response[responseIndex];
+
+      // Se o retorno for true, é um erro
+      if (item.expression === true) {
+        // Força para não sair do campo
+        e.target.focus();
+        // Retorna a mensagem de erro
+        return item.message;
+      }
+
+      // Retorna vazio se for o ultimo
+      if (responseIndex === response.length) return "";
+    }
+  } catch (error) {
+    // Se der erro
+    return "Não foi possivel validar o campo!";
+  }
 };

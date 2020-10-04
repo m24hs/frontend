@@ -34,8 +34,10 @@ const Servicos = () => {
 
   // Busca CEP
   const [cepData, setCepData] = useState({});
+  const [errorCep, setErrorCep] = useState("");
   const handleCEP = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     // Variáveis auxiliares
     const emptyCep = { city: "", street: "", neighborhood: "", state: "" };
@@ -51,8 +53,11 @@ const Servicos = () => {
         neighborhood: emptyState,
         state: emptyState,
       });
+      setIsLoading(false);
       return;
     }
+
+    // Tenta consultar
     try {
       const response = await cepPromise(cep);
       setCepData(response);
@@ -72,7 +77,10 @@ const Servicos = () => {
         neighborhood: emptyState,
         state: emptyState,
       });
+      setErrorCep("CEP não encontrado, por favor, cadastre manualmente.")
     }
+    setIsLoading(false);
+    return;
   };
 
   // Ao enviar
@@ -107,6 +115,42 @@ const Servicos = () => {
     return re.test(String(email).toLowerCase());
   };
 
+  // Valida CPF
+  const isValidCPF = (cpf) => {
+    if (typeof cpf !== "string") return false;
+    cpf = cpf.replace(/[\s.-]*/gim, "");
+    if (
+      !cpf ||
+      cpf.length != 11 ||
+      cpf == "00000000000" ||
+      cpf == "11111111111" ||
+      cpf == "22222222222" ||
+      cpf == "33333333333" ||
+      cpf == "44444444444" ||
+      cpf == "55555555555" ||
+      cpf == "66666666666" ||
+      cpf == "77777777777" ||
+      cpf == "88888888888" ||
+      cpf == "99999999999"
+    ) {
+      return false;
+    }
+    var soma = 0;
+    var resto;
+    for (var i = 1; i <= 9; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    resto = (soma * 10) % 11;
+    if (resto == 10 || resto == 11) resto = 0;
+    if (resto != parseInt(cpf.substring(9, 10))) return false;
+    soma = 0;
+    for (var i = 1; i <= 10; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    resto = (soma * 10) % 11;
+    if (resto == 10 || resto == 11) resto = 0;
+    if (resto != parseInt(cpf.substring(10, 11))) return false;
+    return true;
+  };
+
   return (
     <>
       <Head>
@@ -127,52 +171,100 @@ const Servicos = () => {
               type="mask"
               label="Nome completo *"
               name="name"
-              divStyle={{ width: "100%" }}
+              divstyle={{ width: "100%" }}
               mask={"a".repeat(100)}
               maskPlaceholder=" "
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o nome!",
+                  },
+                  {
+                    expression: !e.value.trim().includes(" "),
+                    message: "Por favor, insira o nome completo!",
+                  },
+                ];
+              }}
             />
             <Input
               type="text"
               label="Email *"
               name="email"
-              divStyle={{ width: "100%" }}
+              divstyle={{ width: "100%" }}
               validate={(e) => {
-                return {
-                  expression: validateEmail(e.target.value),
-                  message: "Email inválido!",
-                };
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o Email!",
+                  },
+                  {
+                    expression: !validateEmail(e.value),
+                    message: "Email inválido!",
+                  },
+                ];
               }}
             />
             <Input
               type="mask"
-              label="Celular *"
-              divStyle={{ width: "50%" }}
+              label="Telefone/Celular *"
+              divstyle={{ width: "50%" }}
               name="phone"
               mask="(99) 999999999"
               maskPlaceholder=" "
+              validate={(e) => {
+                const phone = e.value
+                  .replace("(", "")
+                  .replace(")", "")
+                  .replace(" ", "")
+                  .trim();
+                return [
+                  {
+                    expression: phone === "",
+                    message: "Preencha o celular!",
+                  },
+                  {
+                    expression: phone.length < 10,
+                    message: "Número inválido!",
+                  },
+                ];
+              }}
             />
             <Input
               type="mask"
               label="CPF *"
               name="cpf_cnpj"
-              divStyle={{ width: "50%", paddingLeft: "16px" }}
+              divstyle={{ width: "50%", paddingLeft: "16px" }}
               mask="999.999.999-99"
               maskPlaceholder=" "
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o CPF!",
+                  },
+                  {
+                    expression: !isValidCPF(e.value),
+                    message: "CPF inválido!",
+                  },
+                ];
+              }}
             />
             <Input
               type="mask"
               label="CEP *"
               name="zip_code"
               mask="99999-999"
-              divStyle={{ width: "100%" }}
+              divstyle={{ width: "100%" }}
               maskPlaceholder=" "
               onBlur={(e) => handleCEP(e)}
+              error={errorCep}
             />
             <Input
               type="text"
               name="street"
               label="Endereço *"
-              divStyle={{ width: "60%" }}
+              divstyle={{ width: "60%" }}
               value={inputValue.street.value}
               onChange={(e) =>
                 setInputValue({
@@ -186,13 +278,13 @@ const Servicos = () => {
               type="text"
               label="Número *"
               name="number"
-              divStyle={{ width: "40%", paddingLeft: "16px" }}
+              divstyle={{ width: "40%", paddingLeft: "16px" }}
             />
             <Input
               type="text"
               label="Bairro *"
               name="district"
-              divStyle={{ width: "100%" }}
+              divstyle={{ width: "100%" }}
               value={inputValue.neighborhood.value}
               onChange={(e) =>
                 setInputValue({
@@ -206,7 +298,7 @@ const Servicos = () => {
               type="text"
               label="Cidade *"
               name="city"
-              divStyle={{ width: "60%" }}
+              divstyle={{ width: "60%" }}
               value={inputValue.city.value}
               onChange={(e) =>
                 setInputValue({
@@ -217,7 +309,7 @@ const Servicos = () => {
               readOnly={inputValue.city.disabled}
             />
             <Input
-              divStyle={{ width: "40%", paddingLeft: "16px" }}
+              divstyle={{ width: "40%", paddingLeft: "16px" }}
               label="Estado *"
               type="select"
               options={[
@@ -264,14 +356,14 @@ const Servicos = () => {
             <Input
               name="complement"
               label="Complemento"
-              divStyle={{ width: "100%" }}
+              divstyle={{ width: "100%" }}
               type="text"
             />
             <Input
               type="text"
               name="origin"
               label="Como conheceu a M24?"
-              divStyle={{ width: "100%" }}
+              divstyle={{ width: "100%" }}
             />
             <div>
               <p className="page-description">
