@@ -33,7 +33,6 @@ const Servicos = () => {
   const [isError, setIsError] = useState("");
 
   // Busca CEP
-  const [cepData, setCepData] = useState({});
   const [errorCep, setErrorCep] = useState("");
   const handleCEP = async (e) => {
     e.preventDefault();
@@ -45,7 +44,6 @@ const Servicos = () => {
     // Consulta CepPromise
     const cep = e.target.value;
     if (cep.length === 0) {
-      setCepData(emptyCep);
       setInputValue({
         city: emptyState,
         street: emptyState,
@@ -60,7 +58,6 @@ const Servicos = () => {
     // Tenta consultar
     try {
       const response = await cepPromise(cep);
-      setCepData(response);
       setInputValue({
         city: { value: response.city, disabled: true },
         street: { value: response.street, disabled: true },
@@ -68,8 +65,9 @@ const Servicos = () => {
         neighborhood: { value: response.neighborhood, disabled: true },
         state: { value: response.state, disabled: true },
       });
+      const number = document.querySelector("input[name=number]");
+      number.focus();
     } catch (e) {
-      setCepData(emptyCep);
       setInputValue({
         city: emptyState,
         street: emptyState,
@@ -88,15 +86,15 @@ const Servicos = () => {
     e.preventDefault();
 
     // Pega os dados do form
-    const teste = getFormData(".form-contact");
+    const formData = getFormData(".form-contact");
 
     // Tratamento de dados
-    teste["phone_prefix"] = teste.phone.substr(1, 2);
-    teste["phone"] = teste.phone.substr(5, 9);
-
+    formData["phone_prefix"] = formData.phone.substr(1, 2);
+    formData["phone"] = formData.phone.substr(5, 9);
+    console.log(formData);
     // Consome a API
     setIsLoading(true);
-    const response = await api.post("/users", teste);
+    const response = await api.post("/users", formData);
     console.log(response);
 
     // Avança para a proxima página
@@ -214,9 +212,9 @@ const Servicos = () => {
               maskPlaceholder=" "
               validate={(e) => {
                 const phone = e.value
-                  .replace("(", "")
-                  .replace(")", "")
-                  .replace(" ", "")
+                  .replaceAll("(", "")
+                  .replaceAll(")", "")
+                  .replaceAll(" ", "")
                   .trim();
                 return [
                   {
@@ -259,6 +257,14 @@ const Servicos = () => {
               maskPlaceholder=" "
               onBlur={(e) => handleCEP(e)}
               error={errorCep}
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.replaceAll("-","").replaceAll(" ","").trim() === "",
+                    message: "Preencha o CEP!",
+                  },
+                ];
+              }}              
             />
             <Input
               type="text"
@@ -266,20 +272,42 @@ const Servicos = () => {
               label="Endereço *"
               divstyle={{ width: "60%" }}
               value={inputValue.street.value}
-              onChange={(e) =>
+              onChange={(e) => 
                 setInputValue({
                   ...inputValue,
                   street: { value: e.target.value, disabled: false },
                 })
               }
               readOnly={inputValue.street.disabled}
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o Endereço!",
+                  },
+                ];
+              }}                 
             />
             <Input
               type="text"
               label="Número *"
               name="number"
               divstyle={{ width: "40%", paddingLeft: "16px" }}
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o Número!",
+                  },
+                ];
+              }}   
             />
+            <Input
+              name="complement"
+              label="Complemento"
+              divstyle={{ width: "100%" }}
+              type="text"
+            />            
             <Input
               type="text"
               label="Bairro *"
@@ -292,6 +320,14 @@ const Servicos = () => {
                   neighborhood: { value: e.target.value, disabled: false },
                 })
               }
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o Bairro!",
+                  },
+                ];
+              }}   
               readOnly={inputValue.neighborhood.disabled}
             />
             <Input
@@ -306,12 +342,21 @@ const Servicos = () => {
                   city: { value: e.target.value, disabled: false },
                 })
               }
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha a Cidade!",
+                  },
+                ];
+              }}   
               readOnly={inputValue.city.disabled}
             />
             <Input
               divstyle={{ width: "40%", paddingLeft: "16px" }}
               label="Estado *"
               type="select"
+              name="state"
               options={[
                 { value: "AC", label: "AC" },
                 { value: "AL", label: "AL" },
@@ -351,20 +396,29 @@ const Servicos = () => {
                   state: { value: data.value, disabled: false },
                 });
               }}
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha o Estado!",
+                  },
+                ];
+              }}   
               isDisabled={inputValue.state.disabled}
             />
             <Input
-              name="complement"
-              label="Complemento"
-              divstyle={{ width: "100%" }}
-              type="text"
-            />
-            <Input
-              type="text"
-              name="origin"
+              type="select"
               label="Como conheceu a M24?"
+              name="origin"
               divstyle={{ width: "100%" }}
-            />
+              options={[
+                { value: "Facebook / Instagram", label: "Facebook / Instagram" },
+                { value: "Amigo / Parente", label: "Amigo / Parente" },
+                { value: "Planfleto", label: "Planfleto" },
+                { value: "Oficina parceira", label: "Oficina parceira" },
+              ]}
+              placeholder=""
+            />            
             <div>
               <p className="page-description">
                 Obs: Os campos * são obrigatórios.

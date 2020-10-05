@@ -1,34 +1,34 @@
-import { useState, useEffect } from "react";
-
+import React, { useState, useEffect } from "react";
+React.useLayoutEffect = React.useEffect 
 import { WrapperStyle } from "../styles/components/Input";
 
 import ReactSelect from "react-select";
 import InputMaskWrapper from "react-input-mask";
 
 const Input = (props) => {
-  const { type, label, divstyle, ...restOfProps } = props;
+  const { type, ...restOfProps } = props;
 
   if (type === "select")
     return (
-      <Wrapper style={divstyle} label={label}>
+      <Wrapper {...restOfProps}>
         <Select {...props} />
       </Wrapper>
     );
   else if (type === "text")
     return (
-      <Wrapper style={divstyle} label={label}>
+      <Wrapper {...restOfProps}>
         <HtmlInput type="text" {...props} />
       </Wrapper>
     );
   else if (type === "passoword")
     return (
-      <Wrapper style={divstyle} label={label}>
+      <Wrapper {...restOfProps}>
         <HtmlInput type="password" {...props} />
       </Wrapper>
     );
   else if (type === "mask")
     return (
-      <Wrapper style={divstyle} label={label}>
+      <Wrapper {...restOfProps}>
         <InputMask {...props} />
       </Wrapper>
     );
@@ -40,7 +40,7 @@ export default Input;
 
 const Wrapper = (props) => {
   return (
-    <WrapperStyle style={props.style}>
+    <WrapperStyle style={props.divstyle} light={props.light ? 1 : 0}>
       <label>{props.label}</label>
       {props.children}
     </WrapperStyle>
@@ -70,12 +70,19 @@ const Select = (props) => {
 const HtmlInput = (props) => {
   const { validate, onBlur, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
+  const [propsError, setPropsError] = useState("");
+
+  useEffect(() => {
+    if ((props.error || "") !== "") {
+      setPropsError(props.error);
+    }
+  }, [props]);
 
   return (
     <>
       <input
         {...restOfProps}
-        error={isError !== "" && isError}
+        error={( propsError !== "" && propsError ) || (isError !== "" && isError )}
         onBlur={(e) => {
           if (onBlur) return onBlur(e);
           else if (validate) {
@@ -84,7 +91,7 @@ const HtmlInput = (props) => {
           }
         }}
       />
-      {isError !== "" && <span>{isError}</span>}
+      <span>{ propsError || isError }</span>
     </>
   );
 };
@@ -92,10 +99,11 @@ const HtmlInput = (props) => {
 const InputMask = (props) => {
   const { validate, onBlur, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
+  const [propsError, setPropsError] = useState("");
 
   useEffect(() => {
-    if ((props.error || "").length !== "") {
-      setIsError(props.error);
+    if ((props.error || "") !== "") {
+      setPropsError(props.error);
     }
   }, [props]);
 
@@ -103,16 +111,14 @@ const InputMask = (props) => {
     <>
       <InputMaskWrapper
         {...restOfProps}
-        error={isError !== "" && isError}
+        error={( propsError !== "" && propsError ) || (isError !== "" && isError )}
         onBlur={(e) => {
-          if (onBlur) return onBlur(e);
-          else if (validate) {
-            setIsError(validateInput(validate, e));
-            return;
-          }
+          if (onBlur) onBlur(e);          
+          setIsError(validateInput(validate, e)); 
+          return;
         }}
       />
-      {isError !== "" && <span>{isError}</span>}
+      <span>{ propsError || isError }</span>
     </>
   );
 };
@@ -131,8 +137,6 @@ const validateInput = (f, e) => {
 
       // Se o retorno for true, é um erro
       if (item.expression === true) {
-        // Força para não sair do campo
-        e.target.focus();
         // Retorna a mensagem de erro
         return item.message;
       }

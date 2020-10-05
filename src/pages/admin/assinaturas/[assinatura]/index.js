@@ -35,7 +35,7 @@ const Assinaturas = (props) => {
       <Head>
         <title>Assinaturas - Painel Administrativo - M24</title>
       </Head>
-      <Layout loading={isLoading}>
+      <Layout loading={isLoading ? 1 : 0}>
         <div>
           <h1 className="page-title-secondary">Assinaturas</h1>
           <form className="margin-3x">

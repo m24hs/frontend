@@ -7,6 +7,7 @@ import Head from "next/head";
 import api from "../../../../services/api.js";
 import { getFormData } from "../../../../services/helpers.js";
 import Layout from "../../../../components/admin/Layout";
+import NoSsr from "../../../../components/NoSsr";
 import Editor from "../../../../components/admin/Editor";
 
 const Servicos = (props) => {
@@ -21,6 +22,8 @@ const Servicos = (props) => {
   // Carregar
   useEffect(() => {
     const getData = async () => {
+      if ( servico === "novo" ) 
+        return;
       setIsLoading(true);
       const servicos = await api.get(`/services/${servico}`);
       setFormData(servicos.data);
@@ -39,11 +42,11 @@ const Servicos = (props) => {
   }
 
   return (
-    <>
+    <NoSsr>
       <Head>
         <title>Serviços - Painel Administrativo - M24</title>
       </Head>
-      <Layout loading={isLoading}>
+      <Layout loading={isLoading ? 1 : 0}>
         <div>
           <h1 className="page-title-secondary">Serviços</h1>
           <form className="form-service margin-3x">
@@ -80,7 +83,7 @@ const Servicos = (props) => {
           </form>
         </div>
       </Layout>
-    </>
+    </NoSsr>
   );
 };
 export default Servicos;

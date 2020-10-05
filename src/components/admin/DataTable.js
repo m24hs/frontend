@@ -52,12 +52,12 @@ const DataTable = (props) => {
           />
         )}
         {add && (
-          <Link href={`${baseUrl}/novo`}>
+          <a href={`${baseUrl}/novo`}>
             <button className="btn-primary" type="button">
               <PlusIcon />
               Novo
             </button>
-          </Link>
+          </a>
         )}
       </Form>
       <DataTableWrapper

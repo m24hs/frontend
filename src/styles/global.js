@@ -140,22 +140,6 @@ export default createGlobalStyle`
   .btn-primary:hover:enabled {
     background: var(--color-primary-hover);
   }
-
-  .form-light label {
-        font-weight: bold;
-        color: var(--color-primary);
-    }
-
-    .form-light input {
-        margin: 2px 0 8px 0;
-        padding: 12px 12px;
-        outline: none;
-        font-family: 'Mulish', sans-serif;
-        font-size: 16px;
-        color: var(--color-primary);
-        border: 1px solid var(--color-primary-hover-light);
-        border-radius: 10px;
-    }    
 `;
 
 export const Divider = styled.hr`

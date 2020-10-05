@@ -6,6 +6,7 @@ import api from "../../../../../services/api";
 import { getFormData } from "../../../../../services/helpers";
 
 import Layout from "../../../../../components/site/Layout";
+import Input from "../../../../../components/Input";
 
 import {
   Container,
@@ -22,29 +23,56 @@ const Servicos = (props) => {
   const router = useRouter();
   const { servico, user } = router.query;
   const [paymentType, setPaymentType] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState("");
 
   const handleContinue = async (type) => {
-    if (type === "cartao") {
-      // Pega os dados do form
-      const formData = getFormData(".credit-card");
+    setIsLoading(true);
 
-      const response = await api.post(`/subscriptions/${user}/credit-card`, formData);
-      console.log(response.data);
-      if (response.data.status == "success") {
-        router.push(`/servicos/${servico}/cadastro/${user}/finalizacao/aprovado`);
+    try {
+      let response = {};
+      if (type === "cartao") {
+        // Pega os dados do form
+        const formData = getFormData(".credit-card");
+  
+        // Tratamento dados
+        formData["number"] = formData.number.replaceAll(" ","");
+        formData["first_name"] = formData.name.trim().split(' ').slice(0, -1).join(' ');
+        formData["last_name"] = formData.name.trim().split(' ').slice(-1).join(' ');
+        formData["month"] = formData.date.substr(0,2);
+        formData["year"] = `20${formData.date.substr(3,2)}`;      
+        delete formData["name"];
+        delete formData["date"];
+  
+        response = await api.post(
+          `/subscriptions/${user}/credit-card`,
+          formData
+        );      
+        if (response.data.status == "success") {
+          setIsLoading(false);
+          router.push(
+            `/servicos/${servico}/cadastro/${user}/finalizacao/aprovado`
+          );
+          return;
+        }
+      } else {
+        response = await api.post(`/subscriptions/${user}/boleto`);      
+        if (response.data.status === "success") {
+          setIsLoading(false);
+          router.push({
+            pathname: `/servicos/${servico}/cadastro/${user}/finalizacao/analise`,
+            query: {
+              boleto: response.data.data.recent_invoices[0].secure_url,
+            },
+          });
+          return;
+        } 
       }
-    } else {
-      const response = await api.post(`/subscriptions/${user}/boleto`);
-      console.log(response.data);
-      if (response.data.status === "success") {
-        router.push({
-          pathname: `/servicos/${servico}/cadastro/${user}/finalizacao/analise`,
-          query: {
-            boleto: response.data.data.recent_invoices[0].secure_url
-          },
-        });
-      }
-    }
+      throw new Error(JSON.stringify(response.data.data));
+    } catch (error) {
+      setIsLoading(false);
+      setIsError(error.message);      
+    }    
   };
 
   return (
@@ -52,7 +80,7 @@ const Servicos = (props) => {
       <Head>
         <title>Pagamento - M24</title>
       </Head>
-      <Layout hideFB backgroundColor="var(--color-text)">
+      <Layout hideFB loading={isLoading ? 1 : 0} error={isError} backgroundColor="var(--color-text)">
         <Container>
           <h1 className="page-title-secondary">Assinatura</h1>
           <Wrapper>
@@ -78,23 +106,77 @@ const Servicos = (props) => {
                       Por favor, informe os dados do cartão e clique em
                       confirmar assiantura
                     </p>
-                    <form className="credit-card form-light">
-                      <div>
-                        <label>Número do Cartão</label>
-                        <input type="text" />
-                      </div>
-                      <div>
-                        <label>CVV</label>
-                        <input type="text" />
-                      </div>
-                      <div>
-                        <label>Titular do Cartão</label>
-                        <input type="text" />
-                      </div>
-                      <div>
-                        <label>Data de Vencimento</label>
-                        <input type="text" />
-                      </div>
+                    <form className="credit-card">
+                      <Input
+                        light={true}
+                        type="mask"
+                        label="Número do Cartão"
+                        name="number"
+                        mask="9999 9999 9999 9999"
+                        maskPlaceholder=" "
+                        validate={(e) => {
+                          const number = e.value.replace(" ", "").trim();
+                          return [
+                            {
+                              expression: number === "",
+                              message: "Preencha o número do cartão!",
+                            },
+                            {
+                              expression: number.length < 16,
+                              message: "Número inválido!",
+                            },
+                          ];
+                        }}
+                      />
+                      <Input
+                        light={true}
+                        type="mask"
+                        label="CVV"
+                        name="verification_value"
+                        mask="999999"
+                        maskPlaceholder=" "
+                        validate={(e) => {
+                          const cvv = e.value.trim();
+                          return [
+                            {
+                              expression: cvv === "",
+                              message: "Preencha o CVV",
+                            },
+                          ];
+                        }}
+                      />
+                      <Input
+                        light={true}
+                        type="mask"
+                        label="Titular do Cartão"
+                        name="name"
+                        mask={"a".repeat(50)}
+                        maskPlaceholder=" "
+                        validate={(e) => {
+                          return [
+                            {
+                              expression: e.value.trim() === "",
+                              message: "Preencha o titular do cartão",
+                            },
+                          ];
+                        }}
+                      />
+                      <Input
+                        light={true}
+                        type="mask"
+                        label="Data de Vencimento"
+                        name="date"
+                        mask="99/99"
+                        maskPlaceholder=" "
+                        validate={(e) => {
+                          return [
+                            {
+                              expression: e.value.trim() === "",
+                              message: "Preencha a data de vencimento",
+                            },
+                          ];
+                        }}
+                      />
                       <div>
                         <div>
                           <img
