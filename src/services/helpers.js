@@ -19,7 +19,7 @@ export const capitalize = (str) => {
 };
 
 export const fetchData = async (result) =>
-  await result.then((res) => (res.data)).catch(() => ({}));
+  await result.then((res) => res.data).catch(() => ({}));
 
 export const getFormData = (formName) => {
   const form = document.querySelectorAll(
@@ -39,4 +39,25 @@ export const getFormData = (formName) => {
     }
   });
   return object;
+};
+
+export const countError = (formName) => {
+  let promise = new Promise((resolve, reject) => {
+    // Seleciona components
+    const formComponents = document.querySelectorAll(
+      formName + " .form-component"
+    );
+    // For each
+    [].forEach.call(formComponents, function (item, index) {
+      item.focus();
+      if (index === formComponents.length - 1) resolve();
+    });
+  });
+
+  // Retorna
+  return promise.then(() => {
+    // Verifica errors
+    const formErrors = document.querySelectorAll(formName + " .form-error ");
+    return formErrors.length;    
+  });
 };

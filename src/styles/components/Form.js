@@ -39,6 +39,7 @@ export const WrapperStyle = styled.div`
         & span {
           color: var(--color-tertiary);
           text-align: right;
+          padding: 0 0 4px 0;
         }
 
         & input:focus,
@@ -72,6 +73,7 @@ export const WrapperStyle = styled.div`
         & span {
           color: var(--color-tertiary);
           text-align: right;
+          padding: 0 0 4px 0;
         }
 
         & input:focus,

@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 // Imports de estilo
 import Layout from "../../../components/site/Layout";
 import { PageTitle, PageDescription, Button } from "../../../styles/global";
-import { Container } from "../../../styles/pages/servicos";
 
 // Imports auxiliares
 import api from "../../../services/api";
@@ -38,7 +37,7 @@ const Servico = (props) => {
         <title>{servico} - M24</title>
       </Head>
       <Layout>
-        <Container>
+        <div>
           {servicos.title && (
             <>
               <PageTitle>{servicos.title}</PageTitle>
@@ -54,7 +53,7 @@ const Servico = (props) => {
               )}
             </>
           )}
-        </Container>
+        </div>
       </Layout>
     </>
   );

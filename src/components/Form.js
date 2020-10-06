@@ -85,7 +85,7 @@ const Select = (props) => {
   };
   return (
     <>
-      <ReactSelect {...props} styles={customStyles} />
+      <ReactSelect {...props} styles={customStyles} className="form-component" />
       <input
         type="hidden"
         value={props.value && props.value.value}
@@ -119,8 +119,11 @@ const HtmlInput = (props) => {
             return;
           }
         }}
+        className="form-component"
       />
-      <span>{propsError || isError}</span>
+      { (propsError || isError) &&
+        <span className="form-error">{propsError || isError}</span>
+      }
     </>
   );
 };
@@ -147,8 +150,11 @@ const InputMask = (props) => {
           setIsError(validateInput(validate, e));
           return;
         }}
+        className="form-component"
       />
-      <span>{propsError || isError}</span>
+      { (propsError || isError) &&
+        <span className="form-error">{propsError || isError}</span>
+      }
     </>
   );
 };
@@ -187,8 +193,10 @@ export const Button = (props) => {
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
-    const response = validate();
-    setDisabled(!response);
+    if (validate) {
+      const response = validate();
+      setDisabled(!response);
+    }
   }, [props]);
 
   return (

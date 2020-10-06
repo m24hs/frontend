@@ -11,7 +11,7 @@ import Img from "../../../../assets/cadastro.png";
 
 // Imports auxiliares
 import Form, { Input, Button } from "../../../../components/Form";
-import { getFormData } from "../../../../services/helpers";
+import { countError, getFormData } from "../../../../services/helpers";
 import api from "../../../../services/api";
 import cepPromise from "cep-promise";
 
@@ -77,7 +77,7 @@ const Servicos = () => {
         neighborhood: emptyState,
         state: emptyState,
       });
-      setErrorCep("CEP não encontrado, por favor, cadastre manualmente.")
+      setErrorCep("CEP não encontrado, por favor, cadastre manualmente.");
     }
     setIsLoading(false);
     return;
@@ -88,6 +88,12 @@ const Servicos = () => {
     e.preventDefault();
     setIsError("");
 
+    // Se houver error no form
+    const numberErrors = await countError(".form-contact");
+    if (numberErrors > 0) {
+      return;
+    }
+
     // Pega os dados do form
     const formData = getFormData(".form-contact");
 
@@ -95,11 +101,10 @@ const Servicos = () => {
     formData["name"] = formData.name;
     formData["phone_prefix"] = formData.phone.substr(1, 2);
     formData["phone"] = formData.phone.substr(5, 9);
-    console.log(formData);
+
     // Consome a API
     setIsLoading(true);
     const response = await api.post("/users", formData);
-    console.log(response);
 
     // Avança para a proxima página
     setIsLoading(false);
@@ -168,7 +173,7 @@ const Servicos = () => {
             imprevistos. Entretanto, caso haja qualquer problema, você estará
             amparado 24h por dia, sem dor de cabeça e sem estresse!
           </PageDescription>
-          <Form>
+          <Form className="form-contact">
             <Input
               type="mask"
               label="Nome completo *"
@@ -261,11 +266,13 @@ const Servicos = () => {
               validate={(e) => {
                 return [
                   {
-                    expression: e.value.replaceAll("-","").replaceAll(" ","").trim() === "",
+                    expression:
+                      e.value.replaceAll("-", "").replaceAll(" ", "").trim() ===
+                      "",
                     message: "Preencha o CEP!",
                   },
                 ];
-              }}              
+              }}
             />
             <Input
               type="text"
@@ -273,7 +280,7 @@ const Servicos = () => {
               label="Endereço *"
               divstyle={{ width: "60%" }}
               value={inputValue.street.value}
-              onChange={(e) => 
+              onChange={(e) =>
                 setInputValue({
                   ...inputValue,
                   street: { value: e.target.value, disabled: false },
@@ -287,7 +294,7 @@ const Servicos = () => {
                     message: "Preencha o Endereço!",
                   },
                 ];
-              }}                 
+              }}
             />
             <Input
               type="text"
@@ -301,13 +308,9 @@ const Servicos = () => {
                     message: "Preencha o Número!",
                   },
                 ];
-              }}   
+              }}
             />
-            <Input
-              name="complement"
-              label="Complemento"
-              type="text"
-            />            
+            <Input name="complement" label="Complemento" type="text" />
             <Input
               type="text"
               label="Bairro *"
@@ -326,7 +329,7 @@ const Servicos = () => {
                     message: "Preencha o Bairro!",
                   },
                 ];
-              }}   
+              }}
               readOnly={inputValue.neighborhood.disabled}
             />
             <Input
@@ -348,7 +351,7 @@ const Servicos = () => {
                     message: "Preencha a Cidade!",
                   },
                 ];
-              }}   
+              }}
               readOnly={inputValue.city.disabled}
             />
             <Input
@@ -402,7 +405,7 @@ const Servicos = () => {
                     message: "Preencha o Estado!",
                   },
                 ];
-              }}   
+              }}
               isDisabled={inputValue.state.disabled}
             />
             <Input
@@ -410,29 +413,27 @@ const Servicos = () => {
               label="Como conheceu a M24?"
               name="origin"
               options={[
-                { value: "Facebook / Instagram", label: "Facebook / Instagram" },
+                {
+                  value: "Facebook / Instagram",
+                  label: "Facebook / Instagram",
+                },
                 { value: "Amigo / Parente", label: "Amigo / Parente" },
                 { value: "Planfleto", label: "Planfleto" },
                 { value: "Oficina parceira", label: "Oficina parceira" },
               ]}
               placeholder=""
-            />            
+            />
             <div>
               <PageDescription>
                 Obs: Os campos * são obrigatórios.
               </PageDescription>
             </div>
-            <Button 
+            <Button
               secondary
-              className="btn-default margin-3x"
               type="button"
               onClick={(e) => {
                 handleSubmit(e);
               }}
-              validate={(e) => {
-                const formData = getFormData(".form-contact");
-                return true;
-              }}   
             >
               Continuar
             </Button>

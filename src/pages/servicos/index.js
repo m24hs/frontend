@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 // Imports de estilo
 import Layout from "../../components/site/Layout";
 import { Divider, PageTitle, Button } from "../../styles/global";
-import { Container, ViewHtml } from "../../styles/pages/servicos/index.js";
+import { Container, ViewHtml, ListService, ListItem, ListImage } from "../../styles/pages/servicos/index.js";
 import ImgMotor from "../../assets/servicos/motor.jpg";
 import ImgRoda from "../../assets/servicos/roda.jpg";
 import ImgDirecao from "../../assets/servicos/direcao.jpg";
@@ -26,7 +26,7 @@ const Servicos = (props) => {
       <Layout>
         <Container>
           <PageTitle>Serviços</PageTitle>
-          <ul className="margin-3x">
+          <ListService>
             {props.servicos.map((item, index) => (
               <>
                 {index !== 0 && (
@@ -35,11 +35,11 @@ const Servicos = (props) => {
                   </li>
                 )}
                 <li>
-                  <div className={`services margin-2x ${(index % 2) !== 0 ? "right" : ""}`}>
+                  <ListItem right={ (index % 2) !== 0 }>
                     <PageTitle small>{item.title}</PageTitle>
-                    <div className="service-img">
+                    <ListImage>
                       <img src={ImgRoda} />
-                    </div>
+                    </ListImage>
                     <ViewHtml
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
@@ -48,11 +48,11 @@ const Servicos = (props) => {
                         Saiba mais
                       </Button>
                     </Link>
-                  </div>
+                  </ListItem>
                 </li>
               </>
             ))}
-          </ul>
+          </ListService>
         </Container>
       </Layout>
     </>
