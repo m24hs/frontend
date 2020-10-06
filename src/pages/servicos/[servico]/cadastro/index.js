@@ -167,11 +167,10 @@ const Servicos = () => {
         <Container>
           <PageTitle>Cadastro</PageTitle>
           <PageDescription>
-            Chegamos no mercado com uma proposta inovadora para cuidar da sua
-            moto sem burocracia e com muitas vantagens. Trabalhamos com a gestão
-            preventiva, evitando que você gaste tempo, dinheiro e energia com
-            imprevistos. Entretanto, caso haja qualquer problema, você estará
-            amparado 24h por dia, sem dor de cabeça e sem estresse!
+            Nossa proposta é exclusiva e inovadora, somos pioneiros neste novo
+            nicho e estamos ansiosos para ter você no nosso time. Preencha seus
+            dados corretamente e leia tudo com atenção, você será
+            automaticamente direcionado para o nosso contrato de adesão.
           </PageDescription>
           <Form className="form-contact">
             <Input

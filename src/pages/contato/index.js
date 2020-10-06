@@ -19,16 +19,24 @@ const Contato = () => {
         <Container>
           <PageTitle>Contato</PageTitle>
           <PageDescription>
-          Chegamos no mercado com uma proposta inovadora para cuidar da sua moto sem burocracia e com muitas vantagens.
-
-Trabalhamos com a gestão preventiva, evitando que você gaste tempo, dinheiro e energia com imprevistos. Entretanto, caso haja qualquer problema, você estará amparado 24h por dia, sem dor de cabeça e sem estresse!
+            Tem alguma dúvida, sugestão ou gostaria de saber mais sobre a nossa
+            proposta? Preencha seus dados corretamente e espere nosso contato em
+            breve!
           </PageDescription>
-          <Form className="form-contact">            
-            <Input type="text" label="Nome completo"/>            
-            <Input type="text" label="Email"/>            
-            <Input type="text" label="Telefone / Celular"/>            
-            <Input type="textarea" label="Mensagem" rows="4"/>
-            <Button secondary type="button" onClick={(e) => {handleSubmit(e)}}>Continuar</Button>
+          <Form className="form-contact">
+            <Input type="text" label="Nome completo" />
+            <Input type="text" label="Email" />
+            <Input type="text" label="Telefone / Celular" />
+            <Input type="textarea" label="Mensagem" rows="4" />
+            <Button
+              secondary
+              type="button"
+              onClick={(e) => {
+                handleSubmit(e);
+              }}
+            >
+              Continuar
+            </Button>
           </Form>
         </Container>
       </Layout>

@@ -27,7 +27,7 @@ const Servicos = (props) => {
         <Container>
           <PageTitle>Serviços</PageTitle>
           <ListService>
-            {props.servicos.map((item, index) => (
+            { Object.keys(props.servicos).length > 0 && props.servicos.map((item, index) => (
               <>
                 {index !== 0 && (
                   <li>
