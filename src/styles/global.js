@@ -44,18 +44,6 @@ export default createGlobalStyle`
         cursor: pointer;
     }
 
-    .page-title {
-        color: var(--color-text);
-        border-left: 8px solid var(--color-tertiary);
-        padding: 0 0 0 16px;
-    }
-
-    .page-title-secondary {
-        color: var(--color-primary);
-        border-left: 8px solid var(--color-tertiary);
-        padding: 0 0 0 16px;
-    }
-
     .margin-1x {
         margin: 8px 0;
     }
@@ -66,92 +54,21 @@ export default createGlobalStyle`
 
     .margin-3x {
         margin: 32px 0;
-    }
-
-    .page-description {
-        color: var(--color-text);
-        text-align: justify;
-    }
-
-    .page-description-secondary {
-        color: var(--color-primary);
-        text-align: justify;
-    }    
-
-    .form-contact {
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .form-contact > div {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .form-contact > div.margin-right {
-        padding-right: 16px;
-    }    
-
-    .form-contact label { 
-        color: var(--color-text);
-    }    
-
-.btn-default {
-    grid-area: button;
-    width: 100%;
-    height: 42px;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--color-text);
-    background: var(--color-tertiary);
-    border-radius: 10px;
-    transition: all 0.5s;
-  }
-
-  .btn-default:disabled {
-    cursor: not-allowed;
-    background: var(--color-tertiary-disabled);
-  }
-
-  .btn-default:hover:enabled {
-    background: var(--color-tertiary-hover);
-  }
-
-  .btn-primary svg {
-      width: 18px;
-  }
-
-  .btn-primary {
-    width: 100%;
-    height: 42px;
-    font-size: 18px;
-    font-weight: 800;
-    color: var(--color-text);
-    background: var(--color-primary);
-    border-radius: .25rem;
-    transition: all 0.5s;
-  }
-
-  .btn-primary:disabled {
-    cursor: not-allowed;
-    background: var(--color-primary-disabled);
-  }
-
-  .btn-primary:hover:enabled {
-    background: var(--color-primary-hover);
-  }
+    } 
 `;
 
 export const Divider = styled.hr`
   width: 50%;
   border: 0;
   height: 1px;
-  ${({ dark }) => dark ?  `
+  ${({ dark }) =>
+    dark
+      ? `
     background: var(--color-primary-hover-light);
-  ` : `
-    background: var(--color-secondary);
   `
-  }
+      : `
+    background: var(--color-secondary);
+  `}
   margin: 64px auto;
 `;
 
@@ -194,7 +111,7 @@ export const ErrorStyle = styled.div`
   z-index: 100;
 
   & > div {
-    display: flex;    
+    display: flex;
     align-items: center;
     width: calc(100% - 64px);
     background: var(--color-tertiary);
@@ -203,19 +120,19 @@ export const ErrorStyle = styled.div`
     text-align: center;
     box-shadow: 2px 2px 10px 2px rgba(0, 0, 0, 0.2);
   }
-  & > div > p { 
+  & > div > p {
     flex: 1;
   }
 
   & > div > button {
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   & > div > button:hover {
     background: var(--color-tertiary-hover);
   }
 
-  & > div > button > svg { 
+  & > div > button > svg {
     width: 32px;
     color: var(--color-text);
   }
@@ -223,7 +140,86 @@ export const ErrorStyle = styled.div`
   @media (min-width: 780px) {
     & > div {
       max-width: 600px;
-
     }
   }
+`;
+
+export const PageTitle = styled.h1`
+  border-left: 8px solid var(--color-tertiary);
+  padding: 0 0 0 16px;
+
+  ${({ small = false }) => small && `font-size: 26px;`}
+
+  ${({ secondary = false }) =>
+    !secondary
+      ? `
+        color: var(--color-text);
+    `
+      : `
+        color: var(--color-primary);
+    `}
+`;
+
+export const PageDescription = styled.p`
+  margin: 32px 0;
+  text-align: justify;
+
+  ${({ secondary = false }) =>
+    !secondary
+      ? `
+        color: var(--color-text);
+    `
+      : `
+      color: var(--color-primary);
+    `}
+`;
+
+export const Button = styled.button`
+  width: 100%;
+  height: 42px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-text);
+  background: var(--color-primary);
+  border-radius: 0.25rem;
+  transition: all 0.3s;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:hover:enabled {
+    background: var(--color-primary-hover);
+  }
+
+  & svg {
+    width: 18px;
+  }
+
+  ${({ secondary = false }) =>
+    !secondary
+      ? `
+        color: var(--color-text);
+        background: var(--color-primary);
+
+        &:disabled {
+          background: var(--color-primary-disabled);
+        }
+
+        &:hover:enabled {
+          background: var(--color-primary-hover);
+        }      
+    `
+      : `
+        color: var(--color-text);
+        background: var(--color-tertiary);
+
+        &:disabled {
+          background: var(--color-tertiary-disabled);
+        }
+
+        &:hover:enabled {
+          background: var(--color-tertiary-hover);
+        }      
+    `}
 `;

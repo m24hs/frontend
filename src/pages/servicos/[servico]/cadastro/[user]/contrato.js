@@ -1,28 +1,34 @@
+// Imports padrão
 import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+// Imports de estilo
 import Layout from "../../../../../components/site/Layout";
+import { PageTitle, PageDescription, Button } from "../../../../../styles/global";
 import {
   Container,
   Wrapper,
 } from "../../../../../styles/pages/servicos/cadastro/user/contrato";
-
 import {
   Square as SquareIcon,
   CheckSquareFill as CheckSquareFillIcon,
 } from "@styled-icons/bootstrap/";
 
 const Servicos = () => {
+  // Rotas
   const router = useRouter();
   const { servico, user } = router.query;
 
+  // State
   const [checked, setChecked] = useState(false);
 
+  // Marca check
   const handleCheck = () => {
     setChecked(!checked);
   };
 
+  // Próxima pagina
   const handleContinue = () => {
     router.push(`/servicos/${servico}/cadastro/${user}/pagamento`);
   };
@@ -34,8 +40,11 @@ const Servicos = () => {
       </Head>
       <Layout hideFB backgroundColor="var(--color-text)">
         <Container>
-          <h1 className="page-title-secondary">Contrato</h1>
-          <p className="page-description-secondary margin-3x">Leia atentamente o contrato, caso tenha alguma dúvida entre em contato com a gente.</p>
+          <PageTitle secondary>Contrato</PageTitle>
+          <PageDescription secondary>
+            Leia atentamente o contrato, caso tenha alguma dúvida entre em
+            contato com a gente.
+          </PageDescription>
           <Wrapper className="margin-2x">
             <object
               data="/paper.pdf"
@@ -56,7 +65,12 @@ const Servicos = () => {
                 Eu li e concordo com os termos, quero continuar
               </label>
             </div>
-            <button className="btn-default" disabled={!checked} onClick={() => handleContinue()}>Continuar</button>
+            <Button secondary
+              disabled={!checked}
+              onClick={() => handleContinue()}
+            >
+              Continuar
+            </Button>
           </Wrapper>
         </Container>
       </Layout>

@@ -1,7 +1,10 @@
+// Imports padrão
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
+// Imports de estilo
 import { Container } from "../../styles/pages/sobre";
+import { PageTitle, PageDescription } from "../../styles/global";
 
 const Sobre = () => {
   return (
@@ -11,8 +14,8 @@ const Sobre = () => {
       </Head>
       <Layout>
         <Container>
-          <h1 className="page-title">Sobre</h1>
-          <p className="page-description margin-2x">
+          <PageTitle>Sobre</PageTitle>
+          <PageDescription>
             M24 é uma empresa de assessoria para motocicletas, criada para dar
             ao cliente mais segurança e comodidade ao sair de sua casa, a
             assessoria tem como objetivo principal fazer a gestão da sua
@@ -73,7 +76,7 @@ const Sobre = () => {
             M24hs faz toda a diferença no seu dia a dia. Venha fazer parte desta
             inovação e ficar tranquilo com todos os nossos os serviços, venha
             ser M24hs! #agentecuidaparavoce            
-          </p>
+          </PageDescription>
         </Container>
       </Layout>
     </>

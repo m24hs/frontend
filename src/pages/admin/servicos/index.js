@@ -3,10 +3,13 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
 
+// Imports de estilo
+import Layout from "../../../components/admin/Layout";
+import { PageTitle } from "../../../styles/global";
+
 // Import auxiliares
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
-import Layout from "../../../components/admin/Layout";
 import DataTable from "../../../components/admin/DataTable";
 
 const Servicos = ({ servicos }) => {
@@ -20,7 +23,7 @@ const Servicos = ({ servicos }) => {
       </Head>
       <Layout>
         <div>
-          <h1 className="page-title-secondary">Serviços</h1>
+          <PageTitle secondary>Serviços</PageTitle>
           <DataTable
             className="margin-3x"
             columns={[

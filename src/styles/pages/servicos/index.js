@@ -19,7 +19,6 @@ export const Container = styled.div`
 
   & .services > .service-img {
     grid-area: img;
-    box-shadow: 4px 4px 0px 0px rgba(198, 9, 28, 1);
   }
 
   & .services > .service-img > img {
@@ -27,36 +26,6 @@ export const Container = styled.div`
     height: 100%;
     object-fit: cover;
     display: block;
-  }
-
-  & .services > .service-description {
-    grid-area: text;
-  }
-
-  & .services > .service-description > ul {
-    margin-top: -14px;
-    padding: 16px 1em;
-  }
-
-  & .services > .service-description > ul > li:before {
-    content: "";
-    border-color: transparent var(--color-tertiary);
-    border-style: solid;
-    border-width: 0.35em 0 0.35em 0.45em;
-    display: block;
-    height: 0;
-    width: 0;
-    left: -1em;
-    top: 0.9em;
-    position: relative;
-  }
-
-  & .services > .service-description > ul > li > strong {
-    font-weight: bold;
-  }
-
-  & .services > .service-description > ul > li > p {
-    text-align: left;
   }
 
   & .services > .service-button {
@@ -77,3 +46,33 @@ export const Container = styled.div`
   }
 `;
 
+export const ViewHtml = styled.div`
+  grid-area: text;
+  color: var(--color-text);
+
+  & > ul {
+    margin-top: -14px;
+    padding: 16px 1em;
+  }
+
+  & > ul > li > strong:before {
+    content: "";
+    border-color: transparent var(--color-tertiary);
+    border-style: solid;
+    border-width: 0.35em 0 0.35em 0.45em;
+    display: block;
+    height: 0;
+    width: 0;
+    left: -1em;
+    top: 0.9em;
+    position: relative;
+  }
+
+  & > ul > li > strong {
+    font-weight: bold;
+  }
+
+  & > ul > li > p {
+    text-align: left;
+  }
+`;

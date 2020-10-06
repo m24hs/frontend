@@ -1,9 +1,12 @@
+// Imports auxiliares
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import DataTableWrapper from "react-data-table-component";
 
+// Imports de estilo
+import DataTableWrapper from "react-data-table-component";
 import { Custom, Form } from "../../styles/components/admin/DataTable";
+import { Button } from "../../styles/global";
 import { Plus as PlusIcon } from "@styled-icons/boxicons-regular";
 
 const DataTable = (props) => {
@@ -42,7 +45,7 @@ const DataTable = (props) => {
 
   return (
     <div className={className}>
-      <Form onSubmit={(e) => e.preventDefault()}>
+      <Form onSubmit={(e) => e.preventDefault()}>        
         {search && (
           <input
             type="text"
@@ -53,10 +56,10 @@ const DataTable = (props) => {
         )}
         {add && (
           <a href={`${baseUrl}/novo`}>
-            <button className="btn-primary" type="button">
+            <Button type="button">
               <PlusIcon />
               Novo
-            </button>
+            </Button>
           </a>
         )}
       </Form>

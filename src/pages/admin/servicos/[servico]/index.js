@@ -3,12 +3,16 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
+// Imports de estilo
+import Layout from "../../../../components/admin/Layout";
+import { PageTitle, Button } from "../../../../styles/global";
+import NoSsr from "../../../../components/NoSsr";
+import Editor from "../../../../components/admin/Editor";
+
 // Imports auxiliares
 import api from "../../../../services/api.js";
 import { getFormData } from "../../../../services/helpers.js";
-import Layout from "../../../../components/admin/Layout";
-import NoSsr from "../../../../components/NoSsr";
-import Editor from "../../../../components/admin/Editor";
+
 
 const Servicos = (props) => {
   // Rotas
@@ -46,9 +50,9 @@ const Servicos = (props) => {
       <Head>
         <title>Serviços - Painel Administrativo - M24</title>
       </Head>
-      <Layout loading={isLoading ? 1 : 0}>
+      <Layout loading={isLoading || false }>
         <div>
-          <h1 className="page-title-secondary">Serviços</h1>
+          <PageTitle secondary>Serviços</PageTitle>
           <form className="form-service margin-3x">
             <input name="id" type="hidden" defaultValue={formData.id} />
             <div>
@@ -79,7 +83,7 @@ const Servicos = (props) => {
               <label>Valor</label>
               <input  name="price" type="text" defaultValue={formData.price || 0} />
             </div>            
-            <button className="btn-primary" type="button" onClick={() => handleSave()}>Salvar</button>
+            <Button type="button" onClick={() => handleSave()}>Salvar</Button>
           </form>
         </div>
       </Layout>

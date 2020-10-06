@@ -3,11 +3,14 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
 
+// Imports de estilo
+import Layout from "../../../components/admin/Layout";
+import DataTable from "../../../components/admin/DataTable";
+import { PageTitle } from "../../../styles/global";
+
 // Imports auxiliares
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
-import Layout from "../../../components/admin/Layout";
-import DataTable from "../../../components/admin/DataTable";
 
 const Assinaturas = ({ assinaturas }) => {
   const router = useRouter();
@@ -19,7 +22,7 @@ const Assinaturas = ({ assinaturas }) => {
       </Head>
       <Layout>
         <div>
-          <h1 className="page-title-secondary">Assinaturas</h1>
+          <PageTitle secondary>Assinaturas</PageTitle>
           <DataTable
             className="margin-3x"
             columns={[

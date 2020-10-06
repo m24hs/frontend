@@ -1,53 +1,69 @@
+// Imports padrão
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
-import api from "../../../../../services/api";
-import { getFormData } from "../../../../../services/helpers";
-
+// Imports de estilo
 import Layout from "../../../../../components/site/Layout";
-import Input from "../../../../../components/Input";
-
+import { PageTitle, PageDescription, Button } from "../../../../../styles/global";
 import {
   Container,
   Wrapper,
 } from "../../../../../styles/pages/servicos/cadastro/user/pagamento";
-
 import {
   CreditCard as CreditCardIcon,
   BarcodeReader as BarcodeReaderIcon,
   ArrowBack as ArrowBackIcon,
 } from "@styled-icons/boxicons-regular";
 
+// Imports auxiliares
+import api from "../../../../../services/api";
+import { getFormData } from "../../../../../services/helpers";
+import { Input } from "../../../../../components/Form";
+import cardValidator from "card-validator";
+
 const Servicos = (props) => {
+  // Rotas
   const router = useRouter();
   const { servico, user } = router.query;
+  
+  // State
   const [paymentType, setPaymentType] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
+  // Envia formulário
   const handleContinue = async (type) => {
     setIsLoading(true);
 
     try {
+      setIsError("");
       let response = {};
       if (type === "cartao") {
         // Pega os dados do form
         const formData = getFormData(".credit-card");
-  
+
         // Tratamento dados
-        formData["number"] = formData.number.replaceAll(" ","");
-        formData["first_name"] = formData.name.trim().split(' ').slice(0, -1).join(' ');
-        formData["last_name"] = formData.name.trim().split(' ').slice(-1).join(' ');
-        formData["month"] = formData.date.substr(0,2);
-        formData["year"] = `20${formData.date.substr(3,2)}`;      
+        formData["number"] = formData.number.replaceAll(" ", "");
+        formData["first_name"] = formData.name
+          .trim()
+          .split(" ")
+          .slice(0, -1)
+          .join(" ");
+        formData["last_name"] = formData.name
+          .trim()
+          .split(" ")
+          .slice(-1)
+          .join(" ");
+        formData["month"] = formData.date.substr(0, 2);
+        formData["year"] = `20${formData.date.substr(3, 2)}`;
         delete formData["name"];
         delete formData["date"];
-  
+
         response = await api.post(
           `/subscriptions/${user}/credit-card`,
           formData
-        );      
+        );
         if (response.data.status == "success") {
           setIsLoading(false);
           router.push(
@@ -56,7 +72,7 @@ const Servicos = (props) => {
           return;
         }
       } else {
-        response = await api.post(`/subscriptions/${user}/boleto`);      
+        response = await api.post(`/subscriptions/${user}/boleto`);
         if (response.data.status === "success") {
           setIsLoading(false);
           router.push({
@@ -66,13 +82,13 @@ const Servicos = (props) => {
             },
           });
           return;
-        } 
+        }
       }
-      throw new Error(JSON.stringify(response.data.data));
+      throw new Error(response.data.data);
     } catch (error) {
       setIsLoading(false);
-      setIsError(error.message);      
-    }    
+      setIsError(error.message);
+    }
   };
 
   return (
@@ -80,15 +96,20 @@ const Servicos = (props) => {
       <Head>
         <title>Pagamento - M24</title>
       </Head>
-      <Layout hideFB loading={isLoading ? 1 : 0} error={isError} backgroundColor="var(--color-text)">
+      <Layout
+        hideFB
+        loading={isLoading || false}
+        error={isError}
+        backgroundColor="var(--color-text)"
+      >
         <Container>
-          <h1 className="page-title-secondary">Assinatura</h1>
+          <PageTitle secondary>Assinatura</PageTitle>
           <Wrapper>
             {paymentType === "" ? (
               <>
-                <p className="margin-3x">
+                <PageDescription>
                   Por favor, selecione a forma de pagamento para assinatura:
-                </p>
+                </PageDescription>
                 <ul className="payment-type">
                   <li onClick={() => setPaymentType("cartao")}>
                     <CreditCardIcon /> Cartão de crédito
@@ -115,14 +136,15 @@ const Servicos = (props) => {
                         mask="9999 9999 9999 9999"
                         maskPlaceholder=" "
                         validate={(e) => {
-                          const number = e.value.replace(" ", "").trim();
+                          const number = e.value.replaceAll(" ", "").trim();
                           return [
                             {
                               expression: number === "",
                               message: "Preencha o número do cartão!",
                             },
                             {
-                              expression: number.length < 16,
+                              expression: !cardValidator.number(number)
+                                .isPotentiallyValid,
                               message: "Número inválido!",
                             },
                           ];
@@ -133,7 +155,7 @@ const Servicos = (props) => {
                         type="mask"
                         label="CVV"
                         name="verification_value"
-                        mask="999999"
+                        mask="9999"
                         maskPlaceholder=" "
                         validate={(e) => {
                           const cvv = e.value.trim();
@@ -158,6 +180,12 @@ const Servicos = (props) => {
                               expression: e.value.trim() === "",
                               message: "Preencha o titular do cartão",
                             },
+                            {
+                              expression: !cardValidator.cardholderName(
+                                e.value.trim()
+                              ).isPotentiallyValid,
+                              message: "Nome do titular inválido!",
+                            },
                           ];
                         }}
                       />
@@ -173,6 +201,12 @@ const Servicos = (props) => {
                             {
                               expression: e.value.trim() === "",
                               message: "Preencha a data de vencimento",
+                            },
+                            {
+                              expression: !cardValidator.expirationDate(
+                                e.value.trim()
+                              ).isPotentiallyValid,
+                              message: "Data inválida!",
                             },
                           ];
                         }}
@@ -200,28 +234,26 @@ const Servicos = (props) => {
                         </a>
                       </div>
                     </form>
-                    <button
-                      className="btn-default margin-3x"
+                    <Button secondary
                       onClick={() => handleContinue("cartao")}
                     >
                       Confirmar assinatura
-                    </button>
+                    </Button>
                   </>
                 ) : (
                   <>
-                    <p className="margin-3x">
+                    <PageDescription secondary>
                       O pagamento por boleto é uma ótima pedida pra quem não
                       possui cartão de crédito, será enviado para seu email
                       mensalmente a fatura para o pagamento, fique atento a data
                       de vencimento. Ao confirmar será enviado para o seu email
                       o boleto para a confirmação da assinatura.
-                    </p>
-                    <button
-                      className="btn-default margin-3x"
+                    </PageDescription>
+                    <Button secondary
                       onClick={() => handleContinue("boleto")}
                     >
                       Confirmar assinatura por boleto
-                    </button>
+                    </Button>
                   </>
                 )}
                 <button

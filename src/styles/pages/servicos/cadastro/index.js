@@ -5,9 +5,9 @@ export const Container = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: repeat(3, auto);
   grid-template-areas: "title" "description" "form" "img";
- 
+
   & > h1 {
-      grid-area: title;
+    grid-area: title;
   }
 
   & > p {
@@ -18,11 +18,11 @@ export const Container = styled.div`
     grid-area: form;
   }
 
-  & > div {    
+  & > div {
     text-align: right;
     grid-area: img;
   }
-  & > div > img {    
+  & > div > img {
     width: 100%;
   }
 
@@ -32,11 +32,11 @@ export const Container = styled.div`
     grid-template-areas: "title title" "description description" "form img";
     column-gap: 32px;
 
-    & > div {    
-        align-self: center;
-    }    
-    & > div > img {        
+    & > div {
+      align-self: center;
+    }
+    & > div > img {
       width: 80%;
-    }    
+    }
   }
 `;

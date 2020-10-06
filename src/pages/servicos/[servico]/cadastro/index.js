@@ -6,14 +6,16 @@ import { useRouter } from "next/router";
 // Imports de estilo
 import Layout from "../../../../components/site/Layout";
 import { Container } from "../../../../styles/pages/servicos/cadastro";
+import { PageTitle, PageDescription } from "../../../../styles/global";
 import Img from "../../../../assets/cadastro.png";
-import Input from "../../../../components/Input";
 
 // Imports auxiliares
-import api from "../../../../services/api";
+import Form, { Input, Button } from "../../../../components/Form";
 import { getFormData } from "../../../../services/helpers";
+import api from "../../../../services/api";
 import cepPromise from "cep-promise";
 
+// Componente
 const Servicos = () => {
   // Rotas
   const router = useRouter();
@@ -84,11 +86,13 @@ const Servicos = () => {
   // Ao enviar
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsError("");
 
     // Pega os dados do form
     const formData = getFormData(".form-contact");
 
     // Tratamento de dados
+    formData["name"] = formData.name;
     formData["phone_prefix"] = formData.phone.substr(1, 2);
     formData["phone"] = formData.phone.substr(5, 9);
     console.log(formData);
@@ -156,20 +160,19 @@ const Servicos = () => {
       </Head>
       <Layout hideFB loading={isLoading} error={isError}>
         <Container>
-          <h1 className="page-title">Cadastro</h1>
-          <p className="page-description margin-3x">
+          <PageTitle>Cadastro</PageTitle>
+          <PageDescription>
             Chegamos no mercado com uma proposta inovadora para cuidar da sua
             moto sem burocracia e com muitas vantagens. Trabalhamos com a gestão
             preventiva, evitando que você gaste tempo, dinheiro e energia com
             imprevistos. Entretanto, caso haja qualquer problema, você estará
             amparado 24h por dia, sem dor de cabeça e sem estresse!
-          </p>
-          <form className="form-contact">
+          </PageDescription>
+          <Form>
             <Input
               type="mask"
               label="Nome completo *"
               name="name"
-              divstyle={{ width: "100%" }}
               mask={"a".repeat(100)}
               maskPlaceholder=" "
               validate={(e) => {
@@ -189,7 +192,6 @@ const Servicos = () => {
               type="text"
               label="Email *"
               name="email"
-              divstyle={{ width: "100%" }}
               validate={(e) => {
                 return [
                   {
@@ -253,7 +255,6 @@ const Servicos = () => {
               label="CEP *"
               name="zip_code"
               mask="99999-999"
-              divstyle={{ width: "100%" }}
               maskPlaceholder=" "
               onBlur={(e) => handleCEP(e)}
               error={errorCep}
@@ -305,14 +306,12 @@ const Servicos = () => {
             <Input
               name="complement"
               label="Complemento"
-              divstyle={{ width: "100%" }}
               type="text"
             />            
             <Input
               type="text"
               label="Bairro *"
               name="district"
-              divstyle={{ width: "100%" }}
               value={inputValue.neighborhood.value}
               onChange={(e) =>
                 setInputValue({
@@ -410,7 +409,6 @@ const Servicos = () => {
               type="select"
               label="Como conheceu a M24?"
               name="origin"
-              divstyle={{ width: "100%" }}
               options={[
                 { value: "Facebook / Instagram", label: "Facebook / Instagram" },
                 { value: "Amigo / Parente", label: "Amigo / Parente" },
@@ -420,20 +418,25 @@ const Servicos = () => {
               placeholder=""
             />            
             <div>
-              <p className="page-description">
+              <PageDescription>
                 Obs: Os campos * são obrigatórios.
-              </p>
+              </PageDescription>
             </div>
-            <button
+            <Button 
+              secondary
               className="btn-default margin-3x"
               type="button"
               onClick={(e) => {
                 handleSubmit(e);
               }}
+              validate={(e) => {
+                const formData = getFormData(".form-contact");
+                return true;
+              }}   
             >
               Continuar
-            </button>
-          </form>
+            </Button>
+          </Form>
           <div>
             <img src={Img} />
           </div>

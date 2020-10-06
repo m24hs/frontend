@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
+import { PageTitle } from "../../../../styles/global";
+
 // Imports auxiliares
 import api from "../../../../services/api.js";
 import Layout from "../../../../components/admin/Layout";
@@ -35,16 +37,16 @@ const Assinaturas = (props) => {
       <Head>
         <title>Assinaturas - Painel Administrativo - M24</title>
       </Head>
-      <Layout loading={isLoading ? 1 : 0}>
+      <Layout loading={isLoading || false}>
         <div>
-          <h1 className="page-title-secondary">Assinaturas</h1>
+          <PageTitle secondary>Assinaturas</PageTitle>
           <form className="margin-3x">
             <div>
               <label>ID na IUGU</label>
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.id_iugu}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -52,7 +54,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.name}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -60,7 +62,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.email}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -68,7 +70,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={`(${formData.User && formData.User.phone_prefix}) ${formData.User && formData.User.phone}`}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -76,7 +78,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.cpf_cnpj}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -84,7 +86,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.zip_code}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -92,7 +94,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.street}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -100,7 +102,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.number}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -108,7 +110,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.district}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -116,7 +118,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.city}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -124,7 +126,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.state}
-                readOnly={true}
+                disabled={true}
               />
             </div>
             <div>
@@ -132,7 +134,7 @@ const Assinaturas = (props) => {
               <input
                 type="text"
                 defaultValue={formData.User && formData.User.complement}
-                readOnly={true}
+                disabled={true}
               />
             </div>
           </form>

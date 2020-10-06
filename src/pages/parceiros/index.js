@@ -11,10 +11,10 @@ const Parceiros = () => {
       </Head>
       <Layout>
         <Container>
-          <h1 className="page-title">Parceiros</h1>
-          <p className="page-description margin-2x">
+          <PageTitle>Parceiros</PageTitle>
+          <PageDescription>
           
-          </p>
+          </PageDescription>
         </Container>
       </Layout>
     </>

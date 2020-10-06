@@ -35,7 +35,7 @@ export const getFormData = (formName) => {
   let object = {};
   [].forEach.call(form, function (item) {
     if (item.hasAttribute("name")) {
-      object[item.name] = item.value;
+      object[item.name] = item.value.trim();
     }
   });
   return object;

@@ -45,7 +45,7 @@ const Configuracoes = (props) => {
       </Head>
       <Layout loading={isLoading}>
         <div>
-          <h1 className="page-title-secondary">Configurações</h1>
+          <PageTitle secondary>Configurações</PageTitle>
           <form className="form-service margin-3x">
             <input name="id" type="hidden" defaultValue={formData.id} />
             <div>

@@ -8,13 +8,13 @@ export const Form = styled.form`
     flex: 1;
   }
 
-  & > button {
+  & > a {
     margin-left: 16px;
     width: 90px;
   }
 
   @media (min-width: 780px) {
-    & > button {
+    & > a {
       width: 200px;
     }
   }

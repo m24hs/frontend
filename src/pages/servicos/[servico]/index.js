@@ -1,13 +1,36 @@
+// Imports padrão
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Layout from "../../../components/site/Layout";
 
+// Imports de estilo
+import Layout from "../../../components/site/Layout";
+import { PageTitle, PageDescription, Button } from "../../../styles/global";
 import { Container } from "../../../styles/pages/servicos";
 
-const Servico = () => {
+// Imports auxiliares
+import api from "../../../services/api";
+import { fetchData } from "../../../services/helpers";
+
+const Servico = (props) => {
+  // Rotas
   const router = useRouter();
   const { servico } = router.query;
+
+  // State
+  const [servicos, setServicos] = useState({});
+
+  // Effect
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetchData(
+        api.get(`/services/${servico}?where=url`)
+      );
+      setServicos(response);
+    };
+    getData();
+  }, [props]);
 
   return (
     <>
@@ -16,11 +39,21 @@ const Servico = () => {
       </Head>
       <Layout>
         <Container>
-          <h1 className="page-title">{servico}</h1>
-          <p className="page-description margin-2x"></p>
-          <button className="service-button btn-default">
-            <Link href={`/servicos/${servico}/cadastro`}>Saiba mais</Link>
-          </button>
+          {servicos.title && (
+            <>
+              <PageTitle>{servicos.title}</PageTitle>
+              <PageDescription>{servicos.page}</PageDescription>
+              {servicos.price > 0 ? (
+                <Link href={`/servicos/${servico}/cadastro`}>
+                  <Button secondary>Continuar</Button>
+                </Link>
+              ) : (
+                <Link href={alert("whats")}>
+                  <Button secondary>Saiba mais</Button>
+                </Link>
+              )}
+            </>
+          )}
         </Container>
       </Layout>
     </>

@@ -1,10 +1,24 @@
 import styled from "styled-components";
 
+export const FormStyle = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 export const WrapperStyle = styled.div`
   ${({ light }) =>
     light === false
       ? `
-        & input {
+        & label { 
+          color: var(--color-text);
+        }    
+
+        & input, & textarea {
           margin: 0 0 8px 0;
           padding: 12px 6px;
           outline: none;
@@ -17,7 +31,7 @@ export const WrapperStyle = styled.div`
           transition: all 0.3s;
         }
 
-        & input[error], & input[error]:focus {
+        & input[error], & input[error]:focus, & textarea[error], & textarea[error]:focus {
           color: var(--color-tertiary);
           border-bottom: 2px solid var(--color-tertiary);
         }
@@ -38,7 +52,7 @@ export const WrapperStyle = styled.div`
           color: var(--color-primary);
         }      
 
-        & input {            
+        & input, & textarea {            
           margin: 2px 0 8px 0;
           padding: 12px 12px;
           outline: none;
@@ -50,7 +64,7 @@ export const WrapperStyle = styled.div`
           transition: all 0.3s;
         } 
 
-        & input[error], & input[error]:focus {
+        & input[error], & input[error]:focus, & textarea[error], & textarea[error]:focus {
           color: var(--color-tertiary);
           border: 2px solid var(--color-tertiary);
         }        

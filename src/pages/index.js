@@ -1,8 +1,11 @@
+// Imports padrão
 import { useEffect } from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Layout from "../components/site/Layout";
 
+// Imports de estilo
+import Layout from "../components/site/Layout";
+import { Button } from "../styles/global";
 import { Container, VideoWrapper } from "../styles/pages/index";
 import Background from "../assets/home/background.mp4";
 
@@ -31,7 +34,7 @@ const Index = () => {
             <h3>NÃO TEM PREÇO, <span>TEM VALOR</span></h3>
           </div>
           <Link href="/servicos">
-            <button className="btn-default">Quero ser M24</button>
+            <Button secondary>Quero ser M24</Button>
           </Link>
         </Container>
       </Layout>

@@ -42,9 +42,13 @@ const Menu = () => {
           <li>
             <Link href="/servicos">Serviços</Link>
           </li>
-          <li>
-            <Link href="/parceiros">Parceiros</Link>
-          </li>
+          {
+            /*
+            <li>
+              <Link href="/parceiros">Parceiros</Link>
+            </li>            
+            */
+          }
           <li>
             <Link href="/sobre">Sobre a M24</Link>
           </li>

@@ -1,11 +1,21 @@
+// Imports padrão
 import React, { useState, useEffect } from "react";
-React.useLayoutEffect = React.useEffect 
-import { WrapperStyle } from "../styles/components/Input";
-
+React.useLayoutEffect = React.useEffect;
 import ReactSelect from "react-select";
 import InputMaskWrapper from "react-input-mask";
 
-const Input = (props) => {
+// Imports de estilo
+import { FormStyle, WrapperStyle } from "../styles/components/Form";
+import { Button as ButtonStyle } from "../styles/global"
+
+// Form
+const Form = (props) => {
+  return <FormStyle {...props}>{props.children}</FormStyle>;
+};
+export default Form;
+
+// Input
+export const Input = (props) => {
   const { type, ...restOfProps } = props;
 
   if (type === "select")
@@ -32,21 +42,30 @@ const Input = (props) => {
         <InputMask {...props} />
       </Wrapper>
     );
+  else if (type === "textarea")
+    return (
+      <Wrapper {...restOfProps}>
+        <textarea {...props} />
+      </Wrapper>
+    );
 
   return <></>;
 };
 
-export default Input;
-
+// Wrapper
 const Wrapper = (props) => {
   return (
-    <WrapperStyle style={props.divstyle} light={props.light ? 1 : 0}>
+    <WrapperStyle
+      style={props.divstyle ? props.divstyle : { width: "100%" }}
+      light={props.light ? true : false}
+    >
       <label>{props.label}</label>
       {props.children}
     </WrapperStyle>
   );
 };
 
+// Select
 const Select = (props) => {
   const customStyles = {
     option: (provided, state) => ({
@@ -64,9 +83,19 @@ const Select = (props) => {
     }),
     singleValue: (provided, state) => ({ ...provided, color: "#fff" }),
   };
-  return <ReactSelect {...props} styles={customStyles} />;
+  return (
+    <>
+      <ReactSelect {...props} styles={customStyles} />
+      <input
+        type="hidden"
+        value={props.value && props.value.value}
+        name={props.name}
+      />
+    </>
+  );
 };
 
+// Input
 const HtmlInput = (props) => {
   const { validate, onBlur, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
@@ -82,7 +111,7 @@ const HtmlInput = (props) => {
     <>
       <input
         {...restOfProps}
-        error={( propsError !== "" && propsError ) || (isError !== "" && isError )}
+        error={(propsError !== "" && propsError) || (isError !== "" && isError)}
         onBlur={(e) => {
           if (onBlur) return onBlur(e);
           else if (validate) {
@@ -91,11 +120,12 @@ const HtmlInput = (props) => {
           }
         }}
       />
-      <span>{ propsError || isError }</span>
+      <span>{propsError || isError}</span>
     </>
   );
 };
 
+// Input mask
 const InputMask = (props) => {
   const { validate, onBlur, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
@@ -111,18 +141,19 @@ const InputMask = (props) => {
     <>
       <InputMaskWrapper
         {...restOfProps}
-        error={( propsError !== "" && propsError ) || (isError !== "" && isError )}
+        error={(propsError !== "" && propsError) || (isError !== "" && isError)}
         onBlur={(e) => {
-          if (onBlur) onBlur(e);          
-          setIsError(validateInput(validate, e)); 
+          if (onBlur) onBlur(e);
+          setIsError(validateInput(validate, e));
           return;
         }}
       />
-      <span>{ propsError || isError }</span>
+      <span>{propsError || isError}</span>
     </>
   );
 };
 
+// Valida o input
 const validateInput = (f, e) => {
   try {
     // Executa função
@@ -148,4 +179,21 @@ const validateInput = (f, e) => {
     // Se der erro
     return "Não foi possivel validar o campo!";
   }
+};
+
+// Botão
+export const Button = (props) => {
+  const { validate, ...restOfProps } = props;
+  const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    const response = validate();
+    setDisabled(!response);
+  }, [props]);
+
+  return (
+    <ButtonStyle {...restOfProps} disabled={disabled}>
+      {props.children}
+    </ButtonStyle>
+  );
 };
