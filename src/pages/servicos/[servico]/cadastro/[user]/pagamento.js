@@ -61,7 +61,7 @@ const Servicos = (props) => {
         delete formData["date"];
 
         response = await api.post(
-          `/subscriptions/${user}/credit-card`,
+          `/subscriptions/${user}/credit_card?service=${servico}`,
           formData
         );
         if (response.data.status == "success") {
@@ -72,7 +72,7 @@ const Servicos = (props) => {
           return;
         }
       } else {
-        response = await api.post(`/subscriptions/${user}/boleto`);
+        response = await api.post(`/subscriptions/${user}/bank_slip?service=${servico}`);
         if (response.data.status === "success") {
           setIsLoading(false);
           router.push({
@@ -107,7 +107,7 @@ const Servicos = (props) => {
           <Wrapper>
             {paymentType === "" ? (
               <>
-                <PageDescription>
+                <PageDescription secondary>
                   Por favor, selecione a forma de pagamento para assinatura:
                 </PageDescription>
                 <ul className="payment-type">
@@ -123,10 +123,10 @@ const Servicos = (props) => {
               <>
                 {paymentType === "cartao" ? (
                   <>
-                    <p className="margin-3x">
+                    <PageDescription secondary>
                       Por favor, informe os dados do cartão e clique em
                       confirmar assiantura
-                    </p>
+                    </PageDescription>
                     <form className="credit-card">
                       <Input
                         light={true}
@@ -236,6 +236,7 @@ const Servicos = (props) => {
                     </form>
                     <Button secondary
                       onClick={() => handleContinue("cartao")}
+                      margin="32px 0"
                     >
                       Confirmar assinatura
                     </Button>
@@ -251,6 +252,7 @@ const Servicos = (props) => {
                     </PageDescription>
                     <Button secondary
                       onClick={() => handleContinue("boleto")}
+                      margin="32px 0"
                     >
                       Confirmar assinatura por boleto
                     </Button>

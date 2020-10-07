@@ -45,7 +45,7 @@ export const countError = (formName) => {
   let promise = new Promise((resolve, reject) => {
     // Seleciona components
     const formComponents = document.querySelectorAll(
-      formName + " .form-component"
+      `${formName} .form-component, ${formName} .form-component * ` 
     );
     // For each
     [].forEach.call(formComponents, function (item, index) {

@@ -11,10 +11,10 @@ const Editor = (props) => {
   },[props])
 
   return (
-    <>
+    <div style={{width: props.width || "100%", display: "block"}}>
       <ReactQuill theme="snow" value={value} onChange={setValue} />
       <input name={props.name} type="hidden" value={value}/>
-    </>
+    </div>
   );
 };
 

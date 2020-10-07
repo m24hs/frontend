@@ -5,11 +5,8 @@ import { useRouter } from "next/router";
 
 // Imports de estilo
 import Layout from "../../components/site/Layout";
-import { Divider, PageTitle, Button } from "../../styles/global";
-import { Container, ViewHtml, ListService, ListItem, ListImage } from "../../styles/pages/servicos/index.js";
-import ImgMotor from "../../assets/servicos/motor.jpg";
-import ImgRoda from "../../assets/servicos/roda.jpg";
-import ImgDirecao from "../../assets/servicos/direcao.jpg";
+import { Divider, PageTitle, Button, ViewHtml } from "../../styles/global";
+import { Container, ListService, ListItem, ListImage } from "../../styles/pages/servicos/index.js";
 
 // Imports auxiliares
 import api from "../../services/api";
@@ -38,7 +35,7 @@ const Servicos = (props) => {
                   <ListItem right={ (index % 2) !== 0 }>
                     <PageTitle small>{item.title}</PageTitle>
                     <ListImage>
-                      <img src={ImgRoda} />
+                      <img src={item.image} />
                     </ListImage>
                     <ViewHtml
                       dangerouslySetInnerHTML={{ __html: item.description }}

@@ -405,7 +405,7 @@ const Servicos = () => {
                   },
                 ];
               }}
-              isDisabled={inputValue.state.disabled}
+              isReadOnly={inputValue.state.disabled}
             />
             <Input
               type="select"

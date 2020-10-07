@@ -1,12 +1,13 @@
 // Imports padrão
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 React.useLayoutEffect = React.useEffect;
 import ReactSelect from "react-select";
 import InputMaskWrapper from "react-input-mask";
+import CurrencyFormat from "react-currency-format";
 
 // Imports de estilo
 import { FormStyle, WrapperStyle } from "../styles/components/Form";
-import { Button as ButtonStyle } from "../styles/global"
+import { Button as ButtonStyle } from "../styles/global";
 
 // Form
 const Form = (props) => {
@@ -42,12 +43,19 @@ export const Input = (props) => {
         <InputMask {...props} />
       </Wrapper>
     );
+  else if (type === "currency")
+    return (
+      <Wrapper {...restOfProps}>
+        <InputCurrency {...props} />
+      </Wrapper>
+    );
   else if (type === "textarea")
     return (
       <Wrapper {...restOfProps}>
         <textarea {...props} />
       </Wrapper>
     );
+  else if (type === "hidden") return <input {...props} />;
 
   return <></>;
 };
@@ -67,6 +75,16 @@ const Wrapper = (props) => {
 
 // Select
 const Select = (props) => {
+  const { validate, onBlur, ...restOfProps } = props;
+  const [isError, setIsError] = useState("");
+  const [propsError, setPropsError] = useState("");
+
+  useEffect(() => {
+    if ((props.error || "") !== "") {
+      setPropsError(props.error);
+    }
+  }, [props]);
+
   const customStyles = {
     option: (provided, state) => ({
       ...provided,
@@ -76,21 +94,44 @@ const Select = (props) => {
       height: "46px",
       background: "none",
       border: "0",
-      borderBottom: "2px solid #ffffff60",
+      borderBottom: `2px solid ${
+        propsError || isError ? "var(--color-tertiary)" : "#ffffff60"
+      }`,
+      marginBottom: propsError || isError ? 8 : 0,
       borderRadius: "0",
       boxShadow: 0,
       "&:hover": {},
     }),
     singleValue: (provided, state) => ({ ...provided, color: "#fff" }),
   };
+
+  const selectRef = useRef();
+  const [value, setValue] = useState("");
+
   return (
     <>
-      <ReactSelect {...props} styles={customStyles} className="form-component" />
+      <ReactSelect
+        ref={selectRef}
+        {...restOfProps}
+        styles={customStyles}
+        className="form-component"
+        onBlur={() => {
+          let e = selectRef.current.select.props.value;
+          if (onBlur) return onBlur(e);
+          else if (validate) {
+            setIsError(validateInput(validate, e));
+            return;
+          }
+        }}
+      />
       <input
         type="hidden"
         value={props.value && props.value.value}
         name={props.name}
       />
+      {(propsError || isError) && (
+        <span className="form-error">{propsError || isError}</span>
+      )}
     </>
   );
 };
@@ -113,7 +154,7 @@ const HtmlInput = (props) => {
         {...restOfProps}
         error={(propsError !== "" && propsError) || (isError !== "" && isError)}
         onBlur={(e) => {
-          if (onBlur) return onBlur(e);
+          if (onBlur) onBlur(e);
           else if (validate) {
             setIsError(validateInput(validate, e));
             return;
@@ -121,9 +162,9 @@ const HtmlInput = (props) => {
         }}
         className="form-component"
       />
-      { (propsError || isError) &&
+      {(propsError || isError) && (
         <span className="form-error">{propsError || isError}</span>
-      }
+      )}
     </>
   );
 };
@@ -152,9 +193,39 @@ const InputMask = (props) => {
         }}
         className="form-component"
       />
-      { (propsError || isError) &&
+      {(propsError || isError) && (
         <span className="form-error">{propsError || isError}</span>
-      }
+      )}
+    </>
+  );
+};
+
+// InputCurrency
+const InputCurrency = (props) => {
+  const { type, validate, onBlur, defaultValue, ...restOfProps } = props;
+  const [isError, setIsError] = useState("");
+  const [propsError, setPropsError] = useState("");
+  const [valueChange, setValueChange] = useState("");
+
+  useEffect(() => {
+    if ((props.error || "") !== "") {
+      setPropsError(props.error);
+    }
+  }, [props]);
+
+  useEffect(() => {
+    setValueChange(defaultValue);
+  }, [props]);
+
+  return (
+    <>
+      <CurrencyFormat
+        {...restOfProps}
+        type="text"
+        decimalSeparator=","
+        decimalScale={2}
+        value={defaultValue}
+      />
     </>
   );
 };
@@ -163,7 +234,7 @@ const InputMask = (props) => {
 const validateInput = (f, e) => {
   try {
     // Executa função
-    const response = f(e.target);
+    const response = f(e.hasOwnProperty("target") ? e.target : e);
     // Loop
     for (
       let responseIndex = 0;
@@ -203,5 +274,36 @@ export const Button = (props) => {
     <ButtonStyle {...restOfProps} disabled={disabled}>
       {props.children}
     </ButtonStyle>
+  );
+};
+
+// Uploader
+export const InputUploader = (props) => {
+  const [file, setFile] = useState("");
+
+  const handleOnChange = async (e) => {
+    const base64 = await toBase64(e.target.files[0]);
+    //console.log(base64);
+    setFile(base64);
+  };
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  return (
+    <>
+      <Wrapper {...props}>
+        { props.image && 
+          <img width="100%" src={file || props.defaultValue} />
+        }
+        <input type="file" onChange={(e) => handleOnChange(e)} />
+        <input type="hidden" name={props.name} value={file} />
+      </Wrapper>
+    </>
   );
 };

@@ -8,6 +8,12 @@ export const FormStyle = styled.form`
     display: flex;
     flex-direction: column;
   }
+  
+  ${({ margin }) =>
+    margin &&
+    `
+        margin: ${margin};
+    `}
 `;
 
 export const WrapperStyle = styled.div`

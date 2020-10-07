@@ -51,34 +51,3 @@ export const ListImage = styled.div`
     display: block;
   }
 `;
-
-export const ViewHtml = styled.div`
-  grid-area: text;
-  color: var(--color-text);
-
-  & > ul {
-    margin-top: -14px;
-    padding: 16px 1em;
-  }
-
-  & > ul > li > strong:before {
-    content: "";
-    border-color: transparent var(--color-tertiary);
-    border-style: solid;
-    border-width: 0.35em 0 0.35em 0.45em;
-    display: block;
-    height: 0;
-    width: 0;
-    left: -1em;
-    top: 0.9em;
-    position: relative;
-  }
-
-  & > ul > li > strong {
-    font-weight: bold;
-  }
-
-  & > ul > li > p {
-    text-align: left;
-  }
-`;
