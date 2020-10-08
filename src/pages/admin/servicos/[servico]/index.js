@@ -7,12 +7,15 @@ import Head from "next/head";
 import Layout from "../../../../components/admin/Layout";
 import { PageTitle, Button } from "../../../../styles/global";
 import NoSsr from "../../../../components/NoSsr";
-import Editor from "../../../../components/admin/Editor";
 
 // Imports auxiliares
 import api from "../../../../services/api.js";
 import { getFormData } from "../../../../services/helpers.js";
-import Form, { Input, InputUploader } from "../../../../components/Form";
+import Form, {
+  Input,
+  InputUploader,
+  Editor,
+} from "../../../../components/Form";
 
 const Servicos = (props) => {
   // Rotas
@@ -37,22 +40,33 @@ const Servicos = (props) => {
 
   // Salvar
   const handleSave = async () => {
+    // Marca como loading
     setIsLoading(true);
+
+    // Envia
     const formData = getFormData(".form-service");
     formData["price"] = formData["price"].replace(",", ".");
     const response = await api.post(`/services`, formData);
-    console.log(response);
+
+    // Remove loading
     setIsLoading(false);
-    //router.push("/admin/servicos");
+
+    // Retorna
+    if (response.data.status === "success") router.push("/admin/servicos");
   };
 
   const handleDelete = async () => {
+    // Marca como loading
     setIsLoading(true);
+
+    // Envia
     const formData = getFormData(".form-service");
     const response = await api.delete(`/services/${formData.id}`);
-    console.log(response);
+
+    // Remove loading
     setIsLoading(false);
-    router.push("/admin/servicos");
+
+    if (response.data.status === "success") router.push("/admin/servicos");
   };
 
   return (
@@ -80,7 +94,6 @@ const Servicos = (props) => {
                 ];
               }}
             />
-            <InputUploader image label="Imagem" light={true} name="image" defaultValue={formData.image}/>
             <Editor
               name="description"
               label="Descrição"
@@ -97,9 +110,20 @@ const Servicos = (props) => {
               }
             />
             <InputUploader
+              light={true}
+              image
+              label="Imagem"
+              name="image"
+              accept="image/jpeg,image/gif,image/png"
+              defaultValue={formData.image}
+            />            
+            <InputUploader
               label="PDF do contrato"
+              pdf
               light={true}
               name="contract"
+              accept="application/pdf"
+              defaultValue={formData.contract}
             />
             <Button
               type="button"

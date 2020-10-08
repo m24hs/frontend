@@ -1,11 +1,16 @@
 // Imports padrão
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 // Imports de estilo
 import Layout from "../../../../../components/site/Layout";
-import { PageTitle, PageDescription, Button } from "../../../../../styles/global";
+import {
+  PageTitle,
+  PageDescription,
+  Button,
+} from "../../../../../styles/global";
 import {
   Container,
   Wrapper,
@@ -15,22 +20,33 @@ import {
   CheckSquareFill as CheckSquareFillIcon,
 } from "@styled-icons/bootstrap/";
 
-const Servicos = () => {
+// Imports auxiliares
+import api from "../../../../../services/api";
+import { fetchData } from "../../../../../services/helpers";
+
+const Servicos = (props) => {
   // Rotas
   const router = useRouter();
   const { servico, user } = router.query;
 
   // State
   const [checked, setChecked] = useState(false);
+  const [servicos, setServicos] = useState({});
+
+  // Effect
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetchData(
+        api.get(`/services/${servico}?where=url`)
+      );
+      setServicos(response);
+    };
+    getData();
+  }, [props]);
 
   // Marca check
   const handleCheck = () => {
     setChecked(!checked);
-  };
-
-  // Próxima pagina
-  const handleContinue = () => {
-    router.push(`/servicos/${servico}/cadastro/${user}/pagamento`);
   };
 
   return (
@@ -47,13 +63,17 @@ const Servicos = () => {
           </PageDescription>
           <Wrapper className="margin-2x">
             <object
-              data="/paper.pdf"
+              data={servicos.contract}
               type="application/pdf"
               width="100%"
               height="600px"
             >
               <p>
-                <a href="/paper.pdf" target="_blank">
+                <a
+                  download="contrato.pdf"
+                  href={servicos.contract}
+                  target="_blank"
+                >
                   Seu navegador não permite a exibição do PDF, clique aqui para
                   fazer o download.
                 </a>
@@ -65,12 +85,11 @@ const Servicos = () => {
                 Eu li e concordo com os termos, quero continuar
               </label>
             </div>
-            <Button secondary
-              disabled={!checked}
-              onClick={() => handleContinue()}
-            >
-              Continuar
-            </Button>
+            <Link href="/servicos/[servico]/cadastro/[user]/pagamento" as={`/servicos/${servico}/cadastro/${user}/pagamento`}>
+              <Button secondary disabled={!checked}>
+                Continuar
+              </Button>
+            </Link>
           </Wrapper>
         </Container>
       </Layout>

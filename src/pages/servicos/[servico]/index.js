@@ -6,7 +6,12 @@ import { useRouter } from "next/router";
 
 // Imports de estilo
 import Layout from "../../../components/site/Layout";
-import { PageTitle, PageDescription, Button, ViewHtml } from "../../../styles/global";
+import {
+  PageTitle,
+  PageDescription,
+  Button,
+  ViewHtml,
+} from "../../../styles/global";
 
 // Imports auxiliares
 import api from "../../../services/api";
@@ -34,7 +39,7 @@ const Servico = (props) => {
   return (
     <>
       <Head>
-        <title>{servico} - M24</title>
+        <title>{servicos.title && servicos.title} - M24</title>
       </Head>
       <Layout>
         <div>
@@ -45,13 +50,17 @@ const Servico = (props) => {
                 <ViewHtml dangerouslySetInnerHTML={{ __html: servicos.page }} />
               </PageDescription>
               {servicos.price > 0 ? (
-                <Link href={`/servicos/${servico}/cadastro`}>
+                <a href={`/servicos/${servico}/cadastro`}>
                   <Button secondary>Continuar</Button>
-                </Link>
+                </a>
               ) : (
-                <Link href={"https://api.whatsapp.com/send?phone=558007299123&text=*Mensagem%20autom%C3%A1tica*%20|%20Envie%20esta%20mensagem%20para%20confirmar%20seu%20pr%C3%A9-cadastro%20e%20receber%20mais%20informa%C3%A7%C3%B5es.&fbclid=IwAR31FZjOvBMjR-rl4OMPRYJGfjRoQTFscXkxa9dsuKElaqEl3pyG4r6HTOE"}>
+                <a
+                  href={
+                    "https://api.whatsapp.com/send?phone=558007299123&text=*Mensagem%20autom%C3%A1tica*%20|%20Envie%20esta%20mensagem%20para%20confirmar%20seu%20pr%C3%A9-cadastro%20e%20receber%20mais%20informa%C3%A7%C3%B5es.&fbclid=IwAR31FZjOvBMjR-rl4OMPRYJGfjRoQTFscXkxa9dsuKElaqEl3pyG4r6HTOE"
+                  }
+                >
                   <Button secondary>Saiba mais</Button>
-                </Link>
+                </a>
               )}
             </>
           )}

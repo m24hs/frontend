@@ -88,3 +88,28 @@ export const WrapperStyle = styled.div`
         }       
     `}
 `;
+
+
+export const LabelStyle = styled.label`
+  ${({ light }) =>
+    light === false
+      ? `
+        color: var(--color-text);
+    `
+      : `
+        font-weight: bold;
+        color: var(--color-primary);
+    `}
+`;
+
+export const UploaderWrapper = styled.div`
+  width: 100%;
+  
+  & > div img {
+    border-radius: 0.25rem;
+  }
+
+  & > input {
+    display: none !important;
+  }
+`;

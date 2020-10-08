@@ -4,9 +4,12 @@ React.useLayoutEffect = React.useEffect;
 import ReactSelect from "react-select";
 import InputMaskWrapper from "react-input-mask";
 import CurrencyFormat from "react-currency-format";
+const ReactQuill =
+  typeof window === "object" ? require("react-quill") : () => false;
+import "react-quill/dist/quill.snow.css";
 
 // Imports de estilo
-import { FormStyle, WrapperStyle } from "../styles/components/Form";
+import { FormStyle, WrapperStyle, LabelStyle, UploaderWrapper } from "../styles/components/Form";
 import { Button as ButtonStyle } from "../styles/global";
 
 // Form
@@ -67,7 +70,7 @@ const Wrapper = (props) => {
       style={props.divstyle ? props.divstyle : { width: "100%" }}
       light={props.light ? true : false}
     >
-      <label>{props.label}</label>
+      <LabelStyle light={props.light ? true : false}>{props.label}</LabelStyle>
       {props.children}
     </WrapperStyle>
   );
@@ -282,9 +285,12 @@ export const InputUploader = (props) => {
   const [file, setFile] = useState("");
 
   const handleOnChange = async (e) => {
-    const base64 = await toBase64(e.target.files[0]);
-    //console.log(base64);
-    setFile(base64);
+    try {
+      const base64 = await toBase64(e.target.files[0]);
+      setFile(base64); 
+    } catch (error) {
+      alert("erro");
+    }
   };
 
   const toBase64 = (file) =>
@@ -295,15 +301,51 @@ export const InputUploader = (props) => {
       reader.onerror = (error) => reject(error);
     });
 
+  const handleUpload = () => {
+    inputRef.current.click();
+  }
+
+  const inputRef = useRef();
+
   return (
     <>
-      <Wrapper {...props}>
-        { props.image && 
-          <img width="100%" src={file || props.defaultValue} />
-        }
-        <input type="file" onChange={(e) => handleOnChange(e)} />
-        <input type="hidden" name={props.name} value={file} />
-      </Wrapper>
+      <UploaderWrapper {...props}>
+        <LabelStyle>{props.label}</LabelStyle>
+        <div>
+          {props.image && <img width="100%" src={file || props.defaultValue} />}
+          {props.pdf && (
+            <object
+              data={file || props.defaultValue}
+              type="application/pdf"
+              width="100%"
+              height="600px"
+            ></object>
+          )}          
+        </div>
+        <input ref={inputRef} type="file" id={`upload-${props.name}`} onChange={(e) => handleOnChange(e)} {...props} />
+        <input
+          type="hidden"
+          name={props.name}
+          value={file || props.defaultValue}
+        />
+        <ButtonStyle type="button" onClick={() => handleUpload()}>Upload</ButtonStyle>
+      </UploaderWrapper>
     </>
+  );
+};
+
+export const Editor = (props) => {
+  const [value, setValue] = useState("");
+
+  useEffect(() => {
+    setValue(props.defaultValue || "");
+  }, [props]);
+
+  return (
+    <div style={{ width: props.width || "100%", display: "block" }}>
+      <LabelStyle>{props.label}</LabelStyle>
+      <ReactQuill theme="snow" value={value} onChange={setValue} />
+      <input name={props.name} type="hidden" value={value} />
+    </div>
   );
 };
