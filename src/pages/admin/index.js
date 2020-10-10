@@ -1,11 +1,16 @@
+// Imports padrão
 import { useState } from "react";
 import Head from "next/head";
 import Layout from "../../components/admin/Layout";
 
+// Imports de estilo
 import { Container, Login } from "../../styles/pages/admin";
 import LogoSvg from "../../assets/logo.svg";
+import Form, { Input } from "../../components/Form";
+import { Button, PageTitle } from "../../styles/global";
 
-const Parceiros = () => {
+
+const Login = () => {
   const [logged, setLogged] = useState(false);
     const handleLogin = (e) => {
         e.preventDefault();
@@ -19,21 +24,21 @@ const Parceiros = () => {
       </Head>
       {logged ? (
         <Layout>
-          <Container>teste</Container>
+          <Container>
+          <PageTitle secondary>Bem vindo!</PageTitle>
+            </Container>
         </Layout>
       ) : (
         <Login>
-            <form>
+            <Form>
                 <img src={LogoSvg} />
-                <label>Usuário</label>
-                <input type="text"/>
-                <label>Senha</label>
-                <input type="password"/>
-                <button className="btn-default" type="button" onClick={(e) => handleLogin(e)}>Entrar</button>
-            </form>
+                <Input light={true} type="text" label="Usuário"/ >
+                <Input light={true} type="text" label="Senha"/ >                
+                <Button onClick={(e) => handleLogin(e)}>Entrar</Button>
+            </Form>
         </Login>
       )}
     </>
   );
 };
-export default Parceiros;
+export default Login;

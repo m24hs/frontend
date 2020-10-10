@@ -163,7 +163,7 @@ const Servicos = () => {
       <Head>
         <title>Cadastro - M24</title>
       </Head>
-      <Layout hideFB loading={isLoading} error={isError}>
+      <Layout hideFB loading={isLoading ? true : false} error={isError}>
         <Container>
           <PageTitle>Cadastro</PageTitle>
           <PageDescription>
