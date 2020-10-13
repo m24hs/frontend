@@ -7,7 +7,11 @@ import Head from "next/head";
 import api from "../../../services/api.js";
 import { getFormData } from "../../../services/helpers.js";
 import Layout from "../../../components/admin/Layout";
-import Editor from "../../../components/admin/Editor";
+import { PageTitle } from "../../../styles/global";
+
+import Form, {
+  Editor,
+} from "../../../components/Form";
 
 const Configuracoes = (props) => {
   // Rotas

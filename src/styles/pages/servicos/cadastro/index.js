@@ -21,9 +21,13 @@ export const Container = styled.div`
   & > div {
     text-align: right;
     grid-area: img;
+    width: 100%;
+    height: 100%;    
+    display: flex;
+    justify-content: flex-end;
   }
   & > div > img {
-    width: 100%;
+    display: none;
   }
 
   @media (min-width: 780px) {
@@ -36,7 +40,11 @@ export const Container = styled.div`
       align-self: center;
     }
     & > div > img {
-      width: 80%;
+      display: block;
+      box-shadow: 15px 15px 0px 0px var(--color-tertiary);
+      width: calc(100% - 64px);
+      height: calc(100% - 15px);
+      object-fit: cover;
     }
   }
 `;

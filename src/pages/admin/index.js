@@ -10,7 +10,7 @@ import Form, { Input } from "../../components/Form";
 import { Button, PageTitle } from "../../styles/global";
 
 
-const Login = () => {
+const Wrapper = () => {
   const [logged, setLogged] = useState(false);
     const handleLogin = (e) => {
         e.preventDefault();
@@ -41,4 +41,4 @@ const Login = () => {
     </>
   );
 };
-export default Login;
+export default Wrapper;

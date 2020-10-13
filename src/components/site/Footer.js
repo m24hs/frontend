@@ -11,7 +11,7 @@ import {
   Whatsapp as WhatsappIcon,
   Facebook as FacebookIcon,
   Instagram as InstagramIcon,
-  LinkedinIn as LinkedinIcon
+  LinkedinIn as LinkedinIcon,
 } from "@styled-icons/fa-brands";
 
 const Footer = () => {
@@ -35,24 +35,32 @@ const Footer = () => {
       </ul>
       <ul className="footer-social">
         <li>
-          <a href="#" target="_blank">
-            <WhatsappIcon />
-          </a>
+          <Link href="#" target="_blank">
+            <a>
+              <WhatsappIcon />
+            </a>
+          </Link>
         </li>
         <li>
-          <a href="#" target="_blank">
-            <FacebookIcon />
-          </a>
+          <Link href="#" target="_blank">
+            <a>
+              <FacebookIcon />
+            </a>
+          </Link>
         </li>
         <li>
-          <a href="#" target="_blank">
-            <InstagramIcon />
-          </a>
+          <Link href="#" target="_blank">
+            <a>
+              <InstagramIcon />
+            </a>
+          </Link>
         </li>
         <li>
-          <a href="#" target="_blank">
-            <LinkedinIcon />
-          </a>
+          <Link href="#" target="_blank">
+            <a>
+              <LinkedinIcon />
+            </a>
+          </Link>
         </li>
       </ul>
     </Container>

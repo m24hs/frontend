@@ -2,6 +2,7 @@ import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
 import { Container } from "../../styles/pages/parceiros";
+import { PageTitle, PageDescription } from "../../styles/global";
 
 const Parceiros = () => {
   return (

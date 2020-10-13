@@ -43,11 +43,14 @@ export const ListItem = styled.li`
 
 export const ListImage = styled.div`
   grid-area: img;
-  
+  width: 100%;
+  height: 100%;
+
   & > img {
     width: 100%;
-    height: 100%;
+    height: calc(100% - 15px);
     object-fit: cover;
     display: block;
+    box-shadow: 15px 15px 0px 0px var(--color-tertiary);
   }
 `;

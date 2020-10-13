@@ -25,6 +25,7 @@ const Servicos = (props) => {
   // State
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState("");
 
   // Carregar
   useEffect(() => {
@@ -40,6 +41,7 @@ const Servicos = (props) => {
 
   // Salvar
   const handleSave = async () => {
+    setIsError("");
     // Marca como loading
     setIsLoading(true);
 
@@ -52,7 +54,11 @@ const Servicos = (props) => {
     setIsLoading(false);
 
     // Retorna
-    if (response.data.status === "success") router.push("/admin/servicos");
+    if (response.data.status === "success") {
+      router.push("/admin/servicos"); 
+    } else {
+      setIsError(response.data.data)
+    }
   };
 
   const handleDelete = async () => {
@@ -74,7 +80,7 @@ const Servicos = (props) => {
       <Head>
         <title>Serviços - Painel Administrativo - M24</title>
       </Head>
-      <Layout loading={isLoading || false}>
+      <Layout loading={isLoading || false} error={isError}>
         <div>
           <PageTitle secondary>Serviços</PageTitle>
           <Form className="form-service" margin="16px 0">

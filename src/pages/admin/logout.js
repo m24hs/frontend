@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
-
 const Logout = () => {
-   const router = useRouter();
-   router.push("/");
+  if (typeof window !== "undefined") {
+    window.location.href = "";
+  }
 
-   return(<></>)
-}
+  return <></>;
+};
 
 export default Logout;
