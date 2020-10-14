@@ -12,8 +12,19 @@ import { PageTitle } from "../../../styles/global";
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
 import DataTable from "../../../components/admin/DataTable";
+import NoSsr from "../../../components/NoSsr";
 
 const Servicos = (props) => {
+  return (
+    <NoSsr>
+      <Wrapper {...props}></Wrapper>
+    </NoSsr>
+  );
+};
+
+export default Servicos;
+
+const Wrapper = (props) => {
   // Rota
   const router = useRouter();
 
@@ -73,5 +84,3 @@ const Servicos = (props) => {
     </>
   );
 };
-
-export default Servicos;
