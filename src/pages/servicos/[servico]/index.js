@@ -50,9 +50,9 @@ const Servico = (props) => {
                 <ViewHtml dangerouslySetInnerHTML={{ __html: servicos.page }} />
               </PageDescription>
               {servicos.price > 0 ? (
-                <Link href={`/servicos/[servico]/cadastro`} as={`/servicos/${servico}/cadastro`}>
-                  <Button secondary>Continuar</Button>
-                </Link>
+                  <Button secondary onClick={() => {
+                    location.href = `/servicos/${servico}/cadastro`
+                  }}>Continuar</Button>
               ) : (
                 <Link
                   href={

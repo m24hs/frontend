@@ -31,7 +31,7 @@ const DataTable = (props) => {
     if (value !== "") {
       setFilteredData(filterIt(data, value));
     } else {
-      setFilteredData(data );
+      setFilteredData(data);
     }
   };
 
@@ -45,7 +45,7 @@ const DataTable = (props) => {
 
   return (
     <div className={className}>
-      <Form onSubmit={(e) => e.preventDefault()}>        
+      <Form onSubmit={(e) => e.preventDefault()}>
         {search && (
           <input
             type="text"
@@ -55,18 +55,23 @@ const DataTable = (props) => {
           />
         )}
         {add && (
-          <Link href={`${baseUrl}/novo`}>
+          <a href={`${baseUrl}/novo`}>
             <Button type="button">
               <PlusIcon />
               Novo
             </Button>
-          </Link>
+          </a>
         )}
       </Form>
       <DataTableWrapper
         {...restOfProps}
         customStyles={Custom}
-        noDataComponent={(<><br/>Nenhum registro encontrado.</>)}
+        noDataComponent={
+          <>
+            <br />
+            Nenhum registro encontrado.
+          </>
+        }
         pagination={true}
         highlightOnHover={true}
         responsive={true}

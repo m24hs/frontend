@@ -10,11 +10,16 @@ export const ListService = styled.ul`
 
 export const ListItem = styled.li`
   display: grid;
-  grid-template-rows: repeat(4, auto);
+  grid-template-rows: repeat(5, auto);
   grid-template-columns: 1fr;
-  grid-template-areas: "title" "img" "text" "button";
+  grid-template-areas: "divider" "title" "img" "text" "button";
   row-gap: 16px;
   column-gap: 32px;
+  padding: 32px 0;
+
+  & > span {
+    grid-area: divider;
+  }
 
   & > h1 {
     grid-area: title;
@@ -33,10 +38,10 @@ export const ListItem = styled.li`
     ${({ right }) =>
       right
         ? `    
-        grid-template-areas: "title img" "text img" "button img";
+        grid-template-areas: "divider divider" "title img" "text img" "button img";
       `
         : `
-        grid-template-areas: "img title" "img text" "img button";
+        grid-template-areas: "divider divider" "img title" "img text" "img button";
     `}
   }
 `;

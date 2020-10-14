@@ -33,21 +33,19 @@ const Servicos = (props) => {
             {Object.keys(props.servicos).length > 0 &&
               props.servicos.map((item, index) => (
                 <>
-                  <li key={index}>
-                    {index !== 0 && <Divider />}
-                    <ListItem right={index % 2 !== 0}>
-                      <PageTitle small>{item.title}</PageTitle>
-                      <ListImage>
-                        <img src={item.image} />
-                      </ListImage>
-                      <ViewHtml
-                        dangerouslySetInnerHTML={{ __html: item.description }}
-                      />
-                      <Link href={`${router.pathname}/${item.url}`}>
-                        <Button secondary>Saiba mais</Button>
-                      </Link>
-                    </ListItem>
-                  </li>
+                  <ListItem key={index} right={index % 2 !== 0}>
+                    <span>{index !== 0 && <Divider />}</span>
+                    <PageTitle small>{item.title}</PageTitle>
+                    <ListImage>
+                      <img src={item.image} />
+                    </ListImage>
+                    <ViewHtml
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                    <Link href={`${router.pathname}/${item.url}`}>
+                      <Button secondary>Saiba mais</Button>
+                    </Link>
+                  </ListItem>
                 </>
               ))}
           </ListService>

@@ -1,4 +1,5 @@
 // Imports padrão
+import { useState } from "react";
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
@@ -9,33 +10,123 @@ import Img from "../../assets/contato.jpg";
 
 // Imports auxiliares
 import Form, { Input } from "../../components/Form";
+import api from "../../services/api.js";
+import { getFormData, countError } from "../../services/helpers.js";
 
 const Contato = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState("");
+
+  // Salvar
+  const handleSend = async () => {
+    // Limpa erros
+    setIsError("");
+    
+    // Se houver error no form
+    const numberErrors = await countError(".form-contact");
+    if (numberErrors > 0) {
+      return;
+    }
+
+    // Marca como loading
+    setIsLoading(true);
+
+    // Envia
+    const formData = getFormData(".form-contact");
+    const response = await api.post(`/contact`, formData);
+
+    // Remove loading
+    setIsLoading(false);
+
+    // Retorna
+    if (response.data.status === "success") {
+    } else {
+      setIsError(response.data.data);
+    }
+  };
+
   return (
     <>
       <Head>
         <title>Contato - M24</title>
       </Head>
-      <Layout>
+      <Layout loading={isLoading} error={isError}>
         <div>
           <PageTitle>Contato</PageTitle>
           <PageDescription>
-              Tem alguma dúvida, sugestão ou gostaria de saber mais sobre a
-              nossa proposta? Preencha seus dados corretamente e espere nosso
-              contato em breve!
-            </PageDescription>          
+            Tem alguma dúvida, sugestão ou gostaria de saber mais sobre a nossa
+            proposta? Preencha seus dados corretamente e espere nosso contato em
+            breve!
+          </PageDescription>
           <Wrapper>
             <Form className="form-contact">
-              <Input type="text" label="Nome completo" />
-              <Input type="text" label="Email" />
-              <Input type="text" label="Telefone / Celular" />
-              <Input type="textarea" label="Mensagem" rows="4" />
+              <Input
+                type="text"
+                name="name"
+                label="Nome completo"
+                validate={(e) => {
+                  return [
+                    {
+                      expression: e.value.length === 0,
+                      message: "Preencha o Nome!",
+                    },
+                  ];
+                }}
+              />
+              <Input
+                type="text"
+                name="email"
+                label="Email"
+                validate={(e) => {
+                  return [
+                    {
+                      expression: e.value.length === 0,
+                      message: "Preencha o Email!",
+                    },
+                  ];
+                }}
+              />
+              <Input
+                type="mask"
+                name="phone"
+                label="Telefone / Celular"
+                mask="(99) 999999999"
+                maskPlaceholder=" "                
+                validate={(e) => {
+                  const phone = e.value
+                  .replaceAll("(", "")
+                  .replaceAll(")", "")
+                  .replaceAll(" ", "")
+                  .trim();
+
+                  return [
+                    {
+                      expression: phone.length === 0,
+                      message: "Preencha o Telefon / Celular!",
+                    },
+                  ];
+                }}
+              />
+              <Input
+                type="textarea"
+                name="message"
+                label="Mensagem"
+                rows="4"
+                validate={(e) => {
+                  return [
+                    {
+                      expression: e.value.length === 0,
+                      message: "Preencha a Mensagem!",
+                    },
+                  ];
+                }}
+              />
               <Button
                 secondary
                 type="button"
                 margin="16px 0 0 0"
-                onClick={(e) => {
-                  handleSubmit(e);
+                onClick={() => {
+                  handleSend();
                 }}
               >
                 Continuar

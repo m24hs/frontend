@@ -9,14 +9,11 @@ import { getFormData } from "../../../services/helpers.js";
 import Layout from "../../../components/admin/Layout";
 import { PageTitle } from "../../../styles/global";
 
-import Form, {
-  Editor,
-} from "../../../components/Form";
+import Form, { Input, Editor, Button } from "../../../components/Form";
 
 const Configuracoes = (props) => {
   // Rotas
   const router = useRouter();
-  const { servico } = router.query;
 
   // State
   const [formData, setFormData] = useState({});
@@ -26,21 +23,26 @@ const Configuracoes = (props) => {
   useEffect(() => {
     const getData = async () => {
       setIsLoading(true);
-      const servicos = await api.get(`/services/${servico}`);
-      setFormData(servicos.data);
+      const settings = await api.get(`/settings`);
+      setFormData(settings.data);
       setIsLoading(false);
-    }
+    };
     getData();
-  },[servico]);
+  }, [props]);
 
   // Salvar
   const handleSave = async () => {
     setIsLoading(true);
-    const formData = getFormData(".form-service");
-    const servico = await api.post(`/services`,formData);
+    const formData = getFormData(".form-config");
+    const response = await api.post(`/settings`, formData);
     setIsLoading(false);
-    router.push("/admin/servicos")
-  }
+    // Retorna
+    if (response.data.status === "success") {
+      router.push("/admin/configuracoes");
+    } else {
+      setIsError(response.data.data);
+    }
+  };
 
   return (
     <>
@@ -50,38 +52,47 @@ const Configuracoes = (props) => {
       <Layout loading={isLoading}>
         <div>
           <PageTitle secondary>Configurações</PageTitle>
-          <form className="form-service margin-3x">
-            <input name="id" type="hidden" defaultValue={formData.id} />
-            <div>
-              <label>Email</label>
-              <input name="title" type="text" defaultValue={formData.title} />
-            </div>
-            <div>
-              <label>Senha</label>
-              <input name="url" type="text" defaultValue={formData.url} />
-            </div>
-            <div>
-              <label>Host</label>
-              <input name="image" type="text" defaultValue={formData.image} />
-            </div>    
-            <div>
-              <label>Porta</label>
-              <input name="plan" type="text" defaultValue={formData.plan} />
-            </div>                    
-            <div>
-              <label>Descrição</label>
-              <Editor name="description" defaultValue={formData.description} />
-            </div>
-            <div>
-              <label>Página</label>
-              <Editor name="page" defaultValue={formData.page} />
-            </div>
-            <div>
-              <label>Valor</label>
-              <input  name="price" type="text" defaultValue={formData.price || 0} />
-            </div>            
-            <button className="btn-primary" type="button" onClick={() => handleSave()}>Salvar</button>
-          </form>
+          <Form className="form-config" margin="16px 0">
+            <Input type="hidden" name="id" defaultValue={formData.id} />
+            <Input
+              type="text"
+              label="Nome email"
+              name="name"
+              light={true}
+              defaultValue={formData.name}
+            />
+            <Input
+              type="text"
+              label="Email"
+              name="email"
+              light={true}
+              defaultValue={formData.email}
+            />
+            <Input
+              type="text"
+              label="Senha"
+              name="email_pass"
+              light={true}
+              defaultValue={formData.email_pass}
+            />
+            <Input
+              type="text"
+              label="Host"
+              name="email_server"
+              light={true}
+              defaultValue={formData.email_server}
+            />
+            <Input
+              type="text"
+              label="Porta"
+              name="email_port"
+              light={true}
+              defaultValue={formData.email_port}
+            />
+            <Button type="Button" onClick={() => handleSave()}>
+              Salvar
+            </Button>
+          </Form>
         </div>
       </Layout>
     </>
