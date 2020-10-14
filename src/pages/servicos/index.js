@@ -39,7 +39,6 @@ const Servicos = (props) => {
     const teste = async () => {
       const servicos = await fetchData(api.get("/services"));
       setDataServicos(servicos);
-      console.log(dataServicos);
     }
     teste();
   },[props])

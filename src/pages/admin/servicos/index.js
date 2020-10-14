@@ -12,31 +12,19 @@ import { PageTitle } from "../../../styles/global";
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
 import DataTable from "../../../components/admin/DataTable";
-import NoSsr from "../../../components/NoSsr";
 
 const Servicos = (props) => {
-  return (
-    <NoSsr>
-      <Wrapper {...props}></Wrapper>
-    </NoSsr>
-  );
-};
-
-export default Servicos;
-
-const Wrapper = (props) => {
   // Rota
   const router = useRouter();
-
+  
+  // Preenche variável data
   const [dataServicos,setDataServicos] = useState({});
-
   useEffect(() => {
-    const teste = async () => {
+    const getData = async () => {
       const servicos = await fetchData(api.get("/services"));
       setDataServicos(servicos);
-      console.log(dataServicos);
     }
-    teste();
+    getData();
   },[props])
 
   return (
@@ -84,3 +72,5 @@ const Wrapper = (props) => {
     </>
   );
 };
+
+export default Servicos;

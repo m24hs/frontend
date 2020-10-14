@@ -1,4 +1,5 @@
 // Imports padrão
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
@@ -12,8 +13,19 @@ import { PageTitle } from "../../../styles/global";
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
 
-const Assinaturas = ({ assinaturas }) => {
+const Assinaturas = (props) => {
+  // Rota
   const router = useRouter();
+
+  // Preenche variável data
+  const [dataAssinaturas,setDataAssinaturas] = useState({});
+  useEffect(() => {
+    const getData = async () => {
+      const assinaturas = await fetchData(api.get("/subscriptions"));
+      setDataAssinaturas(assinaturas);
+    }
+    getData();
+  },[props])  
 
   return (
     <>
@@ -55,7 +67,7 @@ const Assinaturas = ({ assinaturas }) => {
                 ),
               },
             ]}
-            data={assinaturas}
+            data={dataAssinaturas}
             baseUrl={router.pathname}
             search={true}
             edit={true}
@@ -65,16 +77,5 @@ const Assinaturas = ({ assinaturas }) => {
     </>
   );
 };
-
-export async function getStaticProps() {
-  // Carregar
-  const assinaturas = await fetchData(api.get("/subscriptions"));
-
-  return {
-    props: {
-      assinaturas,
-    },
-  };
-}
 
 export default Assinaturas;
