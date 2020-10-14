@@ -11,13 +11,14 @@ import { PageTitle } from "../../../styles/global";
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
 import DataTable from "../../../components/admin/DataTable";
+import NoSsr from "../../../components/NoSsr";
 
 const Servicos = ({ servicos }) => {
   // Rota
   const router = useRouter();
 
   return (
-    <>
+    <NoSsr>
       <Head>
         <title>Serviços - Painel Administrativo - M24</title>
       </Head>
@@ -58,7 +59,7 @@ const Servicos = ({ servicos }) => {
           />
         </div>
       </Layout>
-    </>
+    </NoSsr>
   );
 };
 
