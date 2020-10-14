@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import {
   Header,
@@ -13,12 +14,21 @@ import {
 import LogoSvg from "../../assets/logo.svg";
 import { Menu as MenuIcon, LogOut as LogOutIcon, UserCircle as UserCircleIcon } from "@styled-icons/boxicons-regular";
 
+import cookieCutter from 'cookie-cutter';
+
 const Menu = (props) => {
+  const router = useRouter();
   const [userMenuOpen, setUserMenuOpen] = useState(false);
 
   const handleToogleUserMenu = () => {
     setUserMenuOpen(!userMenuOpen);
   }
+
+  const handleLoggout = (e) => {
+    e.preventDefault();
+    cookieCutter.set('logged', false);
+    router.push("/");
+  }  
 
   return (
     <>
@@ -38,7 +48,7 @@ const Menu = (props) => {
             <Link href="/admin/configuracoes">Configurações</Link>
           </li>
           <li>
-            <Link href="/admin/logout">Sair</Link>
+            <a href="#" onClick={(e) => handleLoggout(e)}>Sair</a>
           </li>
         </DropDown>
       </UserMenu>

@@ -54,6 +54,30 @@ const Configuracoes = (props) => {
           <PageTitle secondary>Configurações</PageTitle>
           <Form className="form-config" margin="16px 0">
             <Input type="hidden" name="id" defaultValue={formData.id} />
+            <div>
+              <PageTitle small secondary margin="8px 0">
+                Iugu
+              </PageTitle>
+            </div>
+            <Input
+              type="text"
+              label="API Token"
+              name="iugu_token"
+              light={true}
+              defaultValue={formData.iugu_token}
+            />
+            <Input
+              type="text"
+              label="Account ID"
+              name="iugu_account_id"
+              light={true}
+              defaultValue={formData.iugu_account_id}
+            />
+            <div>
+              <PageTitle small secondary margin="8px 0">
+                Email
+              </PageTitle>
+            </div>            
             <Input
               type="text"
               label="Nome email"
@@ -69,7 +93,7 @@ const Configuracoes = (props) => {
               defaultValue={formData.email}
             />
             <Input
-              type="text"
+              type="password"
               label="Senha"
               name="email_pass"
               light={true}

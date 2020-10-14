@@ -34,9 +34,9 @@ export const Wrapper = styled.div`
     }
     & > div > img {
       display: block;
-      box-shadow: 15px 15px 0px 0px var(--color-tertiary);
+      box-shadow: 8px 8px 0px 0px var(--color-tertiary);
       width: calc(100% - 64px);
-      height: calc(100% - 15px);
+      height: calc(100% - 8px);
       object-fit: cover;
     }
   }

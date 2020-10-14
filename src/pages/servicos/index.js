@@ -19,7 +19,6 @@ import { fetchData } from "../../services/helpers";
 
 const Servicos = (props) => {
   const router = useRouter();
-  console.log(props.servicos);
 
   return (
     <>

@@ -15,7 +15,6 @@ export const ListItem = styled.li`
   grid-template-areas: "divider" "title" "img" "text" "button";
   row-gap: 16px;
   column-gap: 32px;
-  padding: 32px 0;
 
   & > span {
     grid-area: divider;
@@ -53,9 +52,9 @@ export const ListImage = styled.div`
 
   & > img {
     width: 100%;
-    height: calc(100% - 15px);
+    height: calc(100% - 8px);
     object-fit: cover;
     display: block;
-    box-shadow: 15px 15px 0px 0px var(--color-tertiary);
+    box-shadow: 8px 8px 0px 0px var(--color-tertiary);
   }
 `;

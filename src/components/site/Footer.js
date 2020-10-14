@@ -35,28 +35,28 @@ const Footer = () => {
       </ul>
       <ul className="footer-social">
         <li>
-          <Link href="#" target="_blank">
+          <Link href="https://api.whatsapp.com/send?phone=558007299123&text=*Mensagem%20autom%C3%A1tica*%20|%20Envie%20esta%20mensagem%20para%20confirmar%20seu%20pr%C3%A9-cadastro%20e%20receber%20mais%20informa%C3%A7%C3%B5es.&fbclid=IwAR31FZjOvBMjR-rl4OMPRYJGfjRoQTFscXkxa9dsuKElaqEl3pyG4r6HTOE" target="_blank">
             <a>
               <WhatsappIcon />
             </a>
           </Link>
         </li>
         <li>
-          <Link href="#" target="_blank">
+          <Link href="https://www.facebook.com/m24.gestao" target="_blank">
             <a>
               <FacebookIcon />
             </a>
           </Link>
         </li>
         <li>
-          <Link href="#" target="_blank">
+          <Link href="https://www.instagram.com/m24.gestao/" target="_blank">
             <a>
               <InstagramIcon />
             </a>
           </Link>
         </li>
         <li>
-          <Link href="#" target="_blank">
+          <Link href="https://www.linkedin.com/company/m24-gest%C3%A3o-preventiva-de-motocicletas/" target="_blank">
             <a>
               <LinkedinIcon />
             </a>

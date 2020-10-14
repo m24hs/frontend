@@ -10,7 +10,7 @@ import NoSsr from "../../../../components/NoSsr";
 
 // Imports auxiliares
 import api from "../../../../services/api.js";
-import { getFormData } from "../../../../services/helpers.js";
+import { getFormData, countError } from "../../../../services/helpers.js";
 import Form, {
   Input,
   InputUploader,
@@ -42,12 +42,20 @@ const Servicos = (props) => {
   // Salvar
   const handleSave = async () => {
     setIsError("");
+
+    // Se houver error no form
+    const numberErrors = await countError(".form-service");
+    if (numberErrors > 0) {
+      return;
+    }
+
     // Marca como loading
     setIsLoading(true);
 
     // Envia
     const formData = getFormData(".form-service");
     formData["price"] = formData["price"].replace(",", ".");
+    formData["price"] = formData["price"] || "0";
     const response = await api.post(`/services`, formData);
 
     // Remove loading
@@ -55,9 +63,9 @@ const Servicos = (props) => {
 
     // Retorna
     if (response.data.status === "success") {
-      router.push("/admin/servicos"); 
+      router.push("/admin/servicos");
     } else {
-      setIsError(response.data.data)
+      setIsError(response.data.data);
     }
   };
 
@@ -72,7 +80,12 @@ const Servicos = (props) => {
     // Remove loading
     setIsLoading(false);
 
-    if (response.data.status === "success") router.push("/admin/servicos");
+    // Retorna
+    if (response.data.status === "success") {
+      router.push("/admin/servicos");
+    } else {
+      setIsError(response.data.data);
+    }
   };
 
   return (
@@ -122,7 +135,7 @@ const Servicos = (props) => {
               name="image"
               accept="image/jpeg,image/gif,image/png"
               defaultValue={formData.image}
-            />            
+            />
             <InputUploader
               label="PDF do contrato"
               pdf

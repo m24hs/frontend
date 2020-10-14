@@ -12,6 +12,8 @@
     "axios": "^0.20.0",
     "card-validator": "^8.1.0",
     "cep-promise": "^4.0.2",
+    "cookie-cutter": "^0.2.0",
+    "crypto-js": "^4.0.0",
     "moment": "^2.29.1",
     "next": "9.5.4",
     "next-images": "^1.6.0",

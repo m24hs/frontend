@@ -28,16 +28,10 @@ export const Input = (props) => {
         <Select {...props} />
       </Wrapper>
     );
-  else if (type === "text")
+  else if (type === "text" || type === "password")
     return (
       <Wrapper {...restOfProps}>
-        <HtmlInput type="text" {...props} />
-      </Wrapper>
-    );
-  else if (type === "passoword")
-    return (
-      <Wrapper {...restOfProps}>
-        <HtmlInput type="password" {...props} />
+        <HtmlInput {...props} />
       </Wrapper>
     );
   else if (type === "mask")
@@ -313,7 +307,7 @@ export const InputUploader = (props) => {
         <LabelStyle>{props.label}</LabelStyle>
         <div>
           {props.image && <img width="100%" src={file || props.defaultValue} />}
-          {props.pdf && (
+          {props.pdf && (file || props.defaultValue || "") !== "" && (            
             <object
               data={file || props.defaultValue}
               type="application/pdf"
