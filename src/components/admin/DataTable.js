@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import NoSsr from "../NoSsr";
 
 // Imports de estilo
 import DataTableWrapper from "react-data-table-component";
@@ -44,56 +45,58 @@ const DataTable = (props) => {
   };
 
   return (
-    <div className={className}>
-      <Form onSubmit={(e) => e.preventDefault()}>
-        {search && (
-          <input
-            type="text"
-            name="search"
-            placeholder="Pesquisa"
-            onChange={(e) => handleSearch(e)}
-          />
-        )}
-        {add && (
-          <a href={`${baseUrl}/novo`}>
-            <Button type="button">
-              <PlusIcon />
-              Novo
-            </Button>
-          </a>
-        )}
-      </Form>
-      <DataTableWrapper
-        {...restOfProps}
-        customStyles={Custom}
-        noDataComponent={
-          <>
-            <br />
-            Nenhum registro encontrado.
-          </>
-        }
-        pagination={true}
-        highlightOnHover={true}
-        responsive={true}
-        data={filteredData}
-        onRowClicked={(item) => {
-          if (onRowClicked) {
-            return onRowClicked();
-          } else if (edit) {
-            //router.push(`${baseUrl}/${item.id}`);
-            window.location.href = `${baseUrl}/${item.id}`;
+    <NoSsr>
+      <div className={className}>
+        <Form onSubmit={(e) => e.preventDefault()}>
+          {search && (
+            <input
+              type="text"
+              name="search"
+              placeholder="Pesquisa"
+              onChange={(e) => handleSearch(e)}
+            />
+          )}
+          {add && (
+            <a href={`${baseUrl}/novo`}>
+              <Button type="button">
+                <PlusIcon />
+                Novo
+              </Button>
+            </a>
+          )}
+        </Form>
+        <DataTableWrapper
+          {...restOfProps}
+          customStyles={Custom}
+          noDataComponent={
+            <>
+              <br />
+              Nenhum registro encontrado.
+            </>
           }
-          return;
-        }}
-        paginationComponentOptions={{
-          rowsPerPageText: "Linhas por página:",
-          rangeSeparatorText: "de",
-          noRowsPerPage: false,
-          selectAllRowsItem: false,
-          selectAllRowsItemText: "Todos",
-        }}
-      />
-    </div>
+          pagination={true}
+          highlightOnHover={true}
+          responsive={true}
+          data={filteredData}
+          onRowClicked={(item) => {
+            if (onRowClicked) {
+              return onRowClicked();
+            } else if (edit) {
+              //router.push(`${baseUrl}/${item.id}`);
+              window.location.href = `${baseUrl}/${item.id}`;
+            }
+            return;
+          }}
+          paginationComponentOptions={{
+            rowsPerPageText: "Linhas por página:",
+            rangeSeparatorText: "de",
+            noRowsPerPage: false,
+            selectAllRowsItem: false,
+            selectAllRowsItemText: "Todos",
+          }}
+        />
+      </div>
+    </NoSsr>
   );
 };
 
