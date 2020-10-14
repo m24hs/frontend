@@ -1,5 +1,5 @@
 // Imports auxiliares
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -23,6 +23,10 @@ const DataTable = (props) => {
     ...restOfProps
   } = props;
   const [filteredData, setFilteredData] = useState(data);
+
+  useEffect(() => {
+    setFilteredData(data);
+  },[props])
 
   // Pesquisa no json
   const handleSearch = (e) => {

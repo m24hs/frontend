@@ -1,4 +1,5 @@
 // Imports padrão
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Moment from "react-moment";
@@ -11,14 +12,24 @@ import { PageTitle } from "../../../styles/global";
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
 import DataTable from "../../../components/admin/DataTable";
-import NoSsr from "../../../components/NoSsr";
 
-const Servicos = ({ servicos }) => {
+const Servicos = (props) => {
   // Rota
   const router = useRouter();
 
+  const [dataServicos,setDataServicos] = useState({});
+
+  useEffect(() => {
+    const teste = async () => {
+      const servicos = await fetchData(api.get("/services"));
+      setDataServicos(servicos);
+      console.log(dataServicos);
+    }
+    teste();
+  },[props])
+
   return (
-    <NoSsr>
+    <>
       <Head>
         <title>Serviços - Painel Administrativo - M24</title>
       </Head>
@@ -51,7 +62,7 @@ const Servicos = ({ servicos }) => {
                 ),
               },
             ]}
-            data={servicos}
+            data={dataServicos}
             search={true}
             baseUrl={router.pathname}
             add={true}
@@ -59,19 +70,8 @@ const Servicos = ({ servicos }) => {
           />
         </div>
       </Layout>
-    </NoSsr>
+    </>
   );
 };
-
-export async function getStaticProps() {
-  // Carregar
-  const servicos = await fetchData(api.get("/services"));
-
-  return {
-    props: {
-      servicos,
-    },
-  };
-}
 
 export default Servicos;
