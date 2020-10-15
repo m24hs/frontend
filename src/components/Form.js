@@ -77,7 +77,7 @@ const Wrapper = (props) => {
 
 // Select
 const Select = (props) => {
-  const { validate, onBlur, ...restOfProps } = props;
+  const { validate, onBlur, onChange, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
   const [propsError, setPropsError] = useState("");
 
@@ -108,7 +108,13 @@ const Select = (props) => {
   };
 
   const selectRef = useRef();
+  const [value, setValue] = useState("");
 
+  useEffect(() => {
+    if (props.value)
+      setValue(props.value.value);
+  },[props.value]);
+  
   return (
     <>
       <ReactSelect
@@ -120,15 +126,13 @@ const Select = (props) => {
           let e = selectRef.current.select.props.value;
           if (onBlur) return onBlur(e);
           else if (validate) {
-            setIsError(validateInput(validate, e));
+            setIsError(validateInput(validate, e || ""));
             return;
           }
         }}
-      />
-      <input
-        type="hidden"
-        value={props.value && props.value.value}
-        name={props.name}
+        onChange={(e) => {
+          if (onChange) return onChange(e);
+        }}
       />
       {(propsError || isError) && (
         <span className="form-error">{propsError || isError}</span>
@@ -249,6 +253,7 @@ const InputCurrency = (props) => {
 // Valida o input
 const validateInput = (f, e) => {
   try {
+    console.log(e);
     // Executa função
     const response = f(e.hasOwnProperty("target") ? e.target : e);
     // Loop
@@ -258,6 +263,7 @@ const validateInput = (f, e) => {
       responseIndex++
     ) {
       let item = response[responseIndex];
+      console.log(item);
 
       // Se o retorno for true, é um erro
       if (item.expression === true) {
@@ -269,6 +275,7 @@ const validateInput = (f, e) => {
       if (responseIndex === response.length) return "";
     }
   } catch (error) {
+    console.error(error);
     // Se der erro
     return "Não foi possivel validar o campo!";
   }

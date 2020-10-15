@@ -149,6 +149,68 @@ const Servicos = () => {
     return true;
   };
 
+  // Valida Renavam
+  const isValidRenavam = (renavam) => {
+    // https://github.com/eliseuborges/Renavam/blob/9a005330f12817d4e8ca8a334f815282dde073fb/Renavam.js
+    // Valida se possui 11 digitos pos formatacao
+    renavam = "00000000000"+renavam;
+    renavam = renavam.slice(-11);
+
+    if (!renavam.match("[0-9]{11}")) {
+      return false;
+    }
+
+    // Remove o digito (11 posicao)
+    var renavamSemDigito = renavam.substring(0, 10);
+
+    // Inverte os caracteres (reverso)
+    var renavamReversoSemDigito = renavamSemDigito.split("").reverse().join("");
+
+    // Multiplica as strings reversas do renavam pelos numeros multiplicadores
+    // Exemplo: renavam reverso sem digito = 69488936
+    // 6, 9, 4, 8, 8, 9, 3, 6
+    // * * * * * * * *
+    // 2, 3, 4, 5, 6, 7, 8, 9 (numeros multiplicadores - sempre os mesmos [fixo])
+    // 12 + 27 + 16 + 40 + 48 + 63 + 24 + 54
+    // soma = 284
+
+    var soma = 0;
+    var multiplicador = 2;
+    for (var i = 0; i < 10; i++) {
+      var algarismo = renavamReversoSemDigito.substring(i, i + 1);
+      soma += algarismo * multiplicador;
+
+      if (multiplicador >= 9) {
+        multiplicador = 2;
+      } else {
+        multiplicador++;
+      }
+    }
+
+    // mod11 = 284 % 11 = 9 (resto da divisao por 11)
+    var mod11 = soma % 11;
+
+    // Faz-se a conta 11 (valor fixo) - mod11 = 11 - 9 = 2
+    var ultimoDigitoCalculado = 11 - mod11;
+
+    // ultimoDigito = Caso o valor calculado anteriormente seja 10 ou 11, transformo ele em 0
+    // caso contrario, eh o proprio numero
+    ultimoDigitoCalculado =
+      ultimoDigitoCalculado >= 10 ? 0 : ultimoDigitoCalculado;
+
+    // Pego o ultimo digito do renavam original (para confrontar com o calculado)
+    var digitoRealInformado = parseInt(
+      renavam.substring(renavam.length - 1, renavam.length)
+    );
+
+    // Comparo os digitos calculado e informado
+    if (ultimoDigitoCalculado === digitoRealInformado) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <>
       <Head>
@@ -299,8 +361,14 @@ const Servicos = () => {
                 ];
               }}
             />
-            <Input name="complement" label="Complemento" type="text" />
             <Input
+              divstyle={{ width: "60%" }}
+              name="complement"
+              label="Complemento"
+              type="text"
+            />
+            <Input
+              divstyle={{ width: "40%", paddingLeft: "16px" }}
               type="text"
               label="Bairro *"
               name="district"
@@ -398,6 +466,96 @@ const Servicos = () => {
               isReadOnly={inputValue.state.disabled}
             />
             <Input
+              divstyle={{ width: "60%" }}
+              label="Categoria da Moto *"
+              type="select"
+              name="motorcycle_category"
+              options={[
+                { value: "Moto até 100cc", label: "Moto até 100cc" },
+                { value: "Moto até 150cc", label: "Moto até 150cc" },
+                { value: "Moto até 300cc", label: "Moto até 300cc" },
+              ]}
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.length === 0,
+                    message: "Preencha a Categoria!",
+                  },
+                ];
+              }}
+              placeholder=""
+            />
+            <Input
+              divstyle={{ width: "40%", paddingLeft: "16px" }}
+              name="motorcycle_year"
+              label="Ano/Modelo *"
+              type="mask"
+              mask="9999/9999"
+              maskPlaceholder=" "
+              validate={(e) => {
+                const value = e.value.trim().replace("/", "");
+                const year = value.substr(0, 4);
+                const model = value.substr(4, 4);
+                const date = new Date();
+
+                return [
+                  {
+                    expression: value.length === 0,
+                    message: "Preencha a Ano/Modelo!",
+                  },
+                  {
+                    expression: value.length < 8,
+                    message: "Preencha a Ano/Modelo corretamente!",
+                  },
+                  {
+                    expression:
+                      year < 1970 ||
+                      year > date.getFullYear() ||
+                      model < 1970 ||
+                      model > date.getFullYear() + 1,
+                    message: "Preencha a Ano/Modelo corretamente!",
+                  },
+                ];
+              }}
+            />
+            <Input
+              divstyle={{ width: "50%" }}
+              name="motorcycle_placa"
+              label="Placa *"
+              type="mask"
+              mask="aaa-9999"
+              maskPlaceholder=" "
+              validate={(e) => {
+                return [
+                  {
+                    expression: e.value.length === 0,
+                    message: "Preencha a placa!",
+                  },
+                ];
+              }}
+            />
+            <Input
+              divstyle={{ width: "50%", paddingLeft: "16px" }}
+              name="motorcycle_renavam"
+              label="Renavam *"
+              type="mask"
+              mask="99999999999"
+              maskPlaceholder=" "
+              validate={(e) => {
+                const value = e.value.trim();
+                return [
+                  {
+                    expression: value.length === 0,
+                    message: "Preencha o Renavam!",
+                  },
+                  {
+                    expression: !isValidRenavam(value),
+                    message: "Renavam inválido!",
+                  },
+                ];
+              }}
+            />
+            <Input
               type="select"
               label="Como conheceu a M24?"
               name="origin"
@@ -427,9 +585,6 @@ const Servicos = () => {
               Continuar
             </Button>
           </Form>
-          <div>
-            <img src={Img} />
-          </div>
         </Container>
       </Layout>
     </>

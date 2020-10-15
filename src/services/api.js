@@ -2,6 +2,6 @@ import axios from 'axios';
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
-    timeout: 10000,
+    timeout: 60000,
 });
 export default api;

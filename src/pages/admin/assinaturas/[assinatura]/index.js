@@ -126,6 +126,34 @@ const Assinaturas = (props) => {
                 defaultValue={formData.User && formData.User.complement}
                 disabled={true}
               />        
+              <Input
+                light={true}
+                type="text"
+                label="Categoria da Moto"
+                defaultValue={formData.User && formData.User.motorcycle_category}
+                disabled={true}
+              />        
+              <Input
+                light={true}
+                type="text"
+                label="Ano/Modelo"
+                defaultValue={formData.User && formData.User.motorcycle_year}
+                disabled={true}
+              />        
+              <Input
+                light={true}
+                type="text"
+                label="Placa"
+                defaultValue={formData.User && formData.User.motorcycle_placa}
+                disabled={true}
+              />        
+              <Input
+                light={true}
+                type="text"
+                label="Renavam"
+                defaultValue={formData.User && formData.User.motorcycle_renavam}
+                disabled={true}
+              />        
             </Form>
         </div>
       </Layout>
