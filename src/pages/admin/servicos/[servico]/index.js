@@ -37,7 +37,7 @@ const Servicos = (props) => {
       setIsLoading(false);
     };
     getData();
-  }, [servico]);
+  }, [props]);
 
   // Salvar
   const handleSave = async () => {
@@ -70,6 +70,10 @@ const Servicos = (props) => {
   };
 
   const handleDelete = async () => {
+    // 
+    if ( !confirm("Confirma a exclusão?") ) 
+      return;
+
     // Marca como loading
     setIsLoading(true);
 
