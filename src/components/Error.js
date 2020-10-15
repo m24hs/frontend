@@ -15,7 +15,7 @@ const Error = (props) => {
   };
 
   return (
-    <>
+    <> 
       {isError && (
         <ErrorStyle>
           <div>

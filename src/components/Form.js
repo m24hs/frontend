@@ -9,7 +9,12 @@ const ReactQuill =
 import "react-quill/dist/quill.snow.css";
 
 // Imports de estilo
-import { FormStyle, WrapperStyle, LabelStyle, UploaderWrapper } from "../styles/components/Form";
+import {
+  FormStyle,
+  WrapperStyle,
+  LabelStyle,
+  UploaderWrapper,
+} from "../styles/components/Form";
 import { Button as ButtonStyle } from "../styles/global";
 
 // Form
@@ -103,7 +108,6 @@ const Select = (props) => {
   };
 
   const selectRef = useRef();
-  const [value, setValue] = useState("");
 
   return (
     <>
@@ -135,14 +139,19 @@ const Select = (props) => {
 
 // Input
 const HtmlInput = (props) => {
-  const { validate, onBlur, ...restOfProps } = props;
+  const { validate, onBlur, defaultValue, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
-  const [propsError, setPropsError] = useState("");
 
+  const [propsError, setPropsError] = useState("");
   useEffect(() => {
     if ((props.error || "") !== "") {
       setPropsError(props.error);
     }
+  }, [props]);
+
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue(defaultValue || "");
   }, [props]);
 
   return (
@@ -157,6 +166,8 @@ const HtmlInput = (props) => {
             return;
           }
         }}
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
         className="form-component"
       />
       {(propsError || isError) && (
@@ -168,7 +179,7 @@ const HtmlInput = (props) => {
 
 // Input mask
 const InputMask = (props) => {
-  const { validate, onBlur, ...restOfProps } = props;
+  const { validate, onBlur, defaultValue, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
   const [propsError, setPropsError] = useState("");
 
@@ -176,6 +187,11 @@ const InputMask = (props) => {
     if ((props.error || "") !== "") {
       setPropsError(props.error);
     }
+  }, [props]);
+
+  const [value, setValue] = useState("");
+  useEffect(() => {
+    setValue(defaultValue || "");
   }, [props]);
 
   return (
@@ -188,6 +204,8 @@ const InputMask = (props) => {
           setIsError(validateInput(validate, e));
           return;
         }}
+        onChange={(e) => setValue(e.target.value)}
+        value={value}
         className="form-component"
       />
       {(propsError || isError) && (
@@ -211,7 +229,7 @@ const InputCurrency = (props) => {
   }, [props]);
 
   useEffect(() => {
-    setValueChange(defaultValue);
+    setValueChange(defaultValue || 0);
   }, [props]);
 
   return (
@@ -221,7 +239,8 @@ const InputCurrency = (props) => {
         type="text"
         decimalSeparator=","
         decimalScale={2}
-        value={defaultValue}
+        onChange={(e) => setValueChange(e.target.value)}
+        value={valueChange}
       />
     </>
   );
@@ -281,7 +300,7 @@ export const InputUploader = (props) => {
   const handleOnChange = async (e) => {
     try {
       const base64 = await toBase64(e.target.files[0]);
-      setFile(base64); 
+      setFile(base64);
     } catch (error) {
       alert("erro");
     }
@@ -297,7 +316,7 @@ export const InputUploader = (props) => {
 
   const handleUpload = () => {
     inputRef.current.click();
-  }
+  };
 
   const inputRef = useRef();
 
@@ -307,22 +326,30 @@ export const InputUploader = (props) => {
         <LabelStyle>{props.label}</LabelStyle>
         <div>
           {props.image && <img width="100%" src={file || props.defaultValue} />}
-          {props.pdf && (file || props.defaultValue || "") !== "" && (            
+          {props.pdf && (file || props.defaultValue || "") !== "" && (
             <object
               data={file || props.defaultValue}
               type="application/pdf"
               width="100%"
               height="600px"
             ></object>
-          )}          
+          )}
         </div>
-        <input ref={inputRef} type="file" id={`upload-${props.name}`} onChange={(e) => handleOnChange(e)} {...props} />
+        <input
+          ref={inputRef}
+          type="file"
+          id={`upload-${props.name}`}
+          onChange={(e) => handleOnChange(e)}
+          {...props}
+        />
         <input
           type="hidden"
           name={props.name}
           value={file || props.defaultValue}
         />
-        <ButtonStyle type="button" onClick={() => handleUpload()}>Upload</ButtonStyle>
+        <ButtonStyle type="button" onClick={() => handleUpload()}>
+          Upload
+        </ButtonStyle>
       </UploaderWrapper>
     </>
   );
@@ -338,7 +365,7 @@ export const Editor = (props) => {
   return (
     <div style={{ width: props.width || "100%", display: "block" }}>
       <LabelStyle>{props.label}</LabelStyle>
-      <ReactQuill theme="snow" value={value} onChange={setValue} />
+      <ReactQuill theme="snow" value={value} onChange={(e) => setValue(e)} />
       <input name={props.name} type="hidden" value={value} />
     </div>
   );
