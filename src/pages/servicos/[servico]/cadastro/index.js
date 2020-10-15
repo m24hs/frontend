@@ -35,7 +35,6 @@ const Servicos = () => {
   const [isError, setIsError] = useState("");
 
   // Busca CEP
-  const [errorCep, setErrorCep] = useState("");
   const handleCEP = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -46,13 +45,6 @@ const Servicos = () => {
     // Consulta CepPromise
     const cep = e.target.value;
     if (cep.length === 0) {
-      setInputValue({
-        city: emptyState,
-        street: emptyState,
-        number: emptyState,
-        neighborhood: emptyState,
-        state: emptyState,
-      });
       setIsLoading(false);
       return;
     }
@@ -75,9 +67,8 @@ const Servicos = () => {
         street: emptyState,
         number: emptyState,
         neighborhood: emptyState,
-        state: emptyState,
+        state: { value: inputValue.state.value, disabled: false },
       });
-      setErrorCep("CEP não encontrado, por favor, cadastre manualmente.");
     }
     setIsLoading(false);
     return;
@@ -261,7 +252,6 @@ const Servicos = () => {
               mask="99999-999"
               maskPlaceholder=" "
               onBlur={(e) => handleCEP(e)}
-              error={errorCep}
               validate={(e) => {
                 return [
                   {
@@ -278,7 +268,7 @@ const Servicos = () => {
               name="street"
               label="Endereço *"
               divstyle={{ width: "60%" }}
-              value={inputValue.street.value}
+              defaultValue={inputValue.street.value}
               onChange={(e) =>
                 setInputValue({
                   ...inputValue,
@@ -314,7 +304,7 @@ const Servicos = () => {
               type="text"
               label="Bairro *"
               name="district"
-              value={inputValue.neighborhood.value}
+              defaultValue={inputValue.neighborhood.value}
               onChange={(e) =>
                 setInputValue({
                   ...inputValue,
@@ -336,7 +326,7 @@ const Servicos = () => {
               label="Cidade *"
               name="city"
               divstyle={{ width: "60%" }}
-              value={inputValue.city.value}
+              defaultValue={inputValue.city.value}
               onChange={(e) =>
                 setInputValue({
                   ...inputValue,

@@ -85,7 +85,7 @@ const Select = (props) => {
     if ((props.error || "") !== "") {
       setPropsError(props.error);
     }
-  }, [props]);
+  }, [props.error]);
 
   const customStyles = {
     option: (provided, state) => ({
