@@ -7,12 +7,12 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  font-size: .8em;
 
   & > .main {
     flex: 1;
     color: var(--color-text);
     text-align: center;
-    font-size: 1em;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,8 +27,12 @@ export const Container = styled.div`
     font-weight: bold;
   }
 
+  @media (min-width: 480px) {
+    font-size: 1em;
+  }
+
   @media (min-width: 780px) {
-    font-size: 1.5em;
+    font-size: 1.6em;
 
     & > button {
       max-width: 320px;

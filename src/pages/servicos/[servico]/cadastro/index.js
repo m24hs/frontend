@@ -25,7 +25,6 @@ const Servicos = () => {
   const [inputValue, setInputValue] = useState({
     city: emptyState,
     street: emptyState,
-    number: emptyState,
     neighborhood: emptyState,
     state: emptyState,
   });
@@ -54,18 +53,24 @@ const Servicos = () => {
       const response = await cepPromise(cep);
       setInputValue({
         city: { value: response.city, disabled: true },
-        street: { value: response.street, disabled: true },
-        number: { value: response.number, disabled: true },
-        neighborhood: { value: response.neighborhood, disabled: true },
+        street: {
+          value: response.street,
+          disabled: response.street.trim() !== "",
+        },
+        neighborhood: {
+          value: response.neighborhood,
+          disabled: response.neighborhood.trim() !== "",
+        },
         state: { value: response.state, disabled: true },
       });
-      const number = document.querySelector("input[name=number]");
-      number.focus();
+      if (response.street.trim() !== "") {
+        const number = document.querySelector("input[name=number]");
+        number.focus();
+      }
     } catch (e) {
       setInputValue({
         city: emptyState,
         street: emptyState,
-        number: emptyState,
         neighborhood: emptyState,
         state: { value: inputValue.state.value, disabled: false },
       });
@@ -153,7 +158,7 @@ const Servicos = () => {
   const isValidRenavam = (renavam) => {
     // https://github.com/eliseuborges/Renavam/blob/9a005330f12817d4e8ca8a334f815282dde073fb/Renavam.js
     // Valida se possui 11 digitos pos formatacao
-    renavam = "00000000000"+renavam;
+    renavam = "00000000000" + renavam;
     renavam = renavam.slice(-11);
 
     if (!renavam.match("[0-9]{11}")) {
