@@ -152,7 +152,7 @@ const HtmlInput = (props) => {
   const [value, setValue] = useState("");
   useEffect(() => {
     setValue(defaultValue || "");
-  }, [props]);
+  }, [defaultValue]);
 
   return (
     <>
@@ -192,7 +192,7 @@ const InputMask = (props) => {
   const [value, setValue] = useState("");
   useEffect(() => {
     setValue(defaultValue || "");
-  }, [props]);
+  }, [defaultValue]);
 
   return (
     <>
@@ -230,7 +230,7 @@ const InputCurrency = (props) => {
 
   useEffect(() => {
     setValueChange(defaultValue || 0);
-  }, [props]);
+  }, [defaultValue]);
 
   return (
     <>
@@ -360,7 +360,7 @@ export const Editor = (props) => {
 
   useEffect(() => {
     setValue(props.defaultValue || "");
-  }, [props]);
+  }, [props.defaultValue]);
 
   return (
     <div style={{ width: props.width || "100%", display: "block" }}>
