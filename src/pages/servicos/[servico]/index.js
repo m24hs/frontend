@@ -62,27 +62,10 @@ const Servico = (props) => {
   );
 };
 
-export async function getStaticPaths() {
-  const servicos = await fetchData(api.get(`/services/`)) || {};
+Servico.getInitialProps = async (ctx) => {
+  const servicos = await fetchData(api.get(`/services/${ctx.query.servico}?where=url`));
 
-  const paths = servicos.map((item) => ({
-    params: { servico: item.url },
-  }));
-
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({params}) {
-  // Servico
-  const { servico } = params;
-  // Carregar
-  const servicos = await fetchData(api.get(`/services/${servico}?where=url`));
-
-  return {
-    props: {
-      servicos,
-    },
-  };
+  return { servicos }
 }
 
 export default Servico;

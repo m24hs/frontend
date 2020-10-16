@@ -110,7 +110,6 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#E1E1E1" />
           <meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
           <meta name="theme-color" content="#E1E1E1" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         </Head>
         <body>
           <Main />

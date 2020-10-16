@@ -56,15 +56,10 @@ const Servicos = (props) => {
   );
 };
 
-export async function getStaticProps() {
-  // Carregar
+Servicos.getInitialProps = async (ctx) => {
   const servicos = await fetchData(api.get("/services"));
 
-  return {
-    props: {
-      servicos,
-    },
-  };
+  return { servicos }
 }
 
 export default Servicos;

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: "https://marcelorossini-com-br.umbler.net/",
+    baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
     timeout: 60000,
 });
 export default api;
