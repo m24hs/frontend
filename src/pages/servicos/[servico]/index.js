@@ -22,34 +22,20 @@ const Servico = (props) => {
   const router = useRouter();
   const { servico } = router.query;
 
-  // State
-  const [servicos, setServicos] = useState({});
-
-  // Effect
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetchData(
-        api.get(`/services/${servico}?where=url`)
-      );
-      setServicos(response);
-    };
-    getData();
-  }, [props]);
-
   return (
     <>
       <Head>
-        <title>{servicos.title && servicos.title} - M24</title>
+        <title>{props.servicos.title && props.servicos.title} - M24</title>
       </Head>
       <Layout>
         <div>
-          {servicos.title && (
+          {props.servicos && (
             <>
-              <PageTitle>{servicos.title}</PageTitle>
+              <PageTitle>{props.servicos.title}</PageTitle>
               <PageDescription>
-                <ViewHtml dangerouslySetInnerHTML={{ __html: servicos.page }} />
+                <ViewHtml dangerouslySetInnerHTML={{ __html: props.servicos.page }} />
               </PageDescription>
-              {servicos.price > 0 ? (
+              {props.servicos.price > 0 ? (
                   <Button secondary onClick={() => {
                     location.href = `/servicos/${servico}/cadastro`
                   }}>Continuar</Button>
@@ -69,4 +55,19 @@ const Servico = (props) => {
     </>
   );
 };
+
+export async function getServerSideProps(context) {
+  // Servico
+  const { servico } = context.query;
+  // Carregar
+  const servicos = await fetchData(api.get(`/services/${servico}?where=url`));
+
+  return {
+    props: {
+      servicos,
+    },
+  };
+}
+
+
 export default Servico;
