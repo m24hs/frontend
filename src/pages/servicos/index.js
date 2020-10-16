@@ -21,9 +21,7 @@ import { fetchData } from "../../services/helpers";
 const Servicos = (props) => {
   // Variáveis auxiliares
   const router = useRouter();
-  useEffect(() => {
-    alert(props.servicos[0].title);
-  },[props]);
+  
   return (
     <>
       <Head>
@@ -45,7 +43,7 @@ const Servicos = (props) => {
                     <ViewHtml
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
-                    <Link href={`${router.pathname}/${item.url}`}>
+                    <Link href={`${router.pathname}/${item.url}`} shallow={true} >
                       <Button secondary>Saiba mais</Button>
                     </Link>
                   </ListItem>
