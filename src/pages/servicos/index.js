@@ -17,11 +17,32 @@ import {
 // Imports auxiliares
 import api from "../../services/api";
 import { fetchData } from "../../services/helpers";
+import NoSsr from "../../components/NoSsr";
+
+/*
+const Servicos = (props) => {
+  return (
+    <NoSsr>
+      <Wrapper {...props}/>
+    </NoSsr>
+  );
+};
+*/
 
 const Servicos = (props) => {
   // Variáveis auxiliares
   const router = useRouter();
+  const [dataServicos,setDataServicos] = useState({});
   
+  // Carregar
+  useEffect(() => {
+    const teste = async () => {
+      const servicos = await fetchData(api.get("/services"));
+      setDataServicos(servicos);
+    }
+    teste();
+  },[props])
+
   return (
     <>
       <Head>
@@ -31,8 +52,8 @@ const Servicos = (props) => {
         <Container>
           <PageTitle>Serviços</PageTitle>
           <ListService>
-            {Object.keys(props.servicos).length > 0 &&
-              props.servicos.map((item, index) => (
+            {Object.keys(dataServicos).length > 0 &&
+              dataServicos.map((item, index) => (
                 <>
                   <ListItem key={index} right={index % 2 !== 0}>
                     <span>{index !== 0 && <Divider />}</span>
@@ -55,12 +76,5 @@ const Servicos = (props) => {
     </>
   );
 };
-
-export async function getServerSideProps() {
-  const servicos = await fetchData(api.get("/services"));
-
-  return { props: { servicos } };
-}
-
 
 export default Servicos;

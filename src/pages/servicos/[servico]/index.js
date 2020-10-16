@@ -22,36 +22,44 @@ const Servico = (props) => {
   const router = useRouter();
   const { servico } = router.query;
 
+  // State
+  const [servicos, setServicos] = useState({});
+
+  // Effect
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetchData(
+        api.get(`/services/${servico}?where=url`)
+      );
+      setServicos(response);
+    };
+    getData();
+  }, [props]);
+
   return (
     <>
       <Head>
-        <title>{props.servicos.title && props.servicos.title} - M24</title>
+        <title>{servicos.title && servicos.title} - M24</title>
       </Head>
       <Layout>
         <div>
-          {props.servicos && (
+          {servicos.title && (
             <>
-              <PageTitle>{props.servicos.title}</PageTitle>
+              <PageTitle>{servicos.title}</PageTitle>
               <PageDescription>
-                <ViewHtml
-                  dangerouslySetInnerHTML={{ __html: props.servicos.page }}
-                />
+                <ViewHtml dangerouslySetInnerHTML={{ __html: servicos.page }} />
               </PageDescription>
-              {props.servicos.price > 0 ? (
-                <Link href={`/servicos/${servico}/cadastro`}>
-                  <a>
-                    <Button secondary>Continuar</Button>
-                  </a>
-                </Link>
+              {servicos.price > 0 ? (
+                  <Button secondary onClick={() => {
+                    location.href = `/servicos/${servico}/cadastro`
+                  }}>Continuar</Button>
               ) : (
                 <Link
                   href={
                     "https://api.whatsapp.com/send?phone=558007299123&text=*Mensagem%20autom%C3%A1tica*%20|%20Envie%20esta%20mensagem%20para%20confirmar%20seu%20pr%C3%A9-cadastro%20e%20receber%20mais%20informa%C3%A7%C3%B5es.&fbclid=IwAR31FZjOvBMjR-rl4OMPRYJGfjRoQTFscXkxa9dsuKElaqEl3pyG4r6HTOE"
                   }
                 >
-                  <a>
-                    <Button secondary>Saiba mais</Button>
-                  </a>
+                  <a><Button secondary>Saiba mais</Button></a>
                 </Link>
               )}
             </>
@@ -61,11 +69,4 @@ const Servico = (props) => {
     </>
   );
 };
-
-Servico.getInitialProps = async (ctx) => {
-  const servicos = await fetchData(api.get(`/services/${ctx.query.servico}?where=url`));
-
-  return { servicos }
-}
-
 export default Servico;
