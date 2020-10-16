@@ -63,7 +63,7 @@ const Servico = (props) => {
 };
 
 export async function getStaticPaths() {
-  const servicos = await fetchData(api.get(`/services/`));
+  const servicos = await fetchData(api.get(`/services/`)) || {};
 
   const paths = servicos.map((item) => ({
     params: { servico: item.url },
