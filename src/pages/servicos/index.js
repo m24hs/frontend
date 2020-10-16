@@ -56,12 +56,13 @@ const Servicos = (props) => {
   );
 };
 
-Servicos.getInitialProps = async (ctx) => {
-  //const servicos = await fetchData(api.get("/services"));
+export async function getServerSideProps() {
+  // Get the show
   const res = await fetch("http://marcelorossini-com-br.umbler.net/services");
   const servicos = await res.json();
 
-  return { servicos }
+  return { props: { servicos } };
 }
+
 
 export default Servicos;
