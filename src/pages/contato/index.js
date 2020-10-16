@@ -1,5 +1,5 @@
 // Imports padrão
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
@@ -11,9 +11,9 @@ import Img from "../../assets/contato.jpg";
 // Imports auxiliares
 import Form, { Input } from "../../components/Form";
 import api from "../../services/api.js";
-import { getFormData, countError } from "../../services/helpers.js";
+import { getFormData, countError, fetchData } from "../../services/helpers.js";
 
-const Contato = () => {
+const Contato = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
 
@@ -21,7 +21,7 @@ const Contato = () => {
   const handleSend = async () => {
     // Limpa erros
     setIsError("");
-    
+
     // Se houver error no form
     const numberErrors = await countError(".form-contact");
     if (numberErrors > 0) {
@@ -45,6 +45,18 @@ const Contato = () => {
     }
   };
 
+  // Effect
+  const [data, setData] = useState({});
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetchData(
+        api.get(`/settings/`)
+      );
+      setData(response);
+    };
+    getData();
+  }, [props]);
+
   return (
     <>
       <Head>
@@ -53,11 +65,7 @@ const Contato = () => {
       <Layout loading={isLoading} error={isError}>
         <div>
           <PageTitle>Contato</PageTitle>
-          <PageDescription>
-            Tem alguma dúvida, sugestão ou gostaria de saber mais sobre a nossa
-            proposta? Preencha seus dados corretamente e espere nosso contato em
-            breve!
-          </PageDescription>
+          <PageDescription dangerouslySetInnerHTML={{ __html: data.contact ? data.contact : "" }} />
           <Wrapper>
             <Form className="form-contact">
               <Input
@@ -91,13 +99,13 @@ const Contato = () => {
                 name="phone"
                 label="Telefone / Celular"
                 mask="(99) 999999999"
-                maskPlaceholder=" "                
+                maskPlaceholder=" "
                 validate={(e) => {
                   const phone = e.value
-                  .replaceAll("(", "")
-                  .replaceAll(")", "")
-                  .replaceAll(" ", "")
-                  .trim();
+                    .replaceAll("(", "")
+                    .replaceAll(")", "")
+                    .replaceAll(" ", "")
+                    .trim();
 
                   return [
                     {

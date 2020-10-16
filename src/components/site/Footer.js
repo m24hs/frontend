@@ -30,7 +30,7 @@ const Footer = () => {
           <WhatsappIcon /> 0800 729 9123
         </li>
         <li>
-          <EmailIcon /> contato@m24h.com.br
+          <EmailIcon /> atendimento@m24hs.com.br
         </li>
       </ul>
       <ul className="footer-social">

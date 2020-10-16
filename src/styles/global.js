@@ -245,7 +245,7 @@ export const ViewHtml = styled.div`
     padding: 16px 1em;
   }
 
-  & > ul > li > strong:before {
+  & > ul > li:before {
     content: "";
     border-color: transparent var(--color-tertiary);
     border-style: solid;
@@ -256,10 +256,6 @@ export const ViewHtml = styled.div`
     left: -1em;
     top: 0.9em;
     position: relative;
-  }
-
-  & > ul > li > strong {
-    font-weight: bold;
   }
 
   & > ul > li > p {

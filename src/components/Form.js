@@ -111,10 +111,9 @@ const Select = (props) => {
   const [value, setValue] = useState("");
 
   useEffect(() => {
-    if (props.value)
-      setValue(props.value.value);
-  },[props.value]);
-  
+    if (props.value) setValue(props.value.value);
+  }, [props.value]);
+
   return (
     <>
       <ReactSelect
@@ -369,10 +368,26 @@ export const Editor = (props) => {
     setValue(props.defaultValue || "");
   }, [props.defaultValue]);
 
+  const modules = {
+    toolbar: [
+      [{ 'header': [1, 2, false] }],
+      ['bold', 'italic', 'underline','strike', 'blockquote'],
+      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
+      ['link', 'image'],
+      ['clean']
+    ],
+  };
+
+
   return (
     <div style={{ width: props.width || "100%", display: "block" }}>
       <LabelStyle>{props.label}</LabelStyle>
-      <ReactQuill theme="snow" value={value} onChange={(e) => setValue(e)} />
+      <ReactQuill
+        modules={modules}
+        theme="snow"
+        value={value}
+        onChange={(e) => setValue(e)}
+      />
       <input name={props.name} type="hidden" value={value} />
     </div>
   );
