@@ -57,9 +57,7 @@ const Servicos = (props) => {
 };
 
 export async function getServerSideProps() {
-  // Get the show
-  const res = await fetch("http://marcelorossini-com-br.umbler.net/services");
-  const servicos = await res.json();
+  const servicos = await fetchData(api.get("/services"));
 
   return { props: { servicos } };
 }
