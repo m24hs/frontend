@@ -56,10 +56,11 @@ const Servicos = (props) => {
   );
 };
 
-Servicos.getInitialProps = async (ctx) => {
+export async function getServerSideProps(ctx) {
   const servicos = await fetchData(api.get("/services"));
-
-  return { servicos }
-}
+  return {
+    props: { servicos },
+  };
+};
 
 export default Servicos;
