@@ -43,7 +43,7 @@ const Servicos = (props) => {
                     <ViewHtml
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
-                    <Link href={`${router.pathname}/${item.url}`} shallow={true} >
+                    <Link href={`${router.pathname}/${item.url}`}>
                       <Button secondary>Saiba mais</Button>
                     </Link>
                   </ListItem>
@@ -57,7 +57,9 @@ const Servicos = (props) => {
 };
 
 Servicos.getInitialProps = async (ctx) => {
-  const servicos = await fetchData(api.get("/services"));
+  //const servicos = await fetchData(api.get("/services"));
+  const res = await fetch("http://marcelorossini-com-br.umbler.net/services");
+  const servicos = await res.json();
 
   return { servicos }
 }

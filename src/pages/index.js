@@ -33,7 +33,7 @@ const Index = () => {
             <h1>CUIDAR DA SUA MOTO</h1>
             <h3>NÃO TEM PREÇO, <span>TEM VALOR.</span></h3>
           </div>
-          <Link href="/servicos" shallow={true} >
+          <Link href="/servicos">
             <Button secondary>Quero ser M24</Button>
           </Link>
         </Container>
