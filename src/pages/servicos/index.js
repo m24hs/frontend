@@ -21,7 +21,9 @@ import { fetchData } from "../../services/helpers";
 const Servicos = (props) => {
   // Variáveis auxiliares
   const router = useRouter();
-
+  useEffect(() => {
+    alert(props.servicos[0].title);
+  },[props]);
   return (
     <>
       <Head>
@@ -56,11 +58,10 @@ const Servicos = (props) => {
   );
 };
 
-export async function getServerSideProps(ctx) {
+Servicos.getInitialProps = async (ctx) => {
   const servicos = await fetchData(api.get("/services"));
-  return {
-    props: { servicos },
-  };
-};
+
+  return { servicos }
+}
 
 export default Servicos;
