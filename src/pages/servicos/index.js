@@ -17,24 +17,32 @@ import {
 // Imports auxiliares
 import api from "../../services/api";
 import { fetchData } from "../../services/helpers";
-import NoSsr from "../../components/NoSsr";
 
-/*
-const Servicos = (props) => {
-  return (
-    <NoSsr>
-      <Wrapper {...props}/>
-    </NoSsr>
-  );
+export const getStaticProps = async ({ params }) => {
+  const servicos = await fetchData(api.get("/services"));
+  return {
+    props: { servicos },
+  };
 };
-*/
+
+export const getStaticPaths = () => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
 
 const Servicos = (props) => {
   // Variáveis auxiliares
   const router = useRouter();
-  const [dataServicos,setDataServicos] = useState({});
-  
+
+  if (router.isFallback) {
+    return <h1>Loading...</h1>;
+  }
+
   // Carregar
+  /*
+  const [dataServicos, setDataServicos] = useState({});
   useEffect(() => {
     const teste = async () => {
       const servicos = await fetchData(api.get("/services"));
@@ -42,7 +50,7 @@ const Servicos = (props) => {
     }
     teste();
   },[props])
-
+*/
   return (
     <>
       <Head>
@@ -52,8 +60,8 @@ const Servicos = (props) => {
         <Container>
           <PageTitle>Serviços</PageTitle>
           <ListService>
-            {Object.keys(dataServicos).length > 0 &&
-              dataServicos.map((item, index) => (
+            {Object.keys(props.servicos).length > 0 &&
+              props.servicos.map((item, index) => (
                 <>
                   <ListItem key={index} right={index % 2 !== 0}>
                     <span>{index !== 0 && <Divider />}</span>
