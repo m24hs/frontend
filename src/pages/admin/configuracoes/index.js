@@ -75,14 +75,6 @@ const Configuracoes = (props) => {
             />
             <div>
               <PageTitle small secondary margin="8px 0">
-                Conteúdo das páginas
-              </PageTitle>
-            </div>            
-            {/*<Editor name="home" label="Home" defaultValue={formData.home} />*/}
-            <Editor name="about" label="Sobre" defaultValue={formData.about} />
-            <Editor name="contact" label="Contato" defaultValue={formData.contact} />
-            <div>
-              <PageTitle small secondary margin="8px 0">
                 Email
               </PageTitle>
             </div>

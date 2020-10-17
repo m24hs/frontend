@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 
 import { Container, Itens } from "../../styles/components/admin/Sidebar";
 
-import { ListUl as ListUlIcon, CartAlt as CartAltIcon } from "@styled-icons/boxicons-regular";
-import { Settings as SettingsIcons } from "@styled-icons/ionicons-sharp";
+import { ListUl as ListUlIcon, CartAlt as CartAltIcon, Text as TextIcon } from "@styled-icons/boxicons-regular";
+import { Settings as SettingsIcon } from "@styled-icons/ionicons-sharp";
 
 const Sidebar = (props) => {
   return (
@@ -28,11 +28,12 @@ export const MenuItems = () => {
         <li>
           <Link href="/admin/servicos"><a><ListUlIcon/>Serviços</a></Link>
         </li>
-    {/*
         <li>
-          <Link href="/admin/configuracoes"><a><SettingsIcons />Configurações</a></Link>
+          <Link href="/admin/conteudo"><a><TextIcon />Conteúdo</a></Link>
         </li>
-    */}
+        <li>
+          <Link href="/admin/configuracoes"><a><SettingsIcon />Configurações</a></Link>
+        </li>        
       </Itens>
     </>
   );

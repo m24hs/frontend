@@ -31,7 +31,7 @@ const DataTable = (props) => {
   // Pesquisa no json
   const handleSearch = (e) => {
     const value = e.target.value || "";
-
+    
     if (value !== "") {
       setFilteredData(filterIt(data, value));
     } else {
@@ -82,7 +82,7 @@ const DataTable = (props) => {
         data={filteredData}
         onRowClicked={(item) => {
           if (onRowClicked) {
-            return onRowClicked();
+            return onRowClicked(item);
           } else if (edit) {
             //router.push(`${baseUrl}/${item.id}`);
             window.location.href = `${baseUrl}/${item.id}`;

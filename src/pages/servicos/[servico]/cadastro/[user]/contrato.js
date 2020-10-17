@@ -42,7 +42,20 @@ const Servicos = (props) => {
       setServicos(response);
     };
     getData();
-  }, [props]);
+  }, [servico]);
+
+  // Verifica se o usuário já fez o pagamento
+  useEffect(() => {
+    const getData = async () => {
+      if (user) {
+        const subscription = await api.get(`/subscriptions/${user}?where=iugu`);      
+        if (subscription.data.payment_method !== "") {
+          router.push("/");
+        }
+      }
+    };
+    getData();
+  }, [user]);
 
   // Marca check
   const handleCheck = () => {
@@ -85,7 +98,10 @@ const Servicos = (props) => {
                 Eu li e concordo com os termos, quero continuar
               </label>
             </div>
-            <Link href="/servicos/[servico]/cadastro/[user]/pagamento" as={`/servicos/${servico}/cadastro/${user}/pagamento`}>
+            <Link
+              href="/servicos/[servico]/cadastro/[user]/pagamento"
+              as={`/servicos/${servico}/cadastro/${user}/pagamento`}
+            >
               <Button secondary disabled={!checked}>
                 Continuar
               </Button>

@@ -5,7 +5,11 @@ import { useRouter } from "next/router";
 
 // Imports de estilo
 import Layout from "../../../../../components/site/Layout";
-import { PageTitle, PageDescription, Button } from "../../../../../styles/global";
+import {
+  PageTitle,
+  PageDescription,
+  Button,
+} from "../../../../../styles/global";
 import {
   Container,
   Wrapper,
@@ -26,11 +30,24 @@ const Servicos = (props) => {
   // Rotas
   const router = useRouter();
   const { servico, user } = router.query;
-  
+
   // State
   const [paymentType, setPaymentType] = useState("");
   const [isError, setIsError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  // Verifica se o usuário já fez o pagamento
+  useEffect(() => {
+    const getData = async () => {
+      if (user) {
+        const subscription = await api.get(`/subscriptions/${user}?where=iugu`);
+        if (subscription.data.payment_method !== "") {
+          router.push("/");
+        }
+      }
+    };
+    getData();
+  }, [user]);
 
   // Envia formulário
   const handleContinue = async (type) => {
@@ -72,7 +89,9 @@ const Servicos = (props) => {
           return;
         }
       } else {
-        response = await api.post(`/subscriptions/${user}/bank_slip?service=${servico}`);
+        response = await api.post(
+          `/subscriptions/${user}/bank_slip?service=${servico}`
+        );
         if (response.data.status === "success") {
           setIsLoading(false);
           router.push({
@@ -234,7 +253,8 @@ const Servicos = (props) => {
                         </a>
                       </div>
                     </form>
-                    <Button secondary
+                    <Button
+                      secondary
                       onClick={() => handleContinue("cartao")}
                       margin="32px 0"
                     >
@@ -250,7 +270,8 @@ const Servicos = (props) => {
                       de vencimento. Ao confirmar será enviado para o seu email
                       o boleto para a confirmação da assinatura.
                     </PageDescription>
-                    <Button secondary
+                    <Button
+                      secondary
                       onClick={() => handleContinue("boleto")}
                       margin="32px 0"
                     >

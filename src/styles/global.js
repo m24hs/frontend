@@ -240,12 +240,12 @@ export const ViewHtml = styled.div`
   grid-area: text;
   color: var(--color-text);
 
-  & > ul {
+  & ul {
     margin-top: -14px;
     padding: 16px 1em;
   }
 
-  & > ul > li:before {
+  & ul > li:before {
     content: "";
     border-color: transparent var(--color-tertiary);
     border-style: solid;
@@ -258,7 +258,13 @@ export const ViewHtml = styled.div`
     position: relative;
   }
 
-  & > ul > li > p {
+  & ul > li > p {
     text-align: left;
+  }
+
+  & h1, & h2, & h3, & h4, & h5, & h6 {
+    border-left: 8px solid var(--color-tertiary);
+    padding: 0 0 0 16px;
+    margin: 4px 0;
   }
 `;

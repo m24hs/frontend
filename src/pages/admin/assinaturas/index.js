@@ -18,14 +18,14 @@ const Assinaturas = (props) => {
   const router = useRouter();
 
   // Preenche variável data
-  const [dataAssinaturas,setDataAssinaturas] = useState({});
+  const [dataAssinaturas, setDataAssinaturas] = useState({});
   useEffect(() => {
     const getData = async () => {
       const assinaturas = await fetchData(api.get("/subscriptions"));
       setDataAssinaturas(assinaturas);
-    }
+    };
     getData();
-  },[props])  
+  }, [props]);
 
   return (
     <>
@@ -39,13 +39,13 @@ const Assinaturas = (props) => {
             className="margin-3x"
             columns={[
               {
-                name: "#",
-                selector: "id",
+                name: "Usuário",
+                selector: "User.name",
                 sortable: true,
               },
               {
-                name: "Usuário",
-                selector: "User.name",
+                name: "Serviço",
+                selector: "Service.title",
                 sortable: true,
               },
               {
@@ -53,9 +53,22 @@ const Assinaturas = (props) => {
                 sortable: true,
                 cell: (row) => (
                   <>
-                    {row.payment_method === "credit-card"
+                    {row.payment_method === null
+                      ? ""
+                      : row.payment_method === "credit-card"
                       ? "Cartão de Crédito"
                       : "Boleto"}
+                  </>
+                ),
+              },
+              {
+                name: "Situação",
+                sortable: true,
+                cell: (row) => (
+                  <>
+                    {(row.payment_method || "") !== ""
+                      ? "Gerada"
+                      : "Incompleta"}
                   </>
                 ),
               },
@@ -70,7 +83,10 @@ const Assinaturas = (props) => {
             data={dataAssinaturas}
             baseUrl={router.pathname}
             search={true}
-            edit={true}
+            onRowClicked={(item) => {
+              window.location.href = `${router.pathname}/${item.User.id_iugu}`;
+              return;
+            }}
           />
         </div>
       </Layout>

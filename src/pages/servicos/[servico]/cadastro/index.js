@@ -97,6 +97,7 @@ const Servicos = () => {
     formData["name"] = formData.name;
     formData["phone_prefix"] = formData.phone.substr(1, 2);
     formData["phone"] = formData.phone.substr(5, 9);
+    formData["service_url"] = servico;
 
     // Consome a API
     setIsLoading(true);
