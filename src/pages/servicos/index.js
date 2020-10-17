@@ -25,20 +25,9 @@ export const getStaticProps = async ({ params }) => {
   };
 };
 
-export const getStaticPaths = () => {
-  return {
-    paths: [],
-    fallback: true,
-  };
-};
-
 const Servicos = (props) => {
   // Variáveis auxiliares
   const router = useRouter();
-
-  if (router.isFallback) {
-    return <h1>Loading...</h1>;
-  }
 
   // Carregar
   /*
