@@ -1,5 +1,6 @@
 import GlobalStyles from "../styles/global";
 import Head from "next/head";
+import cookieCutter from 'cookie-cutter';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,6 +16,13 @@ function MyApp({ Component, pageProps }) {
       <GlobalStyles />
     </>
   );
+}
+
+MyApp.getInitialProps = (ctx) => {
+  if (ctx.router.pathname.includes("/admin")) {
+    console.log();    
+  }
+  return {};
 }
 
 export default MyApp;
