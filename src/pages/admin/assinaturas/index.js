@@ -53,7 +53,7 @@ const Assinaturas = (props) => {
                 sortable: true,
                 cell: (row) => (
                   <>
-                    {row.payment_method === null
+                    {(row.payment_method || "") === ""
                       ? ""
                       : row.payment_method === "credit-card"
                       ? "Cartão de Crédito"

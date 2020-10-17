@@ -18,11 +18,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-MyApp.getInitialProps = (ctx) => {
-  if (ctx.router.pathname.includes("/admin")) {
-    console.log();    
-  }
-  return {};
-}
-
 export default MyApp;
