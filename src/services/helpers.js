@@ -1,3 +1,5 @@
+import withQuery from "with-query";
+
 export const checkErrors = (response) => {
   if (response.data.hasOwnProperty("error")) {
     console.log(response.data.error);
@@ -45,7 +47,7 @@ export const countError = (formName) => {
   let promise = new Promise((resolve, reject) => {
     // Seleciona components
     const formComponents = document.querySelectorAll(
-      `${formName} .form-component, ${formName} .form-component * ` 
+      `${formName} .form-component, ${formName} .form-component * `
     );
     // For each
     [].forEach.call(formComponents, function (item, index) {
@@ -58,6 +60,14 @@ export const countError = (formName) => {
   return promise.then(() => {
     // Verifica errors
     const formErrors = document.querySelectorAll(formName + " .form-error ");
-    return formErrors.length;    
+    return formErrors.length;
   });
+};
+
+// Funciona com o getStaticProps
+export const getData = async (url, param = null) => {
+  const res = await fetch(
+    withQuery(process.env.NEXT_PUBLIC_SERVER_URL + url, param)
+  ).then((res) => res.json());
+  return res;
 };

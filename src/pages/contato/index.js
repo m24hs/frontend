@@ -11,16 +11,10 @@ import Img from "../../assets/contato.jpg";
 // Imports auxiliares
 import Form, { Input } from "../../components/Form";
 import api from "../../services/api.js";
-import { getFormData, countError, fetchData } from "../../services/helpers.js";
-
-const getData = async () =>
-  await api
-    .get("/settings/")
-    .then((res) => res.data)
-    .catch(() => ({}));
+import { getFormData, countError, getData } from "../../services/helpers";
 
 export async function getServerSideProps(context) {
-  const settings = await getData();
+  const settings = await getData("settings/");
   return {
     props: { settings },
   };

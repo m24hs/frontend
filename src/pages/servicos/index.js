@@ -15,18 +15,12 @@ import {
 } from "../../styles/pages/servicos/index.js";
 
 // Imports auxiliares
-import api from "../../services/api";
-
-const getData = async () =>
-  await api
-    .get("/services", {
-      params: { columns: ["title", "description", "image", "url"] },
-    })
-    .then((res) => res.data)
-    .catch(() => ({}));
+import { getData } from "../../services/helpers";
 
 export async function getServerSideProps(context) {
-  const servicos = await getData();
+  const servicos = await getData("services/", {
+    columns: ["title", "description", "image", "url"],
+  });
   return {
     props: { servicos },
   };

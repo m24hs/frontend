@@ -5,16 +5,10 @@ import Layout from "../../components/site/Layout";
 // Imports de estilo
 import { Container } from "../../styles/pages/sobre";
 import { PageTitle, PageDescription, ViewHtml } from "../../styles/global";
-import api from "../../services/api.js";
-
-const getData = async () =>
-  await api
-    .get("/settings/")
-    .then((res) => res.data)
-    .catch(() => ({}));
+import { getData } from "../../services/helpers";
 
 export async function getServerSideProps(context) {
-  const settings = await getData();
+  const settings = await getData("settings/");
   return {
     props: { settings },
   };
@@ -31,7 +25,9 @@ const Sobre = (props) => {
           <PageTitle>Sobre</PageTitle>
           <PageDescription>
             <ViewHtml
-              dangerouslySetInnerHTML={{ __html: props.settings ? props.settings.about : "" }}
+              dangerouslySetInnerHTML={{
+                __html: props.settings ? props.settings.about : "",
+              }}
             />
           </PageDescription>
         </Container>

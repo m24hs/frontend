@@ -14,34 +14,24 @@ import {
 } from "../../../styles/global";
 
 // Imports auxiliares
-import api from "../../../services/api";
-import { fetchData } from "../../../services/helpers";
+import { getData } from "../../../services/helpers";
+
+export async function getServerSideProps(context) {
+  const servicos = await getData(`services/${context.query.servico}`, {
+    where: "url",
+    columns: ["title", "page", "price"],
+  });
+  return {
+    props: { servicos },
+  };
+}
 
 const Servico = (props) => {
   // Rotas
   const router = useRouter();
   const { servico } = router.query;
 
-  // State
-  const [servicos, setServicos] = useState({});
-
-  // Effect
-  useEffect(() => {
-    const getData = async () => {
-      if (servico) {
-        const response = await fetchData(
-          api.get(`/services/${servico}`, {
-            params: {
-              where: "url",
-              columns: ["title", "page","price"]
-            },
-          })
-        );
-        setServicos(response);
-      }
-    };
-    getData();
-  }, [props]);
+  const { servicos } = props;
 
   return (
     <>
