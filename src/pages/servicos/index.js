@@ -22,7 +22,7 @@ import { fetchData } from "../../services/helpers";
 const getData = async () => {
   const res = await fetch(
     withQuery("http://marcelorossini-com-br.umbler.net/services", {
-      columns: ["title", "description", "image", "url"],
+      columns: ["title", "description", "url"],
     })
   ).then((res) => res.json());
   return res;
