@@ -29,7 +29,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Servicos = (props) => {
+const Servicos = ({servicos}) => {
   // Variáveis auxiliares
   const router = useRouter();
 
@@ -42,8 +42,7 @@ const Servicos = (props) => {
         <Container>
           <PageTitle>Serviços</PageTitle>
           <ListService>
-            {Object.keys(props.servicos).length > 0 &&
-              props.servicos.map((item, index) => (
+            {servicos.map((item, index) => (
                 <>
                   <ListItem key={index} right={index % 2 !== 0}>
                     <span>{index !== 0 && <Divider />}</span>
