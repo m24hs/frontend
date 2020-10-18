@@ -14,13 +14,19 @@ import {
 } from "../../../styles/global";
 
 // Imports auxiliares
-import { getData } from "../../../services/helpers";
+import withQuery from "with-query";
+
+const getData = async () => {
+  const res = await fetch(
+    withQuery(`${process.env.NEXT_PUBLIC_SERVER_URL}services/${context.query.servico}`, {
+      columns: ["title", "page", "price"],
+    })
+  ).then((res) => res.json());
+  return res;
+};
 
 export async function getServerSideProps(context) {
-  const servicos = await getData(`services/${context.query.servico}`, {
-    where: "url",
-    columns: ["title", "page", "price"],
-  });
+  const servicos = await getData();
   return {
     props: { servicos },
   };

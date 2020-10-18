@@ -19,7 +19,7 @@ import withQuery from "with-query";
 
 const getData = async () => {
   const res = await fetch(
-    withQuery("http://marcelorossini-com-br.umbler.net/services", {
+    withQuery(process.env.NEXT_PUBLIC_SERVER_URL+"services", {
       columns: ["title", "description", "image", "url"],
     })
   ).then((res) => res.json());
