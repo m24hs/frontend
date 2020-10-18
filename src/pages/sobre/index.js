@@ -1,5 +1,4 @@
 // Imports padrão
-import { useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
@@ -7,21 +6,21 @@ import Layout from "../../components/site/Layout";
 import { Container } from "../../styles/pages/sobre";
 import { PageTitle, PageDescription, ViewHtml } from "../../styles/global";
 import api from "../../services/api.js";
-import { fetchData } from "../../services/helpers.js";
+
+const getData = async () =>
+  await api
+    .get("/settings/")
+    .then((res) => res.data)
+    .catch(() => ({}));
+
+export async function getServerSideProps(context) {
+  const settings = await getData();
+  return {
+    props: { settings },
+  };
+}
 
 const Sobre = (props) => {
-  // Effect
-  const [data, setData] = useState({});
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetchData(
-        api.get(`/settings/`)
-      );
-      setData(response);
-    };
-    getData();
-  }, [props]);
-
   return (
     <>
       <Head>
@@ -31,7 +30,9 @@ const Sobre = (props) => {
         <Container>
           <PageTitle>Sobre</PageTitle>
           <PageDescription>
-            <ViewHtml dangerouslySetInnerHTML={{ __html: data.about ? data.about : "" }} / >
+            <ViewHtml
+              dangerouslySetInnerHTML={{ __html: props.settings ? props.settings.about : "" }}
+            />
           </PageDescription>
         </Container>
       </Layout>

@@ -15,16 +15,15 @@ import {
 } from "../../styles/pages/servicos/index.js";
 
 // Imports auxiliares
-import withQuery from "with-query";
+import api from "../../services/api";
 
-const getData = async () => {
-  const res = await fetch(
-    withQuery("http://marcelorossini-com-br.umbler.net/services", {
-      columns: ["title", "description", "image", "url"],
+const getData = async () =>
+  await api
+    .get("/services", {
+      params: { columns: ["title", "description", "image", "url"] },
     })
-  ).then((res) => res.json());
-  return res;
-};
+    .then((res) => res.data)
+    .catch(() => ({}));
 
 export async function getServerSideProps(context) {
   const servicos = await getData();

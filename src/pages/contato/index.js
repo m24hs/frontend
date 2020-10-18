@@ -13,6 +13,19 @@ import Form, { Input } from "../../components/Form";
 import api from "../../services/api.js";
 import { getFormData, countError, fetchData } from "../../services/helpers.js";
 
+const getData = async () =>
+  await api
+    .get("/settings/")
+    .then((res) => res.data)
+    .catch(() => ({}));
+
+export async function getServerSideProps(context) {
+  const settings = await getData();
+  return {
+    props: { settings },
+  };
+}
+
 const Contato = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
@@ -45,18 +58,6 @@ const Contato = (props) => {
     }
   };
 
-  // Effect
-  const [data, setData] = useState({});
-  useEffect(() => {
-    const getData = async () => {
-      const response = await fetchData(
-        api.get(`/settings/`)
-      );
-      setData(response);
-    };
-    getData();
-  }, [props]);
-
   return (
     <>
       <Head>
@@ -65,7 +66,11 @@ const Contato = (props) => {
       <Layout loading={isLoading} error={isError}>
         <div>
           <PageTitle>Contato</PageTitle>
-          <PageDescription dangerouslySetInnerHTML={{ __html: data.contact ? data.contact : "" }} />
+          <PageDescription
+            dangerouslySetInnerHTML={{
+              __html: props.settings ? props.settings.contact : "",
+            }}
+          />
           <Wrapper>
             <Form className="form-contact">
               <Input
