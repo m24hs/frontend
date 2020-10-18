@@ -12,6 +12,7 @@ import Img from "../../assets/contato.jpg";
 import Form, { Input } from "../../components/Form";
 import api from "../../services/api";
 
+// Carrega data
 const getData = async () =>
   await api
     .get("/settings/")

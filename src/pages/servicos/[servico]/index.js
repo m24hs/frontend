@@ -16,6 +16,7 @@ import {
 // Imports auxiliares
 import api from "../../../services/api";
 
+// Carrega data
 const getData = async (context) =>
   await api
     .get(`services/${context.query.servico}`, {

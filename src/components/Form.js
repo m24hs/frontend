@@ -302,6 +302,15 @@ export const Button = (props) => {
 // Uploader
 export const InputUploader = (props) => {
   const [file, setFile] = useState("");
+  const [defaultFile, setDefaultFile] = useState("");
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   const handleOnChange = async (e) => {
     try {
@@ -312,17 +321,19 @@ export const InputUploader = (props) => {
     }
   };
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
   const handleUpload = () => {
     inputRef.current.click();
   };
+
+  useEffect(() => {
+    const getFile = async () => {
+      if ((props.defaultValue || "") !== "") {
+        const path = process.env.NEXT_PUBLIC_SERVER_URL;
+        setDefaultFile(path + props.defaultValue);
+      }
+    };
+    getFile();
+  }, [props.defaultValue]);
 
   const inputRef = useRef();
 
@@ -331,14 +342,16 @@ export const InputUploader = (props) => {
       <UploaderWrapper {...props}>
         <LabelStyle>{props.label}</LabelStyle>
         <div>
-          {props.image && <img width="100%" src={file || props.defaultValue} />}
-          {props.pdf && (file || props.defaultValue || "") !== "" && (
+          {props.image && <img width="100%" src={file || defaultFile} />}
+          {props.pdf && (file || defaultFile || "") !== "" && (
             <object
-              data={file || props.defaultValue}
-              type="application/pdf"
               width="100%"
               height="600px"
-            ></object>
+              data={file || defaultFile}
+              type="application/pdf"
+            >
+              {" "}
+            </object>
           )}
         </div>
         <input
@@ -347,11 +360,7 @@ export const InputUploader = (props) => {
           id={`upload-${props.name}`}
           onChange={(e) => handleOnChange(e)}
           {...props}
-        />
-        <input
-          type="hidden"
           name={props.name}
-          value={file || props.defaultValue}
         />
         <ButtonStyle type="button" onClick={() => handleUpload()}>
           Upload
@@ -370,14 +379,18 @@ export const Editor = (props) => {
 
   const modules = {
     toolbar: [
-      [{ 'header': [1, 2, false] }],
-      ['bold', 'italic', 'underline','strike', 'blockquote'],
-      [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-      ['link', 'image'],
-      ['clean']
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+      ],
+      ["link", "image"],
+      ["clean"],
     ],
   };
-
 
   return (
     <div style={{ width: props.width || "100%", display: "block" }}>

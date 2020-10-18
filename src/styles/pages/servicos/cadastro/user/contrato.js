@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     grid-template-areas: "pdf pdf" "check button";
   }
 
-  & > object {
+  & > iframe {
     grid-area: pdf;
   }
 

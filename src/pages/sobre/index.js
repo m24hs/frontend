@@ -7,6 +7,7 @@ import { Container } from "../../styles/pages/sobre";
 import { PageTitle, PageDescription, ViewHtml } from "../../styles/global";
 import api from "../../services/api";
 
+// Carrega data
 const getData = async () =>
   await api
     .get("/settings/")

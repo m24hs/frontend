@@ -6,6 +6,7 @@ import Link from "next/link";
 
 // Imports de estilo
 import Layout from "../../../../../components/site/Layout";
+import Pdf from "../../../../../components/Pdf";
 import {
   PageTitle,
   PageDescription,
@@ -32,6 +33,7 @@ const Servicos = (props) => {
   // State
   const [checked, setChecked] = useState(false);
   const [servicos, setServicos] = useState({});
+  const path = process.env.NEXT_PUBLIC_SERVER_URL;
 
   // Effect
   useEffect(() => {
@@ -81,23 +83,7 @@ const Servicos = (props) => {
             contato com a gente.
           </PageDescription>
           <Wrapper className="margin-2x">
-            <object
-              data={servicos.contract}
-              type="application/pdf"
-              width="100%"
-              height="600px"
-            >
-              <p>
-                <a
-                  download="contrato.pdf"
-                  href={servicos.contract}
-                  target="_blank"
-                >
-                  Seu navegador não permite a exibição do PDF, clique aqui para
-                  fazer o download.
-                </a>
-              </p>
-            </object>
+            <Pdf url={path + servicos.contract} />
             <div onClick={handleCheck}>
               {checked ? <CheckSquareFillIcon /> : <SquareIcon />}
               <label htmlFor="check">

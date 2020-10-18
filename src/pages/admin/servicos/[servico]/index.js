@@ -56,7 +56,18 @@ const Servicos = (props) => {
     const formData = getFormData(".form-service");
     formData["price"] = formData["price"].replace(",", ".");
     formData["price"] = formData["price"] || "0";
-    const response = await api.post(`/services`, formData);
+    
+    // Converte em formdata
+    var postForm = new FormData();
+    for (var key in formData) {
+      postForm.append(key, formData[key]);
+    }
+
+    const response = await api.post(`/services`, postForm, {
+      headers: {
+        "Content-Type": `multipart/form-data; boundary=${postForm._boundary}`,
+       }
+    });
 
     // Remove loading
     setIsLoading(false);
@@ -70,9 +81,8 @@ const Servicos = (props) => {
   };
 
   const handleDelete = async () => {
-    // 
-    if ( !confirm("Confirma a exclusão?") ) 
-      return;
+    //
+    if (!confirm("Confirma a exclusão?")) return;
 
     // Marca como loading
     setIsLoading(true);

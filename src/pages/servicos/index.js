@@ -17,6 +17,7 @@ import {
 // Imports auxiliares
 import api from "../../services/api";
 
+// Carrega data
 const getData = async () =>
   await api
     .get("/services/", {
@@ -41,6 +42,7 @@ export async function getServerSideProps(context) {
 const Servicos = ({ error, data }) => {
   // Variáveis auxiliares
   const router = useRouter();
+  const path = process.env.NEXT_PUBLIC_SERVER_URL;
 
   return (
     <>
@@ -59,7 +61,7 @@ const Servicos = ({ error, data }) => {
                     <span>{index !== 0 && <Divider />}</span>
                     <PageTitle small>{item.title}</PageTitle>
                     <ListImage>
-                      <img src={item.image} />
+                      <img src={path + item.image} />
                     </ListImage>
                     <ViewHtml
                       dangerouslySetInnerHTML={{ __html: item.description }}
