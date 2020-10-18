@@ -18,10 +18,11 @@ import {
 import api from "../../services/api";
 import { fetchData } from "../../services/helpers";
 
-const getData = async postId => {
-  const res = await fetch("http://marcelorossini-com-br.umbler.net/services").then(res => res.json());
-  const post = res;
-  return post;
+const getData = async () => {
+  const res = await api.get("/services", {
+    params: { columns: ["title", "description", "image", "url"] },
+  });
+  return res.data;
 };
 
 export async function getServerSideProps(context) {
@@ -31,7 +32,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Servicos = ({servicos}) => {
+const Servicos = ({ servicos }) => {
   // Variáveis auxiliares
   const router = useRouter();
 
@@ -45,22 +46,22 @@ const Servicos = ({servicos}) => {
           <PageTitle>Serviços</PageTitle>
           <ListService>
             {servicos.map((item, index) => (
-                <>
-                  <ListItem key={index} right={index % 2 !== 0}>
-                    <span>{index !== 0 && <Divider />}</span>
-                    <PageTitle small>{item.title}</PageTitle>
-                    <ListImage>
-                      <img src={item.image} />
-                    </ListImage>
-                    <ViewHtml
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    />
-                    <Link href={`${router.pathname}/${item.url}`}>
-                      <Button secondary>Saiba mais</Button>
-                    </Link>
-                  </ListItem>
-                </>
-              ))}
+              <>
+                <ListItem key={index} right={index % 2 !== 0}>
+                  <span>{index !== 0 && <Divider />}</span>
+                  <PageTitle small>{item.title}</PageTitle>
+                  <ListImage>
+                    <img src={item.image} />
+                  </ListImage>
+                  <ViewHtml
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  />
+                  <Link href={`${router.pathname}/${item.url}`}>
+                    <Button secondary>Saiba mais</Button>
+                  </Link>
+                </ListItem>
+              </>
+            ))}
           </ListService>
         </Container>
       </Layout>
