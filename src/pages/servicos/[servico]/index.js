@@ -14,45 +14,52 @@ import {
 } from "../../../styles/global";
 
 // Imports auxiliares
-import withQuery from "with-query";
+import api from "../../../services/api";
 
-const getData = async () => {
-  const res = await fetch(
-    withQuery(`${process.env.NEXT_PUBLIC_SERVER_URL}services/${context.query.servico}`, {
-      columns: ["title", "page", "price"],
+const getData = async (context) =>
+  await api
+    .get(`services/${context.query.servico}`, {
+      params: { 
+        where: "url",
+        columns: ["title", "page", "price"] },
     })
-  ).then((res) => res.json());
-  return res;
-};
+    .then((res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));
 
 export async function getServerSideProps(context) {
-  const servicos = await getData();
+  const servicos = await getData(context);
+  
   return {
-    props: { servicos },
+    props: servicos,
   };
 }
 
-const Servico = (props) => {
+const Servico = ({ error, data }) => {
   // Rotas
   const router = useRouter();
   const { servico } = router.query;
 
-  const { servicos } = props;
-
   return (
     <>
       <Head>
-        <title>{servicos.title && servicos.title} - M24</title>
+        <title>{!error && data.title} - M24</title>
       </Head>
       <Layout>
+        {error && <div>Erro</div>}
         <div>
-          {servicos.title && (
+          {!error && (
             <>
-              <PageTitle>{servicos.title}</PageTitle>
+              <PageTitle>{data.title}</PageTitle>
               <PageDescription>
-                <ViewHtml dangerouslySetInnerHTML={{ __html: servicos.page }} />
+                <ViewHtml dangerouslySetInnerHTML={{ __html: data.page }} />
               </PageDescription>
-              {servicos.price > 0 ? (
+              {data.price > 0 ? (
                 <Button
                   secondary
                   onClick={() => {

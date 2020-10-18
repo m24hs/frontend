@@ -5,16 +5,28 @@ import Layout from "../../components/site/Layout";
 // Imports de estilo
 import { Container } from "../../styles/pages/sobre";
 import { PageTitle, PageDescription, ViewHtml } from "../../styles/global";
-import { getData } from "../../services/helpers";
+import api from "../../services/api";
+
+const getData = async () =>
+  await api
+    .get("/settings/")
+    .then((res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));
 
 export async function getServerSideProps(context) {
-  const settings = await getData("settings/");
+  const settings = await getData();
   return {
-    props: { settings },
+    props: settings,
   };
 }
 
-const Sobre = (props) => {
+const Sobre = ({ error, data }) => {
   return (
     <>
       <Head>
@@ -26,7 +38,7 @@ const Sobre = (props) => {
           <PageDescription>
             <ViewHtml
               dangerouslySetInnerHTML={{
-                __html: props.settings ? props.settings.about : "",
+                __html: !error ? data.about : "",
               }}
             />
           </PageDescription>

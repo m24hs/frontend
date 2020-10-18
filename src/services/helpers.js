@@ -63,11 +63,3 @@ export const countError = (formName) => {
     return formErrors.length;
   });
 };
-
-// Funciona com o getStaticProps
-export const getData = async (url, param = null) => {
-  const res = await fetch(
-    withQuery(process.env.NEXT_PUBLIC_SERVER_URL + url, param)
-  ).then((res) => res.json());
-  return res;
-};

@@ -10,17 +10,28 @@ import Img from "../../assets/contato.jpg";
 
 // Imports auxiliares
 import Form, { Input } from "../../components/Form";
-import api from "../../services/api.js";
-import { getFormData, countError, getData } from "../../services/helpers";
+import api from "../../services/api";
+
+const getData = async () =>
+  await api
+    .get("/settings/")
+    .then((res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));
 
 export async function getServerSideProps(context) {
-  const settings = await getData("settings/");
+  const settings = await getData();
   return {
-    props: { settings },
+    props: settings,
   };
 }
 
-const Contato = (props) => {
+const Contato = ({ error,data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
 
@@ -62,7 +73,7 @@ const Contato = (props) => {
           <PageTitle>Contato</PageTitle>
           <PageDescription
             dangerouslySetInnerHTML={{
-              __html: props.settings ? props.settings.contact : "",
+              __html: !error ? data.contact : "",
             }}
           />
           <Wrapper>
@@ -119,14 +130,6 @@ const Contato = (props) => {
                 name="message"
                 label="Mensagem"
                 rows="4"
-                validate={(e) => {
-                  return [
-                    {
-                      expression: e.value.length === 0,
-                      message: "Preencha a Mensagem!",
-                    },
-                  ];
-                }}
               />
               <Button
                 secondary
