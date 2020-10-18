@@ -12,7 +12,7 @@ const [browser,setBrowser] = useState("");
   return (
     <PdfWrapper className="pdf">
     {browser === "mobile" ? (
-        <iframe src={"http://docs.google.com/gview?url="+props.url+"&embedded=true"}></iframe>
+        <iframe src={"https://docs.google.com/viewer?url="+props.url+"&embedded=true"}></iframe>
     )
     : (
         <iframe src={props.url}></iframe>
