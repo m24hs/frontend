@@ -15,25 +15,30 @@ import {
 } from "../../styles/pages/servicos/index.js";
 
 // Imports auxiliares
-import withQuery from "with-query";
+import api from "../../services/api";
 
-const getData = async () => {
-  const res = await fetch(
-    withQuery(process.env.NEXT_PUBLIC_SERVER_URL+"services", {
-      columns: ["title", "description", "image", "url"],
+const getData = async () =>
+  await api
+    .get("/services/", {
+      params: { columns: ["title", "description", "image", "url"] },
     })
-  ).then((res) => res.json());
-  return res;
-};
+    .then((res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));
 
 export async function getServerSideProps(context) {
   const servicos = await getData();
   return {
-    props: { servicos },
+    props: servicos,
   };
 }
 
-const Servicos = ({ servicos }) => {
+const Servicos = ({ error, data }) => {
   // Variáveis auxiliares
   const router = useRouter();
 
@@ -45,24 +50,26 @@ const Servicos = ({ servicos }) => {
       <Layout>
         <Container>
           <PageTitle>Serviços</PageTitle>
+          {error && <div>Erro</div>}
           <ListService>
-            {servicos.map((item, index) => (
-              <>
-                <ListItem key={index} right={index % 2 !== 0}>
-                  <span>{index !== 0 && <Divider />}</span>
-                  <PageTitle small>{item.title}</PageTitle>
-                  <ListImage>
-                    <img src={item.image} />
-                  </ListImage>
-                  <ViewHtml
-                    dangerouslySetInnerHTML={{ __html: item.description }}
-                  />
-                  <Link href={`${router.pathname}/${item.url}`}>
-                    <Button secondary>Saiba mais</Button>
-                  </Link>
-                </ListItem>
-              </>
-            ))}
+            {!error &&
+              data.map((item, index) => (
+                <>
+                  <ListItem key={index} right={index % 2 !== 0}>
+                    <span>{index !== 0 && <Divider />}</span>
+                    <PageTitle small>{item.title}</PageTitle>
+                    <ListImage>
+                      <img src={item.image} />
+                    </ListImage>
+                    <ViewHtml
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                    <Link href={`${router.pathname}/${item.url}`}>
+                      <Button secondary>Saiba mais</Button>
+                    </Link>
+                  </ListItem>
+                </>
+              ))}
           </ListService>
         </Container>
       </Layout>
