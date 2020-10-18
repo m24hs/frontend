@@ -1,12 +1,27 @@
+import { useState, useEffect } from "react";
+import { Pdf as PdfWrapper } from "../styles/global";
+
+import { getBrowser } from "../services/helpers";
+
 const Pdf = (props) => {
+const [browser,setBrowser] = useState("");
+  useEffect(() => {
+    setBrowser(getBrowser());
+  }, [props]);
+
   return (
-    <iframe width="100%" height="600px"
-      src={
-        "https://docs.google.com/viewerng/viewer?url=" +
-        props.url +
-        "&embedded=true"
-      }
-    ></iframe>
+    <PdfWrapper className="pdf">
+    {browser === "mobile" ? (
+        <iframe src={"http://docs.google.com/gview?url="+props.url+"&embedded=true"}></iframe>
+    )
+    : (
+        <iframe src={props.url}></iframe>
+    )
+    }
+      <a href={props.url} target="_blank">
+        Se o contrato não estiver sendo exibido, clique aqui.
+      </a>
+    </PdfWrapper>
   );
 };
 

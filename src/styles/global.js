@@ -268,3 +268,17 @@ export const ViewHtml = styled.div`
     margin: 4px 0;
   }
 `;
+
+export const Pdf = styled.div`
+  width: 100%;
+
+  & > iframe {
+    width: 100%;
+    height: 600px;
+    border: 0;
+  }
+
+  & > a {
+    
+  }
+`;

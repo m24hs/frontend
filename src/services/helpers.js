@@ -67,3 +67,15 @@ export const countError = (formName) => {
     return formErrors.length;
   });
 };
+
+export const getBrowser = () => {
+  var ua = navigator.userAgent;
+  if (
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(
+      ua
+    )
+  )
+    return "mobile";
+  else if (/Chrome/i.test(ua)) return "chrome";
+  else return "desktop";
+};
