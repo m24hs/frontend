@@ -19,10 +19,8 @@ import api from "../../services/api";
 import { fetchData } from "../../services/helpers";
 
 const getData = async () => {
-  const res = await api.get("/services", {
-    params: { columns: ["title", "description", "image", "url"] },
-  });
-  return res.data || {};
+  const res = await fetch("https://marcelorossini-com-br.umbler.net/services").then(res => res.json());
+  return res;
 };
 
 export async function getServerSideProps(context) {
