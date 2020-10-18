@@ -15,12 +15,19 @@ import {
 } from "../../styles/pages/servicos/index.js";
 
 // Imports auxiliares
-import { getData } from "../../services/helpers";
+import withQuery from "with-query";
+
+const getData = async () => {
+  const res = await fetch(
+    withQuery("http://marcelorossini-com-br.umbler.net/services", {
+      columns: ["title", "description", "image", "url"],
+    })
+  ).then((res) => res.json());
+  return res;
+};
 
 export async function getServerSideProps(context) {
-  const servicos = await getData("services/", {
-    columns: ["title", "description", "image", "url"],
-  });
+  const servicos = await getData();
   return {
     props: { servicos },
   };
