@@ -16,13 +16,11 @@ import {
 
 // Imports auxiliares
 import withQuery from "with-query";
-import api from "../../services/api";
-import { fetchData } from "../../services/helpers";
 
 const getData = async () => {
   const res = await fetch(
     withQuery("http://marcelorossini-com-br.umbler.net/services", {
-      columns: ["title", "description", "url"],
+      columns: ["title", "description", "image", "url"],
     })
   ).then((res) => res.json());
   return res;
