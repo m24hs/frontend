@@ -37,8 +37,14 @@ const Servicos = (props) => {
   useEffect(() => {
     const getData = async () => {
       const response = await fetchData(
-        api.get(`/services/${servico}?where=url`)
+        api.get(`/services/${servico}`, {
+          params: {
+            where: "url",
+            columns: ["contract"],
+          },
+        })
       );
+
       setServicos(response);
     };
     getData();
@@ -48,7 +54,7 @@ const Servicos = (props) => {
   useEffect(() => {
     const getData = async () => {
       if (user) {
-        const subscription = await api.get(`/subscriptions/${user}?where=iugu`);      
+        const subscription = await api.get(`/subscriptions/${user}?where=iugu`);
         if (subscription.data.payment_method !== "") {
           router.push("/");
         }
