@@ -18,28 +18,20 @@ import {
 import api from "../../services/api";
 import { fetchData } from "../../services/helpers";
 
-/*
-export const getStaticProps = async ({ params }) => {
-  const servicos = await fetchData(api.get("/services"));
+export async function getServerSideProps(context) {
+  const servicos = await fetchData(
+    api.get("/services", {
+      params: { columns: ["title", "description", "image", "url"] },
+    })
+  );
   return {
-    props: { servicos },
+    props: { servicos }, // will be passed to the page component as props
   };
-};
-*/
+}
+
 const Servicos = (props) => {
   // Variáveis auxiliares
   const router = useRouter();
-
-  // Carregar
-  
-  const [dataServicos, setDataServicos] = useState({});
-  useEffect(() => {
-    const teste = async () => {
-      const servicos = await fetchData(api.get("/services", { params: { columns: ["title","description","image","url"] } }));
-      setDataServicos(servicos);
-    }
-    teste();
-  },[props])
 
   return (
     <>
@@ -50,28 +42,8 @@ const Servicos = (props) => {
         <Container>
           <PageTitle>Serviços</PageTitle>
           <ListService>
-            {/*
             {Object.keys(props.servicos).length > 0 &&
               props.servicos.map((item, index) => (
-                <>
-                  <ListItem key={index} right={index % 2 !== 0}>
-                    <span>{index !== 0 && <Divider />}</span>
-                    <PageTitle small>{item.title}</PageTitle>
-                    <ListImage>
-                      <img src={item.image} />
-                    </ListImage>
-                    <ViewHtml
-                      dangerouslySetInnerHTML={{ __html: item.description }}
-                    />
-                    <Link href={`${router.pathname}/${item.url}`}>
-                      <Button secondary>Saiba mais</Button>
-                    </Link>
-                  </ListItem>
-                </>
-              ))}            
-            */}
-            {Object.keys(dataServicos).length > 0 &&
-              dataServicos.map((item, index) => (
                 <>
                   <ListItem key={index} right={index % 2 !== 0}>
                     <span>{index !== 0 && <Divider />}</span>
