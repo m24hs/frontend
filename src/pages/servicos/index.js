@@ -18,14 +18,16 @@ import {
 import api from "../../services/api";
 import { fetchData } from "../../services/helpers";
 
+const getData = async postId => {
+  const res = await fetch("http://marcelorossini-com-br.umbler.net/services").then(res => res.json());
+  const post = res;
+  return post;
+};
+
 export async function getServerSideProps(context) {
-  const servicos = await fetchData(
-    api.get("/services", {
-      params: { columns: ["title", "description", "image", "url"] },
-    })
-  );
+  const servicos = await getData();
   return {
-    props: { servicos }, // will be passed to the page component as props
+    props: { servicos },
   };
 }
 
