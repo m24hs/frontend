@@ -34,7 +34,7 @@ const Index = () => {
             <h3>NÃO TEM PREÇO, <span>TEM VALOR.</span></h3>
           </Main>
           <Label>
-            Disponível em Barra Bonita, Igaraçu do Tiete e Jaú.
+            Disponível em Barra Bonita, Igaraçu do Tietê e Jaú.
           </Label>
           <Link href="/servicos">
             <Button secondary>Contrate Nosso Plano</Button>
