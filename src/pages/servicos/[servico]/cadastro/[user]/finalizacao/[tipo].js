@@ -60,14 +60,25 @@ const Finalizacao = (props) => {
               <PageTitle secondary>
                 Sua assinatura está quase completa...
               </PageTitle>
-              <PageDescription secondary>
-                {name}, faça o pagamento do boleto para efetivar sua assinatura.
-                O boleto também será enviado por email caso queira pagar mais
-                tarde.
-              </PageDescription>
-              <Wrapper tipo={tipo}>
-                <iframe src={boleto} />
-              </Wrapper>
+              {boleto !== "" ? (
+                <>
+                  <PageDescription secondary>
+                    {name}, faça o pagamento do boleto para efetivar sua
+                    assinatura. O boleto também será enviado por email caso
+                    queira pagar mais tarde.
+                  </PageDescription>
+                  <Wrapper tipo={tipo}>
+                    <iframe src={boleto} />
+                  </Wrapper>
+                </>
+              ) : (
+                <>
+                  <PageDescription secondary>
+                    {name}, verifique seu email para dar continuidade, faça o pagamento do boleto para efetivar sua
+                    assinatura. 
+                  </PageDescription>
+                </>
+              )}
             </>
           )}
         </Container>

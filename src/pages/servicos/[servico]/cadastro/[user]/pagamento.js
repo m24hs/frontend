@@ -97,7 +97,7 @@ const Servicos = (props) => {
           router.push({
             pathname: `/servicos/${servico}/cadastro/${user}/finalizacao/analise`,
             query: {
-              boleto: response.data.data.recent_invoices[0].secure_url,
+              boleto: response.data.data.recent_invoices[0] ? response.data.data.recent_invoices[0].secure_url : "",
             },
           });
           return;

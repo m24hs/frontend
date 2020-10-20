@@ -56,7 +56,8 @@ const Servicos = (props) => {
     const formData = getFormData(".form-service");
     formData["price"] = formData["price"].replace(",", ".");
     formData["price"] = formData["price"] || "0";
-    
+    formData["order"] = formData["order"].trim() || "0";
+
     // Converte em formdata
     var postForm = new FormData();
     for (var key in formData) {
@@ -66,7 +67,7 @@ const Servicos = (props) => {
     const response = await api.post(`/services`, postForm, {
       headers: {
         "Content-Type": `multipart/form-data; boundary=${postForm._boundary}`,
-       }
+      },
     });
 
     // Remove loading
@@ -141,6 +142,14 @@ const Servicos = (props) => {
               defaultValue={
                 formData.price && formData.price.toFixed(2).replace(".", ",")
               }
+            />
+            <Input
+              light={true}
+              type="number"
+              label="Ordenação de exibição"
+              name="order"
+              max="99"
+              defaultValue={formData.order}
             />
             <InputUploader
               light={true}

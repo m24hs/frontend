@@ -57,7 +57,7 @@ const Servicos = (props) => {
                 name: "Data e Hora",
                 sortable: true,
                 cell: (row) => (
-                  <Moment date={row.createdAt} format="DD/MM/YYYY HH:mm:ss" />
+                  <Moment date={row.updatedAt} format="DD/MM/YYYY HH:mm:ss" />
                 ),
               },
             ]}

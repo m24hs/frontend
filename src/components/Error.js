@@ -8,7 +8,7 @@ const Error = (props) => {
 
   useEffect(() => {
     setIsError(props.text);
-  }, [props]);
+  }, [props.text]);
 
   const handleCloseError = () => {
     setIsError("");

@@ -588,7 +588,7 @@ const Servicos = () => {
                 handleSubmit(e);
               }}
             >
-              Continuar
+              Contrate nosso plano
             </Button>
           </Form>
         </Container>

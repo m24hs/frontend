@@ -58,7 +58,12 @@ export const Input = (props) => {
       </Wrapper>
     );
   else if (type === "hidden") return <input {...props} />;
-
+  else
+    return (
+      <Wrapper {...restOfProps}>
+        <input {...props} />
+      </Wrapper>
+    );
   return <></>;
 };
 
@@ -204,7 +209,7 @@ const InputMask = (props) => {
         error={(propsError !== "" && propsError) || (isError !== "" && isError)}
         onBlur={(e) => {
           if (onBlur) onBlur(e);
-          setIsError(validateInput(validate, e));
+          else if (validate) setIsError(validateInput(validate, e));
           return;
         }}
         onChange={(e) => setValue(e.target.value)}

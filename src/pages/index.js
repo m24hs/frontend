@@ -34,7 +34,7 @@ const Index = () => {
             <h3>NÃO TEM PREÇO, <span>TEM VALOR.</span></h3>
           </div>
           <Link href="/servicos">
-            <Button secondary>Quero ser M24</Button>
+            <Button secondary>Contrate Nosso Plano</Button>
           </Link>
         </Container>
       </Layout>
