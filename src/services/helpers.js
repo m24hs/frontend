@@ -1,5 +1,3 @@
-import withQuery from "with-query";
-
 export const checkErrors = (response) => {
   if (response.data.hasOwnProperty("error")) {
     console.log(response.data.error);

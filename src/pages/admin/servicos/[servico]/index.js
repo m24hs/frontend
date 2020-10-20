@@ -16,6 +16,7 @@ import Form, {
   InputUploader,
   Editor,
 } from "../../../../components/Form";
+import cookieCutter from 'cookie-cutter';
 
 const Servicos = (props) => {
   // Rotas
@@ -29,6 +30,12 @@ const Servicos = (props) => {
 
   // Carregar
   useEffect(() => {
+    // Vai para tela de loggin
+    if (cookieCutter.get('logged') !== "true") {
+      router.push("/admin");
+    }
+
+    // Consulta
     const getData = async () => {
       if (servico === "novo") return;
       setIsLoading(true);

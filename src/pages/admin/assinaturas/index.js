@@ -12,6 +12,7 @@ import { PageTitle } from "../../../styles/global";
 // Imports auxiliares
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
+import cookieCutter from 'cookie-cutter';
 
 const Assinaturas = (props) => {
   // Rota
@@ -20,6 +21,12 @@ const Assinaturas = (props) => {
   // Preenche variável data
   const [dataAssinaturas, setDataAssinaturas] = useState({});
   useEffect(() => {
+    // Vai para tela de loggin
+    if (cookieCutter.get('logged') !== "true") {
+      router.push("/admin");
+    }
+
+    // Consulta        
     const getData = async () => {
       const assinaturas = await fetchData(api.get("/subscriptions"));
       setDataAssinaturas(assinaturas);
