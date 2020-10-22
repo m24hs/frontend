@@ -33,17 +33,17 @@ const getDataPartners = async () =>
     .catch(() => ({
       error: true,
       data: null,
-    }));    
+    }));
 
 export async function getServerSideProps(context) {
   const settings = await getDataSettings();
   const partners = await getDataPartners();
   return {
-    props: {settings, partners}
+    props: { settings, partners },
   };
 }
 
-const Parceiros = ({settings, partners}) => {
+const Parceiros = ({ settings, partners }) => {
   const path = process.env.NEXT_PUBLIC_SERVER_URL;
 
   return (
@@ -61,12 +61,15 @@ const Parceiros = ({settings, partners}) => {
           />
           <Wrapper>
             <ListPartners>
-            {!partners.error &&
-              partners.data.map((item, index) => (
-                <li>
-                  <img src={path + item.image}/>
-                </li>
-              ))}
+              {!partners.error &&
+                partners.data.map((item, index) => (
+                  <li>
+                    <div>
+                      <img src={path + item.image} />
+                    </div>
+                    <h3>{item.name}</h3>
+                  </li>
+                ))}
             </ListPartners>
           </Wrapper>
         </Container>

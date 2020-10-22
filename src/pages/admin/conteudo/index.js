@@ -53,11 +53,11 @@ const Conteudo = (props) => {
   return (
     <>
       <Head>
-        <title>Configurações - Painel Administrativo - M24</title>
+        <title>Conteúdo - Painel Administrativo - M24</title>
       </Head>
       <Layout loading={isLoading}>
         <div>
-          <PageTitle secondary>Configurações</PageTitle>
+          <PageTitle secondary>Conteúdo</PageTitle>
           <Form className="form-config" margin="16px 0">
             <Input type="hidden" name="id" defaultValue={formData.id} />   
             {/*<Editor name="home" label="Home" defaultValue={formData.home} />*/}

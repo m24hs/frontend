@@ -41,10 +41,10 @@ const Assinaturas = (props) => {
     }
   }, [assinatura]);
 
-  const handleSendLink = () => {
+  const handleSendLink = (url) => {
     console.log(props);
     window.open(
-      `${window.location.origin}/servicos/gestao-preventiva-de-motos/cadastro/${formData.User.id_iugu}/contrato`,
+      `${window.location.origin}/servicos/${url}/cadastro/${formData.User.id_iugu}/contrato`,
       '_blank'
     );
   }
@@ -72,7 +72,7 @@ const Assinaturas = (props) => {
               />
             ) : (
               <>
-                <Button margin={"16px 0"} type="button" onClick={() => handleSendLink()}>
+                <Button margin={"16px 0"} type="button" onClick={() => handleSendLink(formData.Service.url )}>
                   Gerar link de pagamento para o cliente
                 </Button>
               </>
