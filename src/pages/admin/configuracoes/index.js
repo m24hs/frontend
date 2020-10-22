@@ -8,8 +8,8 @@ import api from "../../../services/api.js";
 import { getFormData } from "../../../services/helpers.js";
 import Layout from "../../../components/admin/Layout";
 import { PageTitle } from "../../../styles/global";
-
 import Form, { Input, Editor, Button } from "../../../components/Form";
+import cookieCutter from 'cookie-cutter';
 
 const Configuracoes = (props) => {
   // Rotas
@@ -21,6 +21,12 @@ const Configuracoes = (props) => {
 
   // Carregar
   useEffect(() => {
+    // Vai para tela de loggin
+    if (cookieCutter.get('logged') !== "true") {
+      router.push("/admin");
+    }
+
+    // Consulta    
     const getData = async () => {
       setIsLoading(true);
       const settings = await api.get(`/settings`);

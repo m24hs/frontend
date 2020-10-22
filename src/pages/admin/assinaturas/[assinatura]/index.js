@@ -9,7 +9,7 @@ import { PageTitle } from "../../../../styles/global";
 import api from "../../../../services/api.js";
 import Layout from "../../../../components/admin/Layout";
 import Form, { Input, Button } from "../../../../components/Form";
-import { route } from "next/dist/next-server/server/router";
+import cookieCutter from 'cookie-cutter';
 
 const Assinaturas = (props) => {
   // Rotas
@@ -22,6 +22,12 @@ const Assinaturas = (props) => {
 
   // Carregar
   useEffect(() => {
+    // Vai para tela de loggin
+    if (cookieCutter.get('logged') !== "true") {
+      router.push("/admin");
+    }
+
+    // Consulta    
     if ((assinatura || 0) !== 0) {
       const getData = async () => {
         setIsLoading(true);

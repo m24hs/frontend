@@ -6,7 +6,7 @@ import Link from "next/link";
 // Imports de estilo
 import Layout from "../components/site/Layout";
 import { Button } from "../styles/global";
-import { Container, VideoWrapper } from "../styles/pages/index";
+import { Container, Main, Label, VideoWrapper } from "../styles/pages/index";
 import Background from "../assets/home/background.mp4";
 
 const Index = () => {
@@ -29,10 +29,13 @@ const Index = () => {
               Your browser does not support HTML5 video.
             </video>
           </VideoWrapper>
-          <div className="main">
+          <Main>
             <h1>CUIDAR DA SUA MOTO</h1>
             <h3>NÃO TEM PREÇO, <span>TEM VALOR.</span></h3>
-          </div>
+          </Main>
+          <Label>
+            Disponível em Barra Bonita, Igaraçu do Tietê e Jaú.
+          </Label>
           <Link href="/servicos">
             <Button secondary>Contrate Nosso Plano</Button>
           </Link>

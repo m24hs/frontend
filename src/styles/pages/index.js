@@ -9,36 +9,47 @@ export const Container = styled.div`
   justify-content: flex-end;
   font-size: .8em;
 
-  & > .main {
-    flex: 1;
-    color: var(--color-text);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  & > .main > h3 {
-    font-weight: 100;
-  }
-
-  & > .main span {
-    background: var(--color-tertiary);
-    font-weight: bold;
-  }
-
-  @media (min-width: 480px) {
-    font-size: 1em;
-  }
-
-  @media (min-width: 780px) {
-    font-size: 1.6em;
-
+  @media (min-width: 780px) { 
     & > button {
       max-width: 320px;
     }
-  }
+  }  
 `;
+
+export const Main = styled.main`
+flex: 1;
+color: var(--color-text);
+text-align: center;
+display: flex;
+flex-direction: column;
+justify-content: center;
+
+& > h3 {
+  font-weight: 100;
+}
+
+& span {
+  background: var(--color-tertiary);
+  font-weight: bold;
+}
+
+@media (min-width: 480px) {
+  font-size: 1em;
+}
+
+@media (min-width: 780px) {
+  font-size: 1.6em;
+}
+`
+
+export const Label = styled.div`
+  color: var(--color-text);
+  padding: 16px 0;
+
+  @media (min-width: 780px) {
+    font-size: 16px;
+  }  
+`
 
 export const VideoWrapper = styled.div`
   position: fixed;

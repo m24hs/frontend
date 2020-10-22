@@ -12,6 +12,7 @@ import { PageTitle } from "../../../styles/global";
 import api from "../../../services/api.js";
 import { fetchData } from "../../../services/helpers.js";
 import DataTable from "../../../components/admin/DataTable";
+import cookieCutter from 'cookie-cutter';
 
 const Servicos = (props) => {
   // Rota
@@ -20,6 +21,12 @@ const Servicos = (props) => {
   // Preenche variável data
   const [dataServicos,setDataServicos] = useState({});
   useEffect(() => {
+    // Vai para tela de loggin
+    if (cookieCutter.get('logged') !== "true") {
+      router.push("/admin");
+    }
+
+    // Consulta
     const getData = async () => {
       const servicos = await fetchData(api.get("/services"));
       setDataServicos(servicos);
