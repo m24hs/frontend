@@ -7,7 +7,7 @@ import {
   Logo,
   ButtonMenu,
   Nav,
-  Overlay
+  Overlay,
 } from "../../styles/components/site/Menu";
 
 import LogoSvg from "../../assets/logo.svg";
@@ -20,47 +20,51 @@ const Menu = () => {
       setShowMenu(!showMenu);
     } else {
       setShowMenu(trueFalse);
-    }    
+    }
   };
 
   return (
     <>
-    <Header>
-      <Container>
-        <Link href="/">
-          <Logo src={LogoSvg} />
-        </Link>
-      </Container>
-      <ButtonMenu onClick={() => {handleToogleMenu()}}>
-        <MenuIcon />
-      </ButtonMenu>
-      <Nav className={showMenu ? "showMenu" : ""}>
-        <ul>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/servicos">Serviços</Link>
-          </li>
-          {
-            /*
+      <Header>
+        <Container>
+          <Link href="/">
+            <Logo src={LogoSvg} />
+          </Link>
+        </Container>
+        <ButtonMenu
+          onClick={() => {
+            handleToogleMenu();
+          }}
+        >
+          <MenuIcon />
+        </ButtonMenu>
+        <Nav className={showMenu ? "showMenu" : ""}>
+          <ul>
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/servicos">Serviços</Link>
+            </li>
             <li>
               <Link href="/parceiros">Parceiros</Link>
-            </li>            
-            */
-          }
-          <li>
-            <Link href="/sobre">Sobre a M24</Link>
-          </li>
-          <li>
-            <Link href="/contato">Contato</Link>
-          </li>
-        </ul>
-      </Nav>      
-    </Header>
-    { showMenu &&
-      <Overlay onClick={() => {handleToogleMenu(false)}}/>
-    }
+            </li>
+            <li>
+              <Link href="/sobre">Sobre a M24</Link>
+            </li>
+            <li>
+              <Link href="/contato">Contato</Link>
+            </li>
+          </ul>
+        </Nav>
+      </Header>
+      {showMenu && (
+        <Overlay
+          onClick={() => {
+            handleToogleMenu(false);
+          }}
+        />
+      )}
     </>
   );
 };

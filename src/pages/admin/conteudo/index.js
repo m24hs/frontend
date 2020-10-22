@@ -55,6 +55,7 @@ const Conteudo = (props) => {
           <Form className="form-config" margin="16px 0">
             <Input type="hidden" name="id" defaultValue={formData.id} />   
             {/*<Editor name="home" label="Home" defaultValue={formData.home} />*/}
+            <Editor name="partners" label="Parceiros" defaultValue={formData.partners} />
             <Editor name="about" label="Sobre" defaultValue={formData.about} />
             <Editor name="contact" label="Contato" defaultValue={formData.contact} />
             <Button type="Button" onClick={() => handleSave()}>

@@ -1,10 +1,51 @@
+// Imports padrão
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
-import { Container } from "../../styles/pages/parceiros";
+// Imports de estilo
+import { Container, Wrapper, ListPartners } from "../../styles/pages/parceiros";
 import { PageTitle, PageDescription } from "../../styles/global";
 
-const Parceiros = () => {
+// Imports auxiliares
+import api from "../../services/api";
+
+// Carrega data
+const getDataSettings = async () =>
+  await api
+    .get("/settings/")
+    .then((res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));
+
+// Carrega data
+const getDataPartners = async () =>
+  await api
+    .get("/partners/")
+    .then((res) => ({
+      error: false,
+      data: res.data,
+    }))
+    .catch(() => ({
+      error: true,
+      data: null,
+    }));    
+
+export async function getServerSideProps(context) {
+  const settings = await getDataSettings();
+  const partners = await getDataPartners();
+  return {
+    props: {settings, partners}
+  };
+}
+
+const Parceiros = ({settings, partners}) => {
+  const path = process.env.NEXT_PUBLIC_SERVER_URL;
+
   return (
     <>
       <Head>
@@ -13,9 +54,21 @@ const Parceiros = () => {
       <Layout>
         <Container>
           <PageTitle>Parceiros</PageTitle>
-          <PageDescription>
-          
-          </PageDescription>
+          <PageDescription
+            dangerouslySetInnerHTML={{
+              __html: !settings.error ? settings.data.partners : "",
+            }}
+          />
+          <Wrapper>
+            <ListPartners>
+            {!partners.error &&
+              partners.data.map((item, index) => (
+                <li>
+                  <img src={path + item.image}/>
+                </li>
+              ))}
+            </ListPartners>
+          </Wrapper>
         </Container>
       </Layout>
     </>
