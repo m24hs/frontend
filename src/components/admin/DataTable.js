@@ -33,18 +33,14 @@ const DataTable = (props) => {
     const value = e.target.value || "";
     
     if (value !== "") {
-      setFilteredData(filterIt(data, value));
+      const dataAux = data.filter(item => {
+        let text = JSON.stringify(item);
+        return text.includes(value);
+      });
+      setFilteredData(dataAux);
     } else {
       setFilteredData(data);
     }
-  };
-
-  const filterIt = (object, search) => {
-    return object.filter((obj) =>
-      Object.values(obj).some((val) =>
-        val ? val.toString().toLowerCase().includes(search) : false
-      )
-    );
   };
 
   return (
@@ -84,7 +80,6 @@ const DataTable = (props) => {
           if (onRowClicked) {
             return onRowClicked(item);
           } else if (edit) {
-            //router.push(`${baseUrl}/${item.id}`);
             window.location.href = `${baseUrl}/${item.id}`;
           }
           return;
