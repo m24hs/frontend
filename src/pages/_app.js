@@ -7,11 +7,15 @@ import { useRouter } from "next/router";
 import GlobalStyles from "../styles/global";
 import Loading from "../components/Loading";
 
+// Componente
 function MyApp({ Component, pageProps }) {
+  // Rotas
   const router = useRouter();
 
+  // State
   const [isLoading, setIsLoading] = useState(false);
 
+  // Verifica se mudou de rota
   useEffect(() => {
     const handleStart = (url) => url !== router.asPath && setIsLoading(true);
     const handleComplete = (url) => url === router.asPath && setIsLoading(false);
