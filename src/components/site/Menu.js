@@ -50,6 +50,9 @@ const Menu = () => {
               <Link href="/parceiros">Parceiros</Link>
             </li>
             <li>
+              <Link href="/dicas">Dicas</Link>
+            </li>            
+            <li>
               <Link href="/sobre">Sobre a M24</Link>
             </li>
             <li>

@@ -20,7 +20,7 @@ import Form, {
 const Servicos = (props) => {
   // Rotas
   const router = useRouter();
-  const { parceiro: id } = router.query;
+  const { dica: id } = router.query;
 
   // State
   const [formData, setFormData] = useState({});
@@ -32,8 +32,8 @@ const Servicos = (props) => {
     const getData = async () => {
       if (!id || id === "novo") return;
       setIsLoading(true);
-      const parceiros = await api.get(`/partners/${id}`);
-      setFormData(parceiros.data);
+      const dicas = await api.get(`/posts/${id}`);
+      setFormData(dicas.data);
       setIsLoading(false);
     };
     getData();
@@ -44,7 +44,7 @@ const Servicos = (props) => {
     setIsError("");
 
     // Se houver error no form
-    const numberErrors = await countError(".form-partners");
+    const numberErrors = await countError(".form-posts");
     if (numberErrors > 0) {
       return;
     }
@@ -53,7 +53,7 @@ const Servicos = (props) => {
     setIsLoading(true);
 
     // Envia
-    const formData = getFormData(".form-partners");
+    const formData = getFormData(".form-posts");
 
     // Converte em formdata
     var postForm = new FormData();
@@ -61,7 +61,7 @@ const Servicos = (props) => {
       postForm.append(key, formData[key]);
     }
 
-    const response = await api.post(`/partners`, postForm, {
+    const response = await api.post(`/posts`, postForm, {
       headers: {
         "Content-Type": `multipart/form-data; boundary=${postForm._boundary}`,
       },
@@ -72,7 +72,7 @@ const Servicos = (props) => {
 
     // Retorna
     if (response.data.status === "success") {
-      router.push("/admin/parceiros");
+      router.push("/admin/dicas");
     } else {
       setIsError(response.data.data);
     }
@@ -86,15 +86,15 @@ const Servicos = (props) => {
     setIsLoading(true);
 
     // Envia
-    const formData = getFormData(".form-partners");
-    const response = await api.delete(`/partners/${formData.id}`);
+    const formData = getFormData(".form-posts");
+    const response = await api.delete(`/posts/${formData.id}`);
 
     // Remove loading
     setIsLoading(false);
 
     // Retorna
     if (response.data.status === "success") {
-      router.push("/admin/parceiros");
+      router.push("/admin/dicas");
     } else {
       setIsError(response.data.data);
     }
@@ -103,19 +103,19 @@ const Servicos = (props) => {
   return (
     <NoSsr>
       <Head>
-        <title>Parceiros - Painel Administrativo - M24</title>
+        <title>Dicas - Painel Administrativo - M24</title>
       </Head>
       <Layout loading={isLoading || false} error={isError}>
         <div>
-          <PageTitle secondary>Parceiros</PageTitle>
-          <Form className="form-partners" margin="16px 0">
+          <PageTitle secondary>Dicas</PageTitle>
+          <Form className="form-posts" margin="16px 0">
             <Input name="id" type="hidden" defaultValue={formData.id} />
             <Input
               light={true}
-              name="name"
-              label="Nome"
+              name="title"
+              label="Título"
               type="text"
-              defaultValue={formData.name}
+              defaultValue={formData.title}
               validate={(e) => {
                 return [
                   {
@@ -128,11 +128,16 @@ const Servicos = (props) => {
             <InputUploader
               light={true}
               image
-              label="Logo"
+              label="Imagem"
               name="image"
               accept="image/jpeg,image/gif,image/png"
               defaultValue={formData.image}
             />
+            <Editor
+              name="content"
+              label="Conteúdo"
+              defaultValue={formData.description}
+            />            
             <Button
               type="button"
               width="calc(50% - 8px)"

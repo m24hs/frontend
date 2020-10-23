@@ -55,6 +55,37 @@ export default createGlobalStyle`
     .margin-3x {
         margin: 32px 0;
     } 
+
+    .ql-editor {
+      color: #495057;
+    }    
+
+    .ql-editor ul {
+      margin-top: -14px;
+      padding: 16px 0;
+    }
+
+    .ql-editor ul > li:before {
+      content: "";
+      border-color: transparent var(--color-tertiary);
+      border-style: solid;
+      border-width: 0.35em 0 0.35em 0.45em;
+      display: block;
+      height: 0;
+      width: 0;
+      top: 0.9em;
+      position: relative;
+    }
+
+    .ql-editor ul > li > p {
+      text-align: left;
+    }
+
+    .ql-editor  h1, .ql-editor  h2, .ql-editor  h3, .ql-editor  h4, .ql-editor  h5, .ql-editor  h6 {
+      border-left: 8px solid var(--color-tertiary);
+      padding: 0 0 0 16px;
+      margin: 4px 0;
+    }
 `;
 
 export const Divider = styled.hr`
@@ -262,7 +293,12 @@ export const ViewHtml = styled.div`
     text-align: left;
   }
 
-  & h1, & h2, & h3, & h4, & h5, & h6 {
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6 {
     border-left: 8px solid var(--color-tertiary);
     padding: 0 0 0 16px;
     margin: 4px 0;
@@ -279,6 +315,5 @@ export const Pdf = styled.div`
   }
 
   & > a {
-    
   }
 `;

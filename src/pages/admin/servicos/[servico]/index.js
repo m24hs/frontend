@@ -21,7 +21,7 @@ import cookieCutter from 'cookie-cutter';
 const Servicos = (props) => {
   // Rotas
   const router = useRouter();
-  const { servico } = router.query;
+  const { servico: id } = router.query;
 
   // State
   const [formData, setFormData] = useState({});
@@ -37,9 +37,9 @@ const Servicos = (props) => {
 
     // Consulta
     const getData = async () => {
-      if (servico === "novo") return;
+      if (!id || id === "novo") return;
       setIsLoading(true);
-      const servicos = await api.get(`/services/${servico}`);
+      const servicos = await api.get(`/services/${id}`);
       setFormData(servicos.data);
       setIsLoading(false);
     };

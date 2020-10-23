@@ -5,7 +5,8 @@ import { Container, Itens } from "../../styles/components/admin/Sidebar";
 
 import { ListUl as ListUlIcon, CartAlt as CartAltIcon, Text as TextIcon } from "@styled-icons/boxicons-regular";
 import { Settings as SettingsIcon } from "@styled-icons/ionicons-sharp";
-import { UserTie as UserTieIcon } from "@styled-icons/icomoon"
+import { UserTie as UserTieIcon } from "@styled-icons/icomoon";
+import { LightBulb as LightbulbIcon } from "@styled-icons/entypo"
 
 const Sidebar = (props) => {
   return (
@@ -32,6 +33,9 @@ export const MenuItems = () => {
         <li>
           <Link href="/admin/parceiros"><a><UserTieIcon/>Parceiros</a></Link>
         </li>
+        <li>
+          <Link href="/admin/dicas"><a><LightbulbIcon/>Dicas</a></Link>
+        </li>        
         <li>
           <Link href="/admin/conteudo"><a><TextIcon />Conteúdo</a></Link>
         </li>

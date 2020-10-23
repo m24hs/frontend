@@ -384,7 +384,21 @@ export const Editor = (props) => {
 
   const modules = {
     toolbar: [
-      [{ header: [1, 2, false] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ 'align': [] }],
+      [{ 'background': [] }],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+      ],
+      ["link", "image"],
+      ["clean"],
+    ],
+  };
+/*
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ["bold", "italic", "underline", "strike", "blockquote"],
       [
         { list: "ordered" },
@@ -392,10 +406,11 @@ export const Editor = (props) => {
         { indent: "-1" },
         { indent: "+1" },
       ],
+      [ 'direction', { 'align': [] }],
       ["link", "image"],
       ["clean"],
     ],
-  };
+*/
 
   return (
     <div style={{ width: props.width || "100%", display: "block" }}>

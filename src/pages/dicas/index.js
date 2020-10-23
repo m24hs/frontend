@@ -1,8 +1,8 @@
 // Imports padrão
 import Head from "next/head";
+import Layout from "../../components/site/Layout";
 
 // Imports de estilo
-import Layout from "../../components/site/Layout";
 import { Container, Wrapper, ListPartners } from "../../styles/pages/parceiros";
 import { PageTitle, PageDescription } from "../../styles/global";
 
@@ -10,22 +10,9 @@ import { PageTitle, PageDescription } from "../../styles/global";
 import api from "../../services/api";
 
 // Carrega data
-const getDataSettings = async () =>
+const getDataPosts = async () =>
   await api
-    .get("/settings/")
-    .then((res) => ({
-      error: false,
-      data: res.data,
-    }))
-    .catch(() => ({
-      error: true,
-      data: null,
-    }));
-
-// Carrega data
-const getDataPartners = async () =>
-  await api
-    .get("/partners/")
+    .get("/posts/")
     .then((res) => ({
       error: false,
       data: res.data,
@@ -36,14 +23,13 @@ const getDataPartners = async () =>
     }));
 
 export async function getServerSideProps(context) {
-  const settings = await getDataSettings();
-  const partners = await getDataPartners();
+  const posts = await getDataPosts();
   return {
-    props: { settings, partners },
+    props: { posts },
   };
 }
 
-const Parceiros = ({ settings, partners }) => {
+const Parceiros = ({ settings, posts }) => {
   const path = process.env.NEXT_PUBLIC_SERVER_URL;
 
   return (
@@ -54,16 +40,11 @@ const Parceiros = ({ settings, partners }) => {
       <Layout>
         <Container>
           <PageTitle>Parceiros</PageTitle>
-          <PageDescription
-            dangerouslySetInnerHTML={{
-              __html: !settings.error ? settings.data.partners : "",
-            }}
-          />
           <Wrapper>
             <ListPartners>
-              {!partners.error &&
-                partners.data.map((item, index) => (
-                  <li key={index}>
+              {!posts.error &&
+                posts.data.map((item, index) => (
+                  <li>
                     <div>
                       <img src={path + item.image} />
                     </div>
