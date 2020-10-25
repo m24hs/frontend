@@ -8,7 +8,7 @@ export const FormStyle = styled.form`
     display: flex;
     flex-direction: column;
   }
-  
+
   ${({ margin }) =>
     margin &&
     `
@@ -89,7 +89,6 @@ export const WrapperStyle = styled.div`
     `}
 `;
 
-
 export const LabelStyle = styled.label`
   ${({ light }) =>
     light === false
@@ -104,12 +103,22 @@ export const LabelStyle = styled.label`
 
 export const UploaderWrapper = styled.div`
   width: 100%;
-  
+
   & > div img {
     border-radius: 0.25rem;
+    width: 100%;
   }
 
   & > input {
     display: none !important;
+  }
+
+  @media (min-width: 780px) {
+    & > div {
+      text-align: center;
+    }    
+    & > div img {
+      max-width: 400px;
+    }
   }
 `;

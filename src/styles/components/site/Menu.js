@@ -58,7 +58,7 @@ export const Nav = styled.nav`
 
   @media (max-width: 780px) {
     &.showMenu {
-      height: 350px;
+      height: 400px;
       overflow: initial;
       padding: 10px 16px;
     }

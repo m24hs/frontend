@@ -49,12 +49,12 @@ export const ListImage = styled.div`
   grid-area: img;
   width: 100%;
   height: 100%;
+  box-shadow: 8px 8px 0px 0px var(--color-tertiary);
 
   & > img {
     width: 100%;
-    height: calc(100% - 8px);
+    height: 100%;
     object-fit: cover;
     display: block;
-    box-shadow: 8px 8px 0px 0px var(--color-tertiary);
   }
 `;

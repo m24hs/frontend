@@ -270,6 +270,7 @@ ${({ width }) =>
 export const ViewHtml = styled.div`
   grid-area: text;
   color: var(--color-text);
+  word-break: break-all;
 
   & ul {
     margin-top: -14px;

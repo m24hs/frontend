@@ -347,7 +347,7 @@ export const InputUploader = (props) => {
       <UploaderWrapper {...props}>
         <LabelStyle>{props.label}</LabelStyle>
         <div>
-          {props.image && <img width="100%" src={file || defaultFile} />}
+          {props.image && <img src={file || defaultFile} />}
           {props.pdf && (file || defaultFile || "") !== "" && (
             <object
               width="100%"

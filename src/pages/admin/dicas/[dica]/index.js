@@ -136,7 +136,7 @@ const Servicos = (props) => {
             <Editor
               name="content"
               label="Conteúdo"
-              defaultValue={formData.description}
+              defaultValue={formData.content}
             />            
             <Button
               type="button"
