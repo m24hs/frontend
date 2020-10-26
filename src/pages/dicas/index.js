@@ -91,19 +91,21 @@ const Dicas = ({ posts }) => {
                   </li>
                 ))}
             </ListPosts>
-            <Pagination>
-              {page !== 1 && (
-                <Button secondary onClick={() => handleBackPage()}>
-                  <BackIcon />
-                </Button>
-              )}
-              <div>{page}</div>
-              {(page * 10) < posts.data.count && (
-              <Button secondary onClick={() => handleNextPage()}>
-                <ForwardIcon />
-              </Button>
-              )}
-            </Pagination>
+            {!posts.error && posts.data.count > 10 && (
+              <Pagination>
+                {page !== 1 && (
+                  <Button secondary onClick={() => handleBackPage()}>
+                    <BackIcon />
+                  </Button>
+                )}
+                <div>{page}</div>
+                {page * 10 < posts.data.count && (
+                  <Button secondary onClick={() => handleNextPage()}>
+                    <ForwardIcon />
+                  </Button>
+                )}
+              </Pagination>
+            )}
           </Wrapper>
         </Container>
       </Layout>
