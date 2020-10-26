@@ -11,6 +11,7 @@ import Img from "../../assets/contato.jpg";
 // Imports auxiliares
 import Form, { Input } from "../../components/Form";
 import api from "../../services/api";
+import { validateEmail, countError, getFormData } from "../../services/helpers";
 
 // Carrega data
 const getData = async () =>
@@ -59,6 +60,7 @@ const Contato = ({ error,data }) => {
 
     // Retorna
     if (response.data.status === "success") {
+      alert("Mensagem enviada, logo retornaremos!")
     } else {
       setIsError(response.data.data);
     }
@@ -101,6 +103,10 @@ const Contato = ({ error,data }) => {
                     {
                       expression: e.value.length === 0,
                       message: "Preencha o Email!",
+                    },
+                    {
+                      expression: !validateEmail(e.value),
+                      message: "Email inválido!",
                     },
                   ];
                 }}

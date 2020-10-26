@@ -57,15 +57,13 @@ const Servicos = (props) => {
               },
               {
                 name: "Valor",
+                selector: "price",
                 sortable: true,
-                cell: (row) => <>R$ {row.price.toFixed(2).replace(".", ",")}</>,
               },
               {
                 name: "Data e Hora",
+                selector: "updatedAt",
                 sortable: true,
-                cell: (row) => (
-                  <Moment date={row.updatedAt} format="DD/MM/YYYY HH:mm:ss" />
-                ),
               },
             ]}
             data={dataServicos}

@@ -60,7 +60,7 @@ const Servico = ({ error, data }) => {
               <PageDescription>
                 <ViewHtml dangerouslySetInnerHTML={{ __html: data.page }} />
               </PageDescription>
-              {data.price > 0 ? (
+              {parseInt(data.price) > 0 ? (
                 <Button
                   secondary
                   onClick={() => {

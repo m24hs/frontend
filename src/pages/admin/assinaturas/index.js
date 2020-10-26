@@ -58,33 +58,17 @@ const Assinaturas = (props) => {
               {
                 name: "Forma de Pagamento",
                 sortable: true,
-                cell: (row) => (
-                  <>
-                    {(row.payment_method || "") === ""
-                      ? ""
-                      : row.payment_method === "credit-card"
-                      ? "Cartão de Crédito"
-                      : "Boleto"}
-                  </>
-                ),
+                selector: "payment_method",
               },
               {
                 name: "Situação",
                 sortable: true,
-                cell: (row) => (
-                  <>
-                    {(row.payment_method || "") !== ""
-                      ? "Gerada"
-                      : "Incompleta"}
-                  </>
-                ),
+                selector: "status",
               },
               {
                 name: "Data e Hora",
+                selector: "updatedAt",
                 sortable: true,
-                cell: (row) => (
-                  <Moment date={row.updatedAt} format="DD/MM/YYYY HH:mm:ss" />
-                ),
               },
             ]}
             data={dataAssinaturas}

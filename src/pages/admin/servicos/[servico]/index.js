@@ -147,7 +147,7 @@ const Servicos = (props) => {
               label="Valor"
               type="currency"
               defaultValue={
-                formData.price && formData.price.toFixed(2).replace(".", ",")
+                formData.price && formData.price
               }
             />
             <Input

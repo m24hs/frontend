@@ -50,10 +50,8 @@ const Dicas = (props) => {
               },
               {
                 name: "Data e Hora",
+                selector: "updatedAt",
                 sortable: true,
-                cell: (row) => (
-                  <Moment date={row.updatedAt} format="DD/MM/YYYY HH:mm:ss" />
-                ),
               },
             ]}
             data={dataDicas}

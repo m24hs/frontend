@@ -14,8 +14,13 @@ import {
   WrapperStyle,
   LabelStyle,
   UploaderWrapper,
+  CheckBoxWrapper,
 } from "../styles/components/Form";
 import { Button as ButtonStyle } from "../styles/global";
+import {
+  Square as SquareIcon,
+  CheckSquareFill as CheckSquareFillIcon,
+} from "@styled-icons/bootstrap/";
 
 // Form
 const Form = (props) => {
@@ -386,17 +391,14 @@ export const Editor = (props) => {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ["bold", "italic", "underline", "strike"],
-      [{ 'align': [] }],
-      [{ 'background': [] }],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-      ],
+      [{ align: [] }],
+      [{ background: [] }],
+      [{ list: "ordered" }, { list: "bullet" }],
       ["link", "image"],
       ["clean"],
     ],
   };
-/*
+  /*
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ["bold", "italic", "underline", "strike", "blockquote"],
@@ -423,5 +425,27 @@ export const Editor = (props) => {
       />
       <input name={props.name} type="hidden" value={value} />
     </div>
+  );
+};
+
+export const CheckBox = (props) => {
+  const { defaultValue, ...restOfProps } = props;
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (defaultValue)
+      setEnabled(defaultValue);
+  }, [defaultValue]);
+
+  const handleChangeState = () => {
+    setEnabled(!enabled);
+  }
+
+  return (
+    <CheckBoxWrapper {...restOfProps} onClick={() => handleChangeState()}>
+      <div>{enabled ? <CheckSquareFillIcon /> : <SquareIcon />}</div>
+      <LabelStyle>{props.label}</LabelStyle>
+      <input name={props.name} type="hidden" value={enabled} />
+    </CheckBoxWrapper>
   );
 };

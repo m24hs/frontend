@@ -116,9 +116,34 @@ export const UploaderWrapper = styled.div`
   @media (min-width: 780px) {
     & > div {
       text-align: center;
-    }    
+    }
     & > div img {
       max-width: 400px;
     }
   }
+`;
+
+export const CheckBoxWrapper = styled.div`
+  width: 100%;
+  height: 40px;
+  display: grid !important;
+  grid-template-columns: 40px 1fr;
+  grid-template-rows: auto;
+  grid-template-areas: "icon text";
+  align-items: center;
+  cursor: pointer;
+  
+  & > div {
+    grid-area: icon;
+  }
+
+  & > div > svg {
+    width: 24px;
+    color: var(--color-tertiary);
+  }
+
+  & > label {
+    grid-area: text;
+    cursor: pointer;
+  }  
 `;

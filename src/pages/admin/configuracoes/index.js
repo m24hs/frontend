@@ -8,7 +8,7 @@ import api from "../../../services/api.js";
 import { getFormData } from "../../../services/helpers.js";
 import Layout from "../../../components/admin/Layout";
 import { PageTitle } from "../../../styles/global";
-import Form, { Input, Editor, Button } from "../../../components/Form";
+import Form, { Input, Editor, Button, CheckBox } from "../../../components/Form";
 import cookieCutter from 'cookie-cutter';
 
 const Configuracoes = (props) => {
@@ -67,11 +67,18 @@ const Configuracoes = (props) => {
             </div>
             <Input
               type="text"
-              label="API Token"
+              label="API Token - Teste"
               name="iugu_token"
               light={true}
               defaultValue={formData.iugu_token}
             />
+            <Input
+              type="text"
+              label="API Token - Produção"
+              name="iugu_token_production"
+              light={true}
+              defaultValue={formData.iugu_token_production}
+            />            
             <Input
               type="text"
               label="Account ID"
@@ -79,6 +86,12 @@ const Configuracoes = (props) => {
               light={true}
               defaultValue={formData.iugu_account_id}
             />
+            <CheckBox
+              label="Mode de teste?"
+              name="iugu_test"
+              light={true}
+              defaultValue={formData.iugu_test}
+            />            
             <div>
               <PageTitle small secondary margin="8px 0">
                 Email

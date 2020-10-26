@@ -9,7 +9,7 @@ import { PageTitle } from "../../../../styles/global";
 import api from "../../../../services/api.js";
 import Layout from "../../../../components/admin/Layout";
 import Form, { Input, Button } from "../../../../components/Form";
-import cookieCutter from 'cookie-cutter';
+import cookieCutter from "cookie-cutter";
 
 const Assinaturas = (props) => {
   // Rotas
@@ -23,11 +23,11 @@ const Assinaturas = (props) => {
   // Carregar
   useEffect(() => {
     // Vai para tela de loggin
-    if (cookieCutter.get('logged') !== "true") {
+    if (cookieCutter.get("logged") !== "true") {
       router.push("/admin");
     }
 
-    // Consulta    
+    // Consulta
     if ((assinatura || 0) !== 0) {
       const getData = async () => {
         setIsLoading(true);
@@ -45,9 +45,9 @@ const Assinaturas = (props) => {
     console.log(props);
     window.open(
       `${window.location.origin}/servicos/${url}/cadastro/${formData.User.id_iugu}/contrato`,
-      '_blank'
+      "_blank"
     );
-  }
+  };
 
   return (
     <>
@@ -63,16 +63,16 @@ const Assinaturas = (props) => {
                 light={true}
                 type="text"
                 label="Forma de pagamento"
-                defaultValue={
-                  formData.payment_method === "credit-card"
-                    ? "Cartão de crédito"
-                    : "Boleto"
-                }
+                defaultValue={formData.payment_method}
                 disabled={true}
               />
             ) : (
               <>
-                <Button margin={"16px 0"} type="button" onClick={() => handleSendLink(formData.Service.url )}>
+                <Button
+                  margin={"16px 0"}
+                  type="button"
+                  onClick={() => handleSendLink(formData.Service.url)}
+                >
                   Gerar link de pagamento para o cliente
                 </Button>
               </>
@@ -83,14 +83,14 @@ const Assinaturas = (props) => {
               label="Nome do Cliente"
               defaultValue={formData.User && formData.User.name}
               disabled={true}
-            />      
+            />
             <Input
               light={true}
               type="text"
               label="Serviço"
               defaultValue={formData.Service && formData.Service.title}
               disabled={true}
-            />                     
+            />
             <Input
               light={true}
               type="text"
@@ -196,6 +196,13 @@ const Assinaturas = (props) => {
               type="text"
               label="Renavam"
               defaultValue={formData.User && formData.User.motorcycle_renavam}
+              disabled={true}
+            />
+            <Input
+              light={true}
+              type="text"
+              label="Como conheceu a M24?"
+              defaultValue={formData.User && formData.User.origin}
               disabled={true}
             />
           </Form>

@@ -11,7 +11,7 @@ import Img from "../../../../assets/cadastro.jpg";
 
 // Imports auxiliares
 import Form, { Input, Button } from "../../../../components/Form";
-import { countError, getFormData } from "../../../../services/helpers";
+import { countError, getFormData, validateEmail } from "../../../../services/helpers";
 import api from "../../../../services/api";
 import cepPromise from "cep-promise";
 
@@ -111,12 +111,6 @@ const Servicos = () => {
     } else {
       setIsError(response.data.data);
     }
-  };
-
-  // Valida email
-  const validateEmail = (email) => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
   };
 
   // Valida CPF
