@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import Layout from "../../../../components/site/Layout";
 import { Container } from "../../../../styles/pages/servicos/cadastro";
 import { PageTitle, PageDescription } from "../../../../styles/global";
-import Img from "../../../../assets/cadastro.jpg";
 
 // Imports auxiliares
 import Form, { Input, Button } from "../../../../components/Form";
