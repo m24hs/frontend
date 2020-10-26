@@ -12,7 +12,11 @@ import api from "../../services/api";
 // Carrega data
 const getDataSettings = async () =>
   await api
-    .get("/settings/")
+    .get("/settings/", {
+      params: {
+        columns: ["partners"],
+      },
+    })
     .then((res) => ({
       error: false,
       data: res.data,

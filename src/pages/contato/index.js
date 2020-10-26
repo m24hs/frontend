@@ -16,7 +16,11 @@ import { validateEmail, countError, getFormData } from "../../services/helpers";
 // Carrega data
 const getData = async () =>
   await api
-    .get("/settings/")
+    .get("/settings/", {
+      params: {
+        columns: ["contact"],
+      },
+    })
     .then((res) => ({
       error: false,
       data: res.data,
@@ -33,7 +37,7 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Contato = ({ error,data }) => {
+const Contato = ({ error, data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
 
@@ -60,7 +64,7 @@ const Contato = ({ error,data }) => {
 
     // Retorna
     if (response.data.status === "success") {
-      alert("Mensagem enviada, logo retornaremos!")
+      alert("Mensagem enviada, logo retornaremos!");
     } else {
       setIsError(response.data.data);
     }
@@ -132,12 +136,7 @@ const Contato = ({ error,data }) => {
                   ];
                 }}
               />
-              <Input
-                type="textarea"
-                name="message"
-                label="Mensagem"
-                rows="4"
-              />
+              <Input type="textarea" name="message" label="Mensagem" rows="4" />
               <Button
                 secondary
                 type="button"
