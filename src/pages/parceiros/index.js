@@ -1,72 +1,67 @@
 // Imports padrão
+import { useState, useEffect } from "react";
 import Head from "next/head";
 
 // Imports de estilo
 import Layout from "../../components/site/Layout";
 import { Container, Wrapper, ListPartners } from "../../styles/pages/parceiros";
 import { PageTitle, PageDescription } from "../../styles/global";
+import { fetchData } from "../../services/helpers";
 
 // Imports auxiliares
 import api from "../../services/api";
 
 // Carrega data
-const getDataSettings = async () =>
-  await api
-    .get("/settings/", {
-      params: {
-        columns: ["partners"],
-      },
-    })
-    .then((res) => ({
-      error: false,
-      data: res.data,
-    }))
-    .catch(() => ({
-      error: true,
-      data: null,
-    }));
-
-// Carrega data
-const getDataPartners = async () =>
-  await api
-    .get("/partners/")
-    .then((res) => ({
-      error: false,
-      data: res.data,
-    }))
-    .catch(() => ({
-      error: true,
-      data: null,
-    }));
-
-export async function getServerSideProps(context) {
-  const settings = await getDataSettings();
-  const partners = await getDataPartners();
-  return {
-    props: { settings, partners },
-  };
-}
-
-const Parceiros = ({ settings, partners }) => {
+const Parceiros = (props) => {
+  // Variáveis auxiliares
   const path = process.env.NEXT_PUBLIC_SERVER_URL;
+  const [dataSettings, setDataSettings] = useState({});
+  const [dataPartners, setDataPartners] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Effect
+  useEffect(() => {
+    const getDataSettings = async () => {
+      setDataSettings(true);
+      const response = await fetchData(
+        api.get("/settings/", {
+          params: {
+            columns: ["partners"],
+          },
+        })
+      );
+      setIsLoading(false);
+      setDataSettings(response);
+    };
+    getDataSettings();
+
+    const getDataPartners = async () => {
+      setIsLoading(true);
+      const response = await fetchData(api.get("/partners/"));
+      console.log(response);
+      setIsLoading(false);
+      setDataPartners(response);
+    };
+    getDataPartners();
+  }, [props]);
 
   return (
     <>
       <Head>
         <title>Parceiros - M24</title>
       </Head>
-      <Layout>
+      <Layout loading={isLoading}>
         <Container>
           <PageTitle>Parceiros</PageTitle>
           <PageDescription
             dangerouslySetInnerHTML={{
-              __html: !settings.error ? settings.data.partners : "",
+              __html: dataSettings ? dataSettings.partners : "",
             }}
           />
           <Wrapper>
             <ListPartners>
-              {!partners.error &&
-                partners.data.map((item, index) => (
+              { Object.keys(dataPartners).length > 0 &&
+                dataPartners.map((item, index) => (
                   <li key={index}>
                     <div>
                       <img src={path + item.image} />

@@ -1,4 +1,5 @@
 // Imports padrão
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 
@@ -6,44 +7,41 @@ import Layout from "../../components/site/Layout";
 import { Container } from "../../styles/pages/sobre";
 import { PageTitle, PageDescription, ViewHtml } from "../../styles/global";
 import api from "../../services/api";
+import { fetchData } from "../../services/helpers";
 
-// Carrega data
-const getData = async () =>
-  await api
-    .get("/settings/",{
-      params: {
-        columns: ["about"]
-      }
-    })
-    .then((res) => ({
-      error: false,
-      data: res.data,
-    }))
-    .catch(() => ({
-      error: true,
-      data: null,
-    }));
+const Sobre = (props) => {
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-export async function getServerSideProps(context) {
-  const settings = await getData();
-  return {
-    props: settings,
-  };
-}
+  // Effect
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      const response = await fetchData(
+        api.get("/settings/",{
+          params: {
+            columns: ["about"]
+          }
+        })
+      );
+      setIsLoading(false);
+      setData(response);
+    };
+    getData();
+  }, [props]);
 
-const Sobre = ({ error, data }) => {
   return (
     <>
       <Head>
         <title>Sobre - M24</title>
       </Head>
-      <Layout>
+      <Layout loading={isLoading}>
         <Container>
           <PageTitle>Sobre</PageTitle>
           <PageDescription>
             <ViewHtml
               dangerouslySetInnerHTML={{
-                __html: !error ? data.about : "",
+                __html: data ? data.about : "",
               }}
             />
           </PageDescription>

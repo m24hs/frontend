@@ -1,4 +1,5 @@
 // Imports padrão
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import Layout from "../../components/site/Layout";
 import { useRouter } from "next/router";
@@ -22,38 +23,32 @@ import {
 
 // Imports auxiliares
 import api from "../../services/api";
+import { fetchData } from "../../services/helpers";
 
-// Carrega data
-const getDataPosts = async (page = "1") =>
-  await api
-    .get("/posts/", {
-      params: {
-        page,
-      },
-    })
-    .then((res) => ({
-      error: false,
-      data: res.data,
-    }))
-    .catch(() => ({
-      error: true,
-      data: null,
-    }));
-
-export async function getServerSideProps(context) {
-  const page = context.query.page;
-  const posts = await getDataPosts(page);
-
-  return {
-    props: { posts },
-  };
-}
-
-const Dicas = ({ posts }) => {
+const Dicas = (props) => {
   // Variáveis auxiliares
   const path = process.env.NEXT_PUBLIC_SERVER_URL;
   const router = useRouter();
   const page = router.query.page ? parseInt(router.query.page) : 1;
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      const response = await fetchData(
+        api.get("/posts/", {
+          params: {
+            page,
+          },
+        })
+      );
+      setIsLoading(false);
+      setData(response);
+    };
+    getData();
+  }, [props]);
+
 
   const handleBackPage = () => {
     router.push({ pathname: "/dicas", query: { page: page - 1 } });
@@ -68,13 +63,13 @@ const Dicas = ({ posts }) => {
       <Head>
         <title>Dicas de Gestão - M24</title>
       </Head>
-      <Layout>
+      <Layout loading={isLoading}>
         <Container>
           <PageTitle>Dicas de Gestão </PageTitle>
           <Wrapper>
             <ListPosts>
-              {!posts.error &&
-                posts.data.rows.map((item, index) => (
+              {data.rows && Object.keys(data.rows).length > 0 &&
+                data.rows.map((item, index) => (
                   <li>
                     <PostDivider>{index !== 0 && <Divider />}</PostDivider>
                     <PostTitle>
@@ -91,7 +86,7 @@ const Dicas = ({ posts }) => {
                   </li>
                 ))}
             </ListPosts>
-            {!posts.error && posts.data.count > 10 && (
+            {data.count && data.count > 10 && (
               <Pagination>
                 {page !== 1 && (
                   <Button secondary onClick={() => handleBackPage()}>

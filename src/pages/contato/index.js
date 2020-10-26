@@ -11,35 +11,28 @@ import Img from "../../assets/contato.jpg";
 // Imports auxiliares
 import Form, { Input } from "../../components/Form";
 import api from "../../services/api";
-import { validateEmail, countError, getFormData } from "../../services/helpers";
+import { validateEmail, countError, getFormData, fetchData } from "../../services/helpers";
 
-// Carrega data
-const getData = async () =>
-  await api
-    .get("/settings/", {
-      params: {
-        columns: ["contact"],
-      },
-    })
-    .then((res) => ({
-      error: false,
-      data: res.data,
-    }))
-    .catch(() => ({
-      error: true,
-      data: null,
-    }));
-
-export async function getServerSideProps(context) {
-  const settings = await getData();
-  return {
-    props: settings,
-  };
-}
-
-const Contato = ({ error, data }) => {
+const Contato = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    const getData = async () => {
+      setIsLoading(true);
+      const response = await fetchData(
+        api.get("/settings/", {
+          params: {
+            columns: ["contact"],
+          },
+        })
+      );
+      setIsLoading(false);
+      setData(response);
+    };
+    getData();
+  }, [props]);
 
   // Salvar
   const handleSend = async () => {
@@ -80,7 +73,7 @@ const Contato = ({ error, data }) => {
           <PageTitle>Contato</PageTitle>
           <PageDescription
             dangerouslySetInnerHTML={{
-              __html: !error ? data.contact : "",
+              __html: data ? data.contact : "",
             }}
           />
           <Wrapper>
