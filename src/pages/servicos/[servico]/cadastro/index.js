@@ -522,7 +522,7 @@ const Servicos = () => {
               name="motorcycle_placa"
               label="Placa *"
               type="mask"
-              mask="aaa-9999"
+              mask="***-****"
               maskPlaceholder=" "
               validate={(e) => {
                 return [
@@ -530,6 +530,10 @@ const Servicos = () => {
                     expression: e.value.length === 0,
                     message: "Preencha a placa!",
                   },
+                  {
+                    expression: e.value.replaceAll(" ","").length < 8,
+                    message: "Placa inválida!",
+                  }
                 ];
               }}
             />
