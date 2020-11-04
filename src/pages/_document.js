@@ -32,7 +32,25 @@ export default class MyDocument extends Document {
     return (
       <Html lang="pt">
         <Head>
+          <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-C6187EZ0DZ"
+          ></script>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-C6187EZ0DZ');
+        `,
+            }}
+          />
           <meta charSet="utf-8" />
+          <meta
+            name="description"
+            content="Cuidar da sua moto não tem preço, tem VALOR!"
+          />
           <link
             href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;600;800&display=swap"
             rel="stylesheet"
