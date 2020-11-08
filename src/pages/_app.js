@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import * as gtag from "../services/gtag";
 
 // Imports de estilo
 import GlobalStyles from "../styles/global";
@@ -19,8 +20,10 @@ function MyApp({ Component, pageProps }) {
   // Verifica se mudou de rota
   useEffect(() => {
     const handleStart = (url) => url !== router.asPath && setIsLoading(true);
-    const handleComplete = (url) =>
-      url === router.asPath && setIsLoading(false);
+    const handleComplete = (url) => {
+      gtag.pageview(url);
+      return url === router.asPath && setIsLoading(false);
+    }
 
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
