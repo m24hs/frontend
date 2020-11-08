@@ -38,7 +38,6 @@ const Parceiros = (props) => {
     const getDataPartners = async () => {
       setIsLoading(true);
       const response = await fetchData(api.get("/partners/"));
-      console.log(response);
       setIsLoading(false);
       setDataPartners(response);
     };

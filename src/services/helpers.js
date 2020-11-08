@@ -1,6 +1,5 @@
 export const checkErrors = (response) => {
   if (response.data.hasOwnProperty("error")) {
-    console.log(response.data.error);
     return true;
   }
   return false;

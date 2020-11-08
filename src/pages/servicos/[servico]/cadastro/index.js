@@ -7,10 +7,15 @@ import { useRouter } from "next/router";
 import Layout from "../../../../components/site/Layout";
 import { Container } from "../../../../styles/pages/servicos/cadastro";
 import { PageTitle, PageDescription } from "../../../../styles/global";
+import { WrapperStyle, WrapperRadio } from "../../../../styles/components/Form";
 
 // Imports auxiliares
-import Form, { Input, Button } from "../../../../components/Form";
-import { countError, getFormData, validateEmail } from "../../../../services/helpers";
+import Form, { Input, Button, InputMask } from "../../../../components/Form";
+import {
+  countError,
+  getFormData,
+  validateEmail,
+} from "../../../../services/helpers";
 import api from "../../../../services/api";
 import cepPromise from "cep-promise";
 
@@ -31,6 +36,7 @@ const Servicos = () => {
   // Auxiliares
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
+  const [cpfOrCnpj, setCpfOrCnpj] = useState("cpf");
 
   // Busca CEP
   const handleCEP = async (e) => {
@@ -147,6 +153,56 @@ const Servicos = () => {
     if (resto != parseInt(cpf.substring(10, 11))) return false;
     return true;
   };
+
+  // Valida CNPJ
+  function isValidCNPJ(cnpj) {
+    cnpj = cnpj.replace(/[^\d]+/g, "");
+
+    if (cnpj == "") return false;
+
+    if (cnpj.length != 14) return false;
+
+    // Elimina CNPJs invalidos conhecidos
+    if (
+      cnpj == "00000000000000" ||
+      cnpj == "11111111111111" ||
+      cnpj == "22222222222222" ||
+      cnpj == "33333333333333" ||
+      cnpj == "44444444444444" ||
+      cnpj == "55555555555555" ||
+      cnpj == "66666666666666" ||
+      cnpj == "77777777777777" ||
+      cnpj == "88888888888888" ||
+      cnpj == "99999999999999"
+    )
+      return false;
+
+    // Valida DVs
+    let tamanho = cnpj.length - 2;
+    let numeros = cnpj.substring(0, tamanho);
+    let digitos = cnpj.substring(tamanho);
+    let soma = 0;
+    let pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado != digitos.charAt(0)) return false;
+
+    tamanho = tamanho + 1;
+    numeros = cnpj.substring(0, tamanho);
+    soma = 0;
+    pos = tamanho - 7;
+    for (let i = tamanho; i >= 1; i--) {
+      soma += numeros.charAt(tamanho - i) * pos--;
+      if (pos < 2) pos = 9;
+    }
+    resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
+    if (resultado != digitos.charAt(1)) return false;
+
+    return true;
+  }
 
   // Valida Renavam
   const isValidRenavam = (renavam) => {
@@ -286,6 +342,76 @@ const Servicos = () => {
                 ];
               }}
             />
+            <WrapperStyle
+              light={false}
+              style={{ width: "50%", paddingLeft: "16px" }}
+            >
+              <WrapperRadio>
+                <input
+                  type="radio"
+                  id="radio-cpf"
+                  name="age"
+                  value="cpf"
+                  checked={cpfOrCnpj === "cpf"}
+                  onChange={(e) => {
+                    setCpfOrCnpj(e.target.value);
+                  }}
+                />
+                <label htmlFor="radio-cpf">CPF</label>
+                <input
+                  type="radio"
+                  id="radio-cnpj"
+                  name="age"
+                  value="cnpj"
+                  checked={cpfOrCnpj === "cnpj"}
+                  onChange={(e) => {
+                    setCpfOrCnpj(e.target.value);
+                  }}
+                />
+                <label htmlFor="radio-cnpj">CNPJ</label>
+              </WrapperRadio>
+              {cpfOrCnpj === "cnpj" ? (
+                <InputMask
+                  type="mask"
+                  name="cpf_cnpj"
+                  mask="99.999.999/9999-99"
+                  maskPlaceholder=" "
+                  validate={(e) => {
+                    return [
+                      {
+                        expression: e.value.length === 0,
+                        message: "Preencha o CNPJ!",
+                      },
+                      {
+                        expression: !isValidCNPJ(e.value),
+                        message: "CNPJ inválido!",
+                      },
+                    ];
+                  }}
+                />
+              ) : (
+                <InputMask
+                  type="mask"
+                  name="cpf_cnpj"
+                  mask="999.999.999-99"
+                  maskPlaceholder=" "
+                  validate={(e) => {
+                    return [
+                      {
+                        expression: e.value.length === 0,
+                        message: "Preencha o CPF!",
+                      },
+                      {
+                        expression: !isValidCPF(e.value),
+                        message: "CPF inválido!",
+                      },
+                    ];
+                  }}
+                />
+              )}
+            </WrapperStyle>
+
+            {/*                      
             <Input
               type="mask"
               label="CPF *"
@@ -306,6 +432,7 @@ const Servicos = () => {
                 ];
               }}
             />
+            */}
             <Input
               type="mask"
               label="CEP *"
@@ -531,9 +658,9 @@ const Servicos = () => {
                     message: "Preencha a placa!",
                   },
                   {
-                    expression: e.value.replaceAll(" ","").length < 8,
+                    expression: e.value.replaceAll(" ", "").length < 8,
                     message: "Placa inválida!",
-                  }
+                  },
                 ];
               }}
             />

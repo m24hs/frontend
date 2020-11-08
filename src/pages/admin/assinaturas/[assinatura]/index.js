@@ -42,7 +42,6 @@ const Assinaturas = (props) => {
   }, [assinatura]);
 
   const handleSendLink = (url) => {
-    console.log(props);
     window.open(
       `${window.location.origin}/servicos/${url}/cadastro/${formData.User.id_iugu}/contrato`,
       "_blank"

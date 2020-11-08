@@ -147,3 +147,11 @@ export const CheckBoxWrapper = styled.div`
     cursor: pointer;
   }  
 `;
+
+export const WrapperRadio = styled.div`
+  height: 20px;
+
+  & > label {
+    padding: 0 10px 0 4px;
+  }
+`;

@@ -45,9 +45,10 @@ justify-content: center;
 export const Label = styled.div`
   color: var(--color-text);
   padding: 16px 0;
+  text-align: center;
 
   @media (min-width: 780px) {
-    font-size: 16px;
+    max-width: 400px;
   }  
 `
 

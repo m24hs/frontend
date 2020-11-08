@@ -191,7 +191,7 @@ const HtmlInput = (props) => {
 };
 
 // Input mask
-const InputMask = (props) => {
+export const InputMask = (props) => {
   const { validate, onBlur, defaultValue, ...restOfProps } = props;
   const [isError, setIsError] = useState("");
   const [propsError, setPropsError] = useState("");
@@ -262,7 +262,6 @@ const InputCurrency = (props) => {
 // Valida o input
 const validateInput = (f, e) => {
   try {
-    console.log(e);
     // Executa função
     const response = f(e.hasOwnProperty("target") ? e.target : e);
     // Loop
@@ -272,7 +271,6 @@ const validateInput = (f, e) => {
       responseIndex++
     ) {
       let item = response[responseIndex];
-      console.log(item);
 
       // Se o retorno for true, é um erro
       if (item.expression === true) {
