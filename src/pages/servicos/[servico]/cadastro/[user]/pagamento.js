@@ -61,7 +61,7 @@ const Servicos = (props) => {
         const formData = getFormData(".credit-card");
 
         // Tratamento dados
-        formData["number"] = formData.number.replaceAll(" ", "");
+        formData["number"] = formData.number.replace(" ", "");
         formData["first_name"] = formData.name
           .trim()
           .split(" ")
@@ -152,7 +152,7 @@ const Servicos = (props) => {
                         mask="9999 9999 9999 9999"
                         maskPlaceholder=" "
                         validate={(e) => {
-                          const number = e.value.replaceAll(" ", "").trim();
+                          const number = e.value.replace(" ", "").trim();
                           return [
                             {
                               expression: number === "",

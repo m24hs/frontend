@@ -264,9 +264,9 @@ const Servicos = () => {
               maskPlaceholder=" "
               validate={(e) => {
                 const phone = e.value
-                  .replaceAll("(", "")
-                  .replaceAll(")", "")
-                  .replaceAll(" ", "")
+                  .replace("(", "")
+                  .replace(")", "")
+                  .split(" ").join("")
                   .trim();
                 return [
                   {
@@ -382,8 +382,7 @@ const Servicos = () => {
                 return [
                   {
                     expression:
-                      e.value.replaceAll("-", "").replaceAll(" ", "").trim() ===
-                      "",
+                      e.value.replace("-", "").split(" ").join("").trim() === "",
                     message: "Preencha o CEP!",
                   },
                 ];

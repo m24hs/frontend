@@ -116,9 +116,9 @@ const Contato = (props) => {
                 maskPlaceholder=" "
                 validate={(e) => {
                   const phone = e.value
-                    .replaceAll("(", "")
-                    .replaceAll(")", "")
-                    .replaceAll(" ", "")
+                    .replace("(", "")
+                    .replace(")", "")
+                    .split(" ").join("")
                     .trim();
 
                   return [
