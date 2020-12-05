@@ -203,7 +203,7 @@ const Servicos = () => {
 
     return true;
   }
-  
+
   return (
     <>
       <Head>
@@ -550,6 +550,7 @@ const Servicos = () => {
               placeholder=""
             />
             <Input
+              divstyle={{ width: "40%" }}
               type="select"
               label="Como conheceu a M24?"
               name="origin"
