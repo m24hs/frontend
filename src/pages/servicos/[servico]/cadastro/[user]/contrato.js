@@ -79,7 +79,7 @@ const Servicos = (props) => {
         <Container>
           <PageTitle secondary>Contrato</PageTitle>
           <PageDescription secondary>
-            Leia atentamente o contrato, caso tenha alguma dúvida entre em
+            Caso tenha alguma dúvida entre em
             contato com a gente.
           </PageDescription>
           <Wrapper className="margin-2x">
