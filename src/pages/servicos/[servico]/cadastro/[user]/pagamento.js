@@ -133,9 +133,6 @@ const Servicos = (props) => {
                   <li onClick={() => setPaymentType("cartao")}>
                     <CreditCardIcon /> Cartão de crédito
                   </li>
-                  <li onClick={() => setPaymentType("boleto")}>
-                    <BarcodeReaderIcon /> Boleto
-                  </li>
                 </ul>
               </>
             ) : (
@@ -263,29 +260,8 @@ const Servicos = (props) => {
                   </>
                 ) : (
                   <>
-                    <PageDescription secondary>
-                      O pagamento por boleto é uma ótima pedida pra quem não
-                      possui cartão de crédito, será enviado para seu email
-                      mensalmente a fatura para o pagamento, fique atento a data
-                      de vencimento. Ao confirmar será enviado para o seu email
-                      o boleto para a confirmação da assinatura.
-                    </PageDescription>
-                    <Button
-                      secondary
-                      onClick={() => handleContinue("boleto")}
-                      margin="32px 0"
-                    >
-                      Confirmar assinatura por boleto
-                    </Button>
                   </>
                 )}
-                <button
-                  className="change-payment-type"
-                  onClick={() => setPaymentType("")}
-                >
-                  <ArrowBackIcon />
-                  Selecionar outra forma de pagamento
-                </button>
               </>
             )}
           </Wrapper>
