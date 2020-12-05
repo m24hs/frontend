@@ -550,7 +550,7 @@ const Servicos = () => {
               placeholder=""
             />
             <Input
-              divstyle={{ width: "40%" }}
+              divstyle={{ width: "39%", paddingLeft: "16px" }}
               type="select"
               label="Como conheceu a M24?"
               name="origin"
