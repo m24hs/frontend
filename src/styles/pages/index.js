@@ -41,6 +41,7 @@ display:none;
 @media (min-width: 780px) {
   font-size: 1.6em;
   display:block;
+  padding-top:20%;
 }
 `
 
