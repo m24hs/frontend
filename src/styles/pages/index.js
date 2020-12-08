@@ -53,7 +53,7 @@ export const Label = styled.div`
 `
 
 export const VideoWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   z-index: -100;
   top: 0;
   left: 0;
@@ -72,5 +72,9 @@ export const VideoWrapper = styled.div`
     height: 100%;
     -o-filter: blur(8px);
     filter: blur(8px);    
+  }
+
+  @media (min-width: 768px){
+    background-image: url('https://i.pinimg.com/originals/9a/db/6b/9adb6b3abf78af04193857799d0bb883.jpg');
   }
 `;
