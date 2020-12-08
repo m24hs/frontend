@@ -47,7 +47,7 @@ const Index = (props) => {
       </Head>
       <Layout backgroundColor="none">
         <Container>
-          <VideoWrapper style="background:url('../assets/home/bannerInicio.jpeg')">
+          <VideoWrapper>
           </VideoWrapper>
           <Main>
             <h1>CUIDAR DA SUA MOTO</h1>

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Background from "../assets/home/bannerInicio.jpeg";
 
 export const Container = styled.div`
   width: 100%;
@@ -60,7 +61,7 @@ export const VideoWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--color-primary);
+  background: url('"${Background}"');
 
   & > video {
     object-fit: cover;
