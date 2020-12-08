@@ -14,10 +14,10 @@ import api from "../services/api";
 import { fetchData } from "../services/helpers";
 
 const Index = (props) => {
-  useEffect(() => {
-    const video = document.querySelector(".home-background");
-    video.play();
-  }, []);
+  //useEffect(() => {
+ //   const video = document.querySelector(".home-background");
+ //   video.play();
+//  }, []);
 
   const [data, setData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
