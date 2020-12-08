@@ -23,7 +23,7 @@ text-align: center;
 display: flex;
 flex-direction: column;
 justify-content: center;
-display:block;
+display:none;
 & > h3 {
   font-weight: 100;
 }
@@ -35,12 +35,12 @@ display:block;
 
 @media (min-width: 480px) {
   font-size: 1em;
-  display:none;
+  display:block;
 }
 
 @media (min-width: 780px) {
   font-size: 1.6em;
-  display:none;
+  display:block;
 }
 `
 
@@ -48,9 +48,9 @@ export const Label = styled.div`
   color: var(--color-text);
   padding: 16px 0;
   text-align: center;
-display:block;
+display:none;
   @media (min-width: 780px) {
-    max-width: 400px;display:none;
+    max-width: 400px;display:block;
   }  
 `
 
