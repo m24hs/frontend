@@ -7,7 +7,7 @@ import Link from "next/link";
 import Layout from "../components/site/Layout";
 import { Button } from "../styles/global";
 import { Container, Main, Label, VideoWrapper } from "../styles/pages/index";
-import Background from "../assets/home/background.mp4";
+import Background from "../assets/home/bannerInicio.jpeg";
 
 // Imports Auxiliares
 import api from "../services/api";
@@ -48,10 +48,6 @@ const Index = (props) => {
       <Layout backgroundColor="none">
         <Container>
           <VideoWrapper>
-            <video autoPlay muted loop className="home-background">
-              <source src={Background} type="video/mp4" />
-              Your browser does not support HTML5 video.
-            </video>
           </VideoWrapper>
           <Main>
             <h1>CUIDAR DA SUA MOTO</h1>

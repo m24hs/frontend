@@ -60,7 +60,7 @@ export const VideoWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: var(--color-primary);
+  background: url('{Background}')
 
   & > video {
     object-fit: cover;
