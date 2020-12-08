@@ -60,7 +60,7 @@ export const VideoWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url('{Background}')
+  background: url('../../src/assets/home/bannerInicio.jpeg')
 
   & > video {
     object-fit: cover;
