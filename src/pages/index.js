@@ -7,13 +7,14 @@ import Link from "next/link";
 import Layout from "../components/site/Layout";
 import { Button } from "../styles/global";
 import { Container, Main, Label, VideoWrapper } from "../styles/pages/index";
+import Background from "../assets/home/bannerInicio.jpeg";
 
 // Imports Auxiliares
 import api from "../services/api";
 import { fetchData } from "../services/helpers";
 
 const Index = (props) => {
-  //useEffect(() => {
+ // useEffect(() => {
  //   const video = document.querySelector(".home-background");
  //   video.play();
 //  }, []);
