@@ -530,13 +530,12 @@ const Servicos = () => {
             />
             <Input
               divstyle={{ width: "60%" }}
-              label="Categoria da Moto *"
+              label="Tipo de veículo*"
               type="select"
               name="motorcycle_category"
               options={[
-                { value: "Moto até 100cc", label: "Moto até 100cc" },
-                { value: "Moto até 150cc", label: "Moto até 150cc" },
-                { value: "Moto até 300cc", label: "Moto até 300cc" },
+                { value: "Moto até 300cc", label: "Motos até 300cc" },
+                { value: "Carros", label: "Carros" },
               ]}
               validate={(e) => {
                 return [
