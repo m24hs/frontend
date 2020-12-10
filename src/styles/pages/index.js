@@ -35,12 +35,10 @@ display:none;
 
 @media (min-width: 480px) {
   font-size: 1em;
-  display:block;
 }
 
 @media (min-width: 780px) {
   font-size: 1.6em;
-  display:block;
   padding-top:20%;
 }
 `
@@ -49,10 +47,7 @@ export const Label = styled.div`
   color: var(--color-text);
   padding: 16px 0;
   text-align: center;
-display:none;
-  @media (min-width: 780px) {
-    max-width: 400px;display:block;
-  }  
+  display:none;
 `
 
 export const VideoWrapper = styled.div`

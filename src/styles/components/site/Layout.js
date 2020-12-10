@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
     ${({ withoutPadding }) =>
       !withoutPadding
         ? `
-        padding: calc(64px + 32px) 32px 32px 32px;            
+        padding: 25px;            
     `
         : `
         padding: 64px 0 0 0;            
