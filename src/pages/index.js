@@ -61,7 +61,7 @@ const Index = (props) => {
             }}
           />
           <Link href="/servicos">
-            <Button secondary>Contrate Nosso Plano</Button>
+            <Button secondary>Conheça nossos planos</Button>
           </Link>
         </Container>
       </Layout>
