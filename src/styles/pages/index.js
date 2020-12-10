@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Background from "../../../src/assets/home/bannerInicio.jpeg";
+import Background from "../../../src/assets/home/Banner-Rastreador.png";
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -75,9 +75,5 @@ export const VideoWrapper = styled.div`
     height: 100%;
     -o-filter: blur(8px);
     filter: blur(8px);    
-  }
-
-  @media (min-width: 768px){
-    background-image: url('https://i.pinimg.com/originals/9a/db/6b/9adb6b3abf78af04193857799d0bb883.jpg');
   }
 `;
