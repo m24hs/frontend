@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Background from "../../../src/assets/home/Banner-Rastreador.png";
+import BackgroundMobile from "../../../src/assets/home/Rastreador-mobile.png";
 export const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -70,5 +71,9 @@ export const VideoWrapper = styled.div`
     height: 100%;
     -o-filter: blur(8px);
     filter: blur(8px);    
+  }
+
+  @media(max-width:768px){
+    background-image:url(${BackgroundMobile});
   }
 `;
