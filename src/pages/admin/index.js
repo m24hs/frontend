@@ -38,7 +38,7 @@ const Wrapper = (props) => {
     if (
       formData.user === "admin" &&
       CryptoJS.MD5(formData.pass).toString() ===
-        "71efb6896c3271ece69215077defa3dc"
+        "2f704b2e1d1ccf4a0baf3e03fe4bc4ba"
     ) {
       cookieCutter.set('logged', true);
       setLogged(true);
