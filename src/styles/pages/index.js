@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Background from "../../../src/assets/home/Banner-Rastreador.png";
-import BackgroundMobile from "../../../src/assets/home/Rastreador-mobile.png";
-export const Container = styled.div`
+import BackgroundMobile from "../../../src/assets/home/bannerInicio.jpeg";
+export const Container = styled.div `
   width: 100%;
   height: 100vh;
   display: flex;
@@ -17,7 +17,7 @@ export const Container = styled.div`
   }  
 `;
 
-export const Main = styled.main`
+export const Main = styled.main `
 flex: 1;
 color: var(--color-text);
 text-align: center;
@@ -44,14 +44,14 @@ display:none;
 }
 `
 
-export const Label = styled.div`
+export const Label = styled.div `
   color: var(--color-text);
   padding: 16px 0;
   text-align: center;
   display:none;
 `
 
-export const VideoWrapper = styled.div`
+export const VideoWrapper = styled.div `
   position: absolute;
   z-index: -100;
   top: 0;
