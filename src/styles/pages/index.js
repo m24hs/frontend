@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Background from "https://4kwallpapers.com/images/wallpapers/biker-dark-motorcycle-3371x2160-1480.jpg";
-import BackgroundMobile from "https://4kwallpapers.com/images/wallpapers/biker-dark-motorcycle-3371x2160-1480.jpg";
+import Background from "../../../src/assets/home/bannerMoto.jpg";
+import BackgroundMobile from "../../../src/assets/home/bannerMoto.jpg";
 export const Container = styled.div `
   width: 100%;
   height: 100vh;
