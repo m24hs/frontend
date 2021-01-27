@@ -24,7 +24,6 @@ text-align: center;
 display: flex;
 flex-direction: column;
 justify-content: center;
-display:none;
 & > h3 {
   font-weight: 100;
 }
@@ -48,7 +47,6 @@ export const Label = styled.div `
   color: var(--color-text);
   padding: 16px 0;
   text-align: center;
-  display:none;
 `
 
 export const VideoWrapper = styled.div `
