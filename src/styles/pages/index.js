@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Background from "../../../src/assets/home/Banner-Rastreador.png";
-import BackgroundMobile from "../../../src/assets/home/bannerInicio.jpeg";
+import Background from "https://4kwallpapers.com/images/wallpapers/biker-dark-motorcycle-3371x2160-1480.jpg";
+import BackgroundMobile from "https://4kwallpapers.com/images/wallpapers/biker-dark-motorcycle-3371x2160-1480.jpg";
 export const Container = styled.div `
   width: 100%;
   height: 100vh;
@@ -24,7 +24,6 @@ text-align: center;
 display: flex;
 flex-direction: column;
 justify-content: center;
-display:none;
 & > h3 {
   font-weight: 100;
 }
@@ -48,7 +47,6 @@ export const Label = styled.div `
   color: var(--color-text);
   padding: 16px 0;
   text-align: center;
-  display:none;
 `
 
 export const VideoWrapper = styled.div `
